@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luckie 🐾 | The One & Only</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #e74c3c;
+      --accent: #f39c12;
+      --dark: #1a1a2e;
+      --light: #fef9f0;
+      --text: #333;
+      --card-bg: #fff;
+      --shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Nunito', sans-serif; background: var(--light); color: var(--text); }
+
+    /* NAV */
+    nav {
+      background: var(--dark);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .nav-logo {
+      font-family: 'Pacifico', cursive;
+      color: #fff;
+      font-size: 1.6rem;
+      padding: 1rem 0;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a {
+      color: #ccc;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: #fff;
+      background: var(--primary);
+    }
+
+    /* PAGE SYSTEM */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--dark) 0%, #16213e 50%, #0f3460 100%);
+      color: white;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '🐾';
+      font-size: 15rem;
+      position: absolute;
+      top: -3rem;
+      right: -3rem;
+      opacity: 0.05;
+      transform: rotate(20deg);
+    }
+    .hero-avatar {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 5px solid var(--accent);
+      object-fit: cover;
+      margin: 0 auto 1.5rem;
+      display: block;
+      box-shadow: 0 0 40px rgba(243,156,18,0.4);
+    }
+    .hero h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero .tagline {
+      font-size: 1.2rem;
+      color: #ccc;
+      margin-bottom: 2rem;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-bottom: 2.5rem;
+    }
+    .stat { text-align: center; }
+    .stat .num { font-size: 2rem; font-weight: 800; color: var(--accent); }
+    .stat .label { font-size: 0.85rem; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
+    .hero-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      padding: 0.75rem 2rem;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: #c0392b; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(231,76,60,0.4); }
+    .btn-outline { background: transparent; color: white; border: 2px solid white; }
+    .btn-outline:hover { background: white; color: var(--dark); transform: translateY(-2px); }
+    .btn-accent { background: var(--accent); color: white; }
+    .btn-accent:hover { background: #e67e22; transform: translateY(-2px); }
+
+    /* SECTION */
+    .section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      font-family: 'Pacifico', cursive;
+      font-size: 2rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .section-sub { color: #888; margin-bottom: 2.5rem; font-size: 1.05rem; }
+
+    /* PHOTO GRID */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .photo-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .photo-card:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
+    .photo-card img { width: 100%; height: 280px; object-fit: cover; }
+    .photo-card .photo-info { padding: 1rem 1.2rem; }
+    .photo-card .photo-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 0.3rem; }
+    .photo-card .photo-caption { color: #777; font-size: 0.9rem; margin-bottom: 0.8rem; }
+    .photo-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      background: #f0f0f0;
+      color: #555;
+      border-radius: 20px;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .photo-like {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 0.8rem;
+      cursor: pointer;
+    }
+
+    /* BLOG */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    .blog-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    .blog-card:hover { transform: translateY(-4px); }
+    .blog-card img { width: 100%; height: 220px; object-fit: cover; }
+    .blog-card .blog-info { padding: 1.5rem; }
+    .blog-card .blog-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .blog-card .blog-excerpt { color: #777; font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.5; }
+    .blog-card .blog-meta { font-size: 0.8rem; color: #aaa; }
+
+    /* SHOP */
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
+    .product-card:hover { transform: translateY(-4px); }
+    .product-card .product-img {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(135deg, #e74c3c22, #f39c1222);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+    }
+    .product-card .product-img img { width: 100%; height: 100%; object-fit: cover; }
+    .product-card .product-info { padding: 1.2rem; }
+    .product-card .product-name { font-weight: 800; font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .product-card .product-desc { color: #777; font-size: 0.9rem; margin-bottom: 1rem; }
+    .product-card .product-bottom { display: flex; justify-content: space-between; align-items: center; }
+    .product-card .price { font-size: 1.3rem; font-weight: 800; color: var(--primary); }
+    .btn-sm { padding: 0.4rem 1.2rem; font-size: 0.9rem; border-radius: 20px; }
+
+    /* MEMBERSHIP */
+    .membership-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .tier-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+      position: relative;
+      transition: transform 0.2s;
+    }
+    .tier-card:hover { transform: translateY(-5px); }
+    .tier-card.featured {
+      background: linear-gradient(135deg, var(--dark), #0f3460);
+      color: white;
+      border: 3px solid var(--accent);
+    }
+    .tier-card.featured .tier-desc { color: #ccc; }
+    .tier-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.2rem 1rem;
+      border-radius: 20px;
+    }
+    .tier-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .tier-name { font-family: 'Pacifico', cursive; font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .tier-price { font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem; }
+    .tier-card.featured .tier-price { color: var(--accent); }
+    .tier-price span { font-size: 0.9rem; font-weight: 400; color: #888; }
+    .tier-card.featured .tier-price span { color: #aaa; }
+    .tier-desc { color: #777; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .tier-features { list-style: none; text-align: left; margin-bottom: 1.5rem; }
+    .tier-features li { padding: 0.3rem 0; font-size: 0.9rem; }
+    .tier-features li::before { content: '✅ '; }
+
+    /* EMAIL SIGNUP */
+    .email-signup {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 20px;
+      padding: 3rem;
+      text-align: center;
+      color: white;
+      margin: 2rem 0;
+    }
+    .email-signup h2 { font-family: 'Pacifico', cursive; font-size: 2rem; margin-bottom: 0.5rem; }
+    .email-signup p { margin-bottom: 1.5rem; font-size: 1.05rem; opacity: 0.9; }
+    .email-form { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+    .email-form input {
+      padding: 0.75rem 1.5rem;
+      border-radius: 30px;
+      border: none;
+      font-size: 1rem;
+      font-family: 'Nunito', sans-serif;
+      min-width: 280px;
+      outline: none;
+    }
+    .email-form .btn { background: var(--dark); color: white; }
+    .email-form .btn:hover { background: #0f3460; }
+
+    /* ABOUT */
+    .about-section { 
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    @media (max-width: 700px) {
+      .about-section { grid-template-columns: 1fr; gap: 2rem; }
+      .hero h1 { font-size: 2.5rem; }
+      .hero-stats { gap: 1.5rem; }
+      nav { flex-direction: column; padding: 0.5rem 1rem; gap: 0.5rem; }
+      .nav-links { flex-wrap: wrap; justify-content: center; gap: 0.3rem; }
+    }
+    .about-img { width: 100%; border-radius: 20px; box-shadow: var(--shadow); }
+    .about-text h2 { font-family: 'Pacifico', cursive; font-size: 2rem; margin-bottom: 1rem; color: var(--dark); }
+    .about-text p { color: #666; line-height: 1.8; margin-bottom: 1rem; }
+    .fun-facts { background: #fff; border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); margin-top: 1rem; }
+    .fun-facts h3 { font-weight: 800; margin-bottom: 0.8rem; }
+    .fun-fact { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem; font-size: 0.95rem; }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      color: #aaa;
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: white;
+      border-radius: 20px;
+      max-width: 600px;
+      width: 90%;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .modal img { width: 100%; max-height: 400px; object-fit: cover; }
+    .modal-body { padding: 1.5rem; }
+    .modal-body h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .modal-body p { color: #666; line-height: 1.6; margin-bottom: 1rem; }
+    .modal-close {
+      float: right;
+      background: #eee;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--dark);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 700;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s;
+      z-index: 9999;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')">Lucky<span>🐾</span></a>
+  <div class="nav-links">
+    <a href="#" onclick="showPage('home')" class="active" id="nav-home">Home</a>
+    <a href="#" onclick="showPage('photos')" id="nav-photos">Photos</a>
+    <a href="#" onclick="showPage('blog')" id="nav-blog">Blog</a>
+    <a href="#" onclick="showPage('shop')" id="nav-shop">Shop</a>
+    <a href="#" onclick="showPage('membership')" id="nav-membership">🌟 Join</a>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <img class="hero-avatar" src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/e451488b1_20240810_085531.jpg" alt="Luckie" />
+    <h1>Hi, I'm <span>Luckie</span> 🐾</h1>
+    <p class="tagline">The internet's most stylish little dog. Living big. Napping bigger.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="num">∞</div><div class="label">Good Boys Given</div></div>
+      <div class="stat"><div class="num">100%</div><div class="label">Treat Motivated</div></div>
+      <div class="stat"><div class="num">24/7</div><div class="label">Vibes Only</div></div>
+    </div>
+    <div class="hero-btns">
+      <button class="btn btn-primary" onclick="showPage('photos')">📸 See My Photos</button>
+      <button class="btn btn-outline" onclick="showPage('membership')">🌟 Join the Pack</button>
+      <button class="btn btn-accent" onclick="showPage('shop')">🛍️ Get Merch</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="about-section">
+      <img class="about-img" src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/b0fb03377_20240721_112448.jpg" alt="Luckie chilling" />
+      <div class="about-text">
+        <h2>About Me 🐾</h2>
+        <p>Hey! I'm Luckie — a small dog with enormous personality and absolutely zero chill (except during nap time, which is sacred).</p>
+        <p>I love car rides, beach walks, wearing stylish bandanas, and judging people from a comfortable distance. My human finally gave me my own website, which is honestly overdue.</p>
+        <p>Follow along for photos, adventures, and maybe some unsolicited opinions on dog food.</p>
+        <div class="fun-facts">
+          <h3>🐶 Fun Facts</h3>
+          <div class="fun-fact">🎽 Favorite accessory: bandanas (obviously)</div>
+          <div class="fun-fact">🚗 Happiest place: the front seat</div>
+          <div class="fun-fact">🏖️ Favorite activity: beach patrol</div>
+          <div class="fun-fact">😴 Daily naps: too many to count</div>
+          <div class="fun-fact">🦴 Motivation level: treat-dependent</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Photos Preview -->
+  <div style="background: #f8f4ef; padding: 4rem 0;">
+    <div class="section">
+      <div class="section-title">Latest Snaps 📸</div>
+      <div class="section-sub">Fresh content from Luckie's camera roll</div>
+      <div class="photo-grid" id="home-photos"></div>
+      <div style="text-align:center; margin-top: 2rem;">
+        <button class="btn btn-primary" onclick="showPage('photos')">See All Photos →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Signup -->
+  <div class="section">
+    <div class="email-signup">
+      <h2>Join the Pack 🐾</h2>
+      <p>Get Luckie's latest adventures, exclusive content, and tail-wagging updates straight to your inbox.</p>
+      <div class="email-form">
+        <input type="email" id="hero-email" placeholder="your@email.com" />
+        <button class="btn" onclick="subscribeEmail()">Subscribe Free</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHOTOS PAGE -->
+<div class="page" id="page-photos">
+  <div class="section">
+    <div class="section-title">Photo Gallery 📸</div>
+    <div class="section-sub">Every pic is a masterpiece. Fight me.</div>
+    <div class="photo-grid" id="photos-grid"></div>
+  </div>
+</div>
+
+<!-- BLOG PAGE -->
+<div class="page" id="page-blog">
+  <div class="section">
+    <div class="section-title">Luckie's Blog ✍️</div>
+    <div class="section-sub">Thoughts, adventures, and deep nap-time reflections</div>
+    <div class="blog-grid" id="blog-grid"></div>
+  </div>
+</div>
+
+<!-- SHOP PAGE -->
+<div class="page" id="page-shop">
+  <div class="section">
+    <div class="section-title">Luckie's Shop 🛍️</div>
+    <div class="section-sub">Wear the dog. Be the vibe. Zero inventory needed — print-on-demand!</div>
+    <div class="shop-grid" id="shop-grid"></div>
+
+    <div style="background: #fff3cd; border-radius: 16px; padding: 2rem; margin-top: 3rem; border-left: 4px solid var(--accent);">
+      <h3 style="font-weight:800; margin-bottom:0.5rem;">💡 How the Shop Works</h3>
+      <p style="color:#666; line-height:1.7;">Products are fulfilled via print-on-demand partners like <strong>Printful</strong> or <strong>Printify</strong>. That means zero upfront inventory cost — Luckie's face gets printed and shipped only when someone orders. We also earn affiliate income when you shop Luckie's favorite pet products. 🐾</p>
+    </div>
+  </div>
+</div>
+
+<!-- MEMBERSHIP PAGE -->
+<div class="page" id="page-membership">
+  <div class="section">
+    <div class="section-title">Join the Pack 🌟</div>
+    <div class="section-sub">Pick your tier. Get closer to Luckie. It's that simple.</div>
+
+    <div class="membership-grid">
+      <div class="tier-card">
+        <div class="tier-icon">🐶</div>
+        <div class="tier-name">Free Pup</div>
+        <div class="tier-price">$0 <span>/month</span></div>
+        <div class="tier-desc">Join the pack at no cost. You're in the family.</div>
+        <ul class="tier-features">
+          <li>Access to public photos</li>
+          <li>Weekly email updates</li>
+          <li>Luckie's blog posts</li>
+        </ul>
+        <button class="btn btn-outline" style="width:100%;color:var(--dark);border-color:var(--dark);" onclick="subscribeEmail()">Join Free</button>
+      </div>
+
+      <div class="tier-card featured">
+        <div class="tier-badge">Most Popular</div>
+        <div class="tier-icon">⭐</div>
+        <div class="tier-name">Fan</div>
+        <div class="tier-price">$4.99 <span>/month</span></div>
+        <div class="tier-desc">The real fans. You know who you are.</div>
+        <ul class="tier-features">
+          <li>Everything in Free</li>
+          <li>Exclusive behind-the-scenes photos</li>
+          <li>Monthly wallpaper pack</li>
+          <li>Early access to new content</li>
+          <li>Name in Luckie's credits 🐾</li>
+        </ul>
+        <button class="btn btn-accent" style="width:100%;" onclick="showToast('Fan membership coming soon! 🌟')">Become a Fan</button>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-icon">👑</div>
+        <div class="tier-name">Super Fan</div>
+        <div class="tier-price">$9.99 <span>/month</span></div>
+        <div class="tier-desc">VIP access. The inner circle. Luckie's ride-or-die.</div>
+        <ul class="tier-features">
+          <li>Everything in Fan</li>
+          <li>Monthly video content</li>
+          <li>Custom Luckie digital stickers</li>
+          <li>Direct Q&A with Luckie's human</li>
+          <li>10% off all merch</li>
+          <li>Annual photo print gift 🎁</li>
+        </ul>
+        <button class="btn btn-primary" style="width:100%;" onclick="showToast('Super Fan tier coming soon! 👑')">Go Super Fan</button>
+      </div>
+    </div>
+
+    <div class="email-signup">
+      <h2>Get Notified When We Launch 🚀</h2>
+      <p>Paid memberships are coming soon. Drop your email to be first in line.</p>
+      <div class="email-form">
+        <input type="email" id="member-email" placeholder="your@email.com" />
+        <button class="btn" onclick="subscribeMember()">Notify Me</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHOTO MODAL -->
+<div class="modal-overlay" id="photo-modal" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <img id="modal-img" src="" alt="" />
+    <div class="modal-body">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h2 id="modal-title"></h2>
+      <p id="modal-caption"></p>
+      <div id="modal-tags" class="photo-tags"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<footer>
+  <p>🐾 <strong>Luckie</strong> — The Original Good Boy</p>
+  <p style="margin-top:0.5rem; font-size:0.8rem;">Made with ❤️ | All photos © their respective humans</p>
+</footer>
+
+<script>
+  // Sample data (will be replaced with API calls)
+  const photos = [
+    {
+      id: 1,
+      title: "Ride or Die 🚗",
+      caption: "Living my best life in the front seat. Don't @ me.",
+      image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/b0fb03377_20240721_112448.jpg",
+      tags: ["car", "vibes", "bandana", "silly"],
+      likes: 47,
+      featured: true
+    },
+    {
+      id: 2,
+      title: "Beach Walk Boss 🏖️",
+      caption: "Strutting through the sand like I own the place. Because I do.",
+      image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/e451488b1_20240810_085531.jpg",
+      tags: ["beach", "walk", "outdoors", "adventure"],
+      likes: 62,
+      featured: true
+    }
+  ];
+
+  const posts = [
+    {
+      id: 1,
+      title: "My First Post: Hi, I'm Luckie 🐾",
+      excerpt: "Hey there! I'm Luckie, and this is my corner of the internet. A small dog with big energy and even bigger opinions...",
+      content: "Hey there! I'm Luckie, and this is my corner of the internet. I'm a small dog with big energy and even bigger opinions about car rides, beach walks, and the best spots to take a nap.\n\nMy human decided I deserved my own website (finally, tbh), so here we are. Expect lots of photos, some adventures, and maybe some product recommendations from a dog who's tried them all.\n\nFollow along — it's going to be a good time. 🐾",
+      cover_image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/b0fb03377_20240721_112448.jpg",
+      tags: ["intro", "hello", "about"],
+      date: "July 21, 2024"
+    }
+  ];
+
+  const products = [
+    { id: 1, name: "Luckie Logo Tee", description: "Rock Luckie's face on a soft, comfy tee. Print-on-demand, ships worldwide.", price: 24.99, category: "Apparel", emoji: "👕" },
+    { id: 2, name: "Luckie Sticker Pack", description: "5 premium vinyl stickers featuring Luckie in his best poses. Waterproof and laptop-ready.", price: 8.99, category: "Stickers", emoji: "✨" },
+    { id: 3, name: "Luckie Wallpaper Pack", description: "10 exclusive high-res Luckie wallpapers for your phone. Instant digital download.", price: 2.99, category: "Digital", emoji: "📱" }
+  ];
+
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    document.getElementById('nav-' + name).classList.add('active');
+    window.scrollTo(0, 0);
+    if (name === 'photos') renderPhotos();
+    if (name === 'blog') renderBlog();
+    if (name === 'shop') renderShop();
+  }
+
+  function renderPhotos() {
+    const grid = document.getElementById('photos-grid');
+    grid.innerHTML = photos.map(p => photoCard(p)).join('');
+  }
+
+  function renderHomePhotos() {
+    const grid = document.getElementById('home-photos');
+    grid.innerHTML = photos.filter(p => p.featured).map(p => photoCard(p)).join('');
+  }
+
+  function photoCard(p) {
+    return `<div class="photo-card" onclick="openModal(${p.id})">
+      <img src="${p.image_url}" alt="${p.title}" loading="lazy" />
+      <div class="photo-info">
+        <div class="photo-title">${p.title}</div>
+        <div class="photo-caption">${p.caption}</div>
+        <div class="photo-tags">${p.tags.map(t => `<span class="tag">#${t}</span>`).join('')}</div>
+        <div class="photo-like" onclick="event.stopPropagation(); likePhoto(${p.id}, this)">❤️ <span>${p.likes}</span></div>
+      </div>
+    </div>`;
+  }
+
+  function renderBlog() {
+    const grid = document.getElementById('blog-grid');
+    grid.innerHTML = posts.map(p => `
+      <div class="blog-card" onclick="openPost(${p.id})">
+        <img src="${p.cover_image_url}" alt="${p.title}" />
+        <div class="blog-info">
+          <div class="blog-title">${p.title}</div>
+          <div class="blog-excerpt">${p.excerpt}</div>
+          <div class="blog-meta">📅 ${p.date} · ${p.tags.map(t => '#'+t).join(' ')}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  function renderShop() {
+    const grid = document.getElementById('shop-grid');
+    grid.innerHTML = products.map(p => `
+      <div class="product-card">
+        <div class="product-img">${p.emoji}</div>
+        <div class="product-info">
+          <div class="product-name">${p.name}</div>
+          <div class="product-desc">${p.description}</div>
+          <div class="product-bottom">
+            <div class="price">$${p.price}</div>
+            <button class="btn btn-primary btn-sm" onclick="showToast('Shop launching soon! 🛍️')">Buy Now</button>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  function openModal(id) {
+    const p = photos.find(ph => ph.id === id);
+    if (!p) return;
+    document.getElementById('modal-img').src = p.image_url;
+    document.getElementById('modal-title').textContent = p.title;
+    document.getElementById('modal-caption').textContent = p.caption;
+    document.getElementById('modal-tags').innerHTML = p.tags.map(t => `<span class="tag">#${t}</span>`).join('');
+    document.getElementById('photo-modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('photo-modal').classList.remove('open');
+  }
+
+  function openPost(id) {
+    const p = posts.find(post => post.id === id);
+    showToast('Blog reader coming soon! ✍️');
+  }
+
+  function likePhoto(id, el) {
+    const p = photos.find(ph => ph.id === id);
+    if (p) {
+      p.likes++;
+      el.querySelector('span').textContent = p.likes;
+      showToast('❤️ Liked!');
+    }
+  }
+
+  function subscribeEmail() {
+    const email = document.getElementById('hero-email').value;
+    if (!email || !email.includes('@')) { showToast('Please enter a valid email! 📧'); return; }
+    showToast('🎉 You\'re in the pack! Welcome, ' + email.split('@')[0] + '!');
+    document.getElementById('hero-email').value = '';
+  }
+
+  function subscribeMember() {
+    const email = document.getElementById('member-email').value;
+    if (!email || !email.includes('@')) { showToast('Please enter a valid email! 📧'); return; }
+    showToast('🌟 You\'ll be first to know!');
+    document.getElementById('member-email').value = '';
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // Init
+  renderHomePhotos();
+</script>
+</body>
+</html>
