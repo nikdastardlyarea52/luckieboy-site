@@ -524,7 +524,7 @@
           <li>Early access to new content</li>
           <li>Name in Luckie's credits 🐾</li>
         </ul>
-        <button class="btn btn-accent" style="width:100%;" onclick="showToast('Fan membership coming soon! 🌟')">Become a Fan</button>
+        <button class="btn btn-accent" style="width:100%;" onclick="startCheckout('fan')">Become a Fan — $4.99/mo</button>
       </div>
 
       <div class="tier-card">
@@ -540,7 +540,7 @@
           <li>10% off all merch</li>
           <li>Annual photo print gift 🎁</li>
         </ul>
-        <button class="btn btn-primary" style="width:100%;" onclick="showToast('Super Fan tier coming soon! 👑')">Go Super Fan</button>
+        <button class="btn btn-primary" style="width:100%;" onclick="startCheckout('superfan')">Go Super Fan — $9.99/mo</button>
       </div>
     </div>
 
@@ -704,6 +704,26 @@
       p.likes++;
       el.querySelector('span').textContent = p.likes;
       showToast('❤️ Liked!');
+    }
+  }
+
+  async function startCheckout(tier) {
+    const tierNames = { fan: 'Fan ($4.99/mo)', superfan: 'Super Fan ($9.99/mo)' };
+    showToast('Opening checkout for ' + tierNames[tier] + '... 🐾');
+    try {
+      const res = await fetch('/api/apps/6a0421bfc04dc7179e198e72/functions/createCheckout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier })
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.open(data.url, '_blank');
+      } else {
+        showToast('Checkout coming very soon! Drop your email below to be notified. 📧');
+      }
+    } catch(e) {
+      showToast('Checkout coming very soon! Drop your email below to be notified. 📧');
     }
   }
 
