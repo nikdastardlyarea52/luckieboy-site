@@ -77,14 +77,16 @@
       transform: rotate(20deg);
     }
     .hero-avatar {
-      width: 160px;
-      height: 160px;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
       border: 5px solid var(--accent);
       object-fit: cover;
+      object-position: center top;
       margin: 0 auto 1.5rem;
       display: block;
-      box-shadow: 0 0 40px rgba(243,156,18,0.4);
+      box-shadow: 0 0 40px rgba(243,156,18,0.5);
+      background: rgba(255,255,255,0.05);
     }
     .hero h1 {
       font-family: 'Pacifico', cursive;
@@ -384,7 +386,7 @@
 <body>
 
 <nav>
-  <a class="nav-logo" href="#" onclick="showPage('home')">Lucky<span>🐾</span></a>
+  <a class="nav-logo" href="#" onclick="showPage('home')" style="display:flex;align-items:center;gap:0.5rem;"><img src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/5332b50d4_generated_image.png" style="height:42px;width:auto;border-radius:8px;" alt="Luckie logo" />Luckie<span>🐾</span></a>
   <div class="nav-links">
     <a href="#" onclick="showPage('home')" class="active" id="nav-home">Home</a>
     <a href="#" onclick="showPage('photos')" id="nav-photos">Photos</a>
@@ -397,7 +399,7 @@
 <!-- HOME PAGE -->
 <div class="page active" id="page-home">
   <div class="hero">
-    <img class="hero-avatar" src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/e451488b1_20240810_085531.jpg" alt="Luckie" />
+    <img class="hero-avatar" src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/5c868dc69_Adobe_Express_20221028_06083109390586660353007.png" alt="Luckie" />
     <h1>Hi, I'm <span>Luckie</span> 🐾</h1>
     <p class="tagline">The internet's most stylish little dog. Living big. Napping bigger.</p>
     <div class="hero-stats">
