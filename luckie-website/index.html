@@ -612,9 +612,10 @@
   ];
 
   const products = [
-    { id: 1, name: "Luckie Logo Tee", description: "Rock Luckie's face on a soft, comfy tee. Print-on-demand, ships worldwide.", price: 24.99, category: "Apparel", emoji: "👕" },
-    { id: 2, name: "Luckie Sticker Pack", description: "5 premium vinyl stickers featuring Luckie in his best poses. Waterproof and laptop-ready.", price: 8.99, category: "Stickers", emoji: "✨" },
-    { id: 3, name: "Luckie Wallpaper Pack", description: "10 exclusive high-res Luckie wallpapers for your phone. Instant digital download.", price: 2.99, category: "Digital", emoji: "📱" }
+    { id: 1, name: "Luckie Classic Tee", description: "Rock Luckie's face on a soft Bella+Canvas unisex tee. Ships worldwide via Printful.", price: 29.99, category: "Apparel", emoji: "👕", image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/5c868dc69_Adobe_Express_20221028_06083109390586660353007.png", external_url: "https://www.printful.com/dashboard/sync/products" },
+    { id: 2, name: "Luckie Coffee Mug", description: "Start every morning with Luckie's face on your mug. White glossy, 11oz or 15oz.", price: 19.99, category: "Drinkware", emoji: "☕", image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/5c868dc69_Adobe_Express_20221028_06083109390586660353007.png", external_url: "https://www.printful.com/dashboard/sync/products" },
+    { id: 3, name: "Luckie Hoodie", description: "Cozy Gildan hoodie with Luckie on the front. Because every outfit needs him.", price: 44.99, category: "Apparel", emoji: "🧥", image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/5c868dc69_Adobe_Express_20221028_06083109390586660353007.png", external_url: "https://www.printful.com/dashboard/sync/products" },
+    { id: 4, name: "Luckie Sticker", description: "Kiss-cut vinyl sticker in 3 sizes. Weatherproof. Perfect for laptops, water bottles, anything.", price: 4.99, category: "Stickers", emoji: "✨", image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/f92e71611_BackgroundEraser_20221228_162019803.png", external_url: "https://www.printful.com/dashboard/sync/products" }
   ];
 
   function showPage(name) {
@@ -667,13 +668,13 @@
     const grid = document.getElementById('shop-grid');
     grid.innerHTML = products.map(p => `
       <div class="product-card">
-        <div class="product-img">${p.emoji}</div>
+        <div class="product-img">${p.image_url ? `<img src="${p.image_url}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;padding:1rem;" />` : p.emoji}</div>
         <div class="product-info">
           <div class="product-name">${p.name}</div>
           <div class="product-desc">${p.description}</div>
           <div class="product-bottom">
             <div class="price">$${p.price}</div>
-            <button class="btn btn-primary btn-sm" onclick="showToast('Shop launching soon! 🛍️')">Buy Now</button>
+            <a class="btn btn-primary btn-sm" href="${p.external_url || '#'}" target="_blank">Buy Now 🐾</a>
           </div>
         </div>
       </div>`).join('');
