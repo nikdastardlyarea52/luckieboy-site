@@ -674,7 +674,7 @@
           <div class="product-desc">${p.description}</div>
           <div class="product-bottom">
             <div class="price">$${p.price}</div>
-            <a class="btn btn-primary btn-sm" href="${p.external_url || '#'}" target="_blank">Buy Now 🐾</a>
+            <button class="btn btn-primary btn-sm" onclick="buyMerch('${p.id || p.name.toLowerCase().replace(/ /g,'_')}', '${p.name}', ${p.price})">Buy Now 🐾</button>
           </div>
         </div>
       </div>`).join('');
@@ -710,21 +710,64 @@
 
   async function startCheckout(tier) {
     const tierNames = { fan: 'Fan ($4.99/mo)', superfan: 'Super Fan ($9.99/mo)' };
+    const tierPrices = { fan: 499, superfan: 999 };
+    const tierDescs = {
+      fan: 'Exclusive behind-the-scenes photos, monthly wallpaper pack, early access & more 🐾',
+      superfan: 'VIP access — video content, custom stickers, Q&A, 10% off merch & annual photo print 👑'
+    };
     showToast('Opening checkout for ' + tierNames[tier] + '... 🐾');
     try {
-      const res = await fetch('/api/apps/6a0421bfc04dc7179e198e72/functions/createCheckout', {
+      const res = await fetch('/api/apps/6a0421bfc04dc7179e198e72/payments/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier })
+        body: JSON.stringify({
+          items: [{
+            name: (tier === 'fan' ? 'Luckie Fan Membership' : 'Luckie Super Fan Membership'),
+            description: tierDescs[tier],
+            price: tierPrices[tier],
+            quantity: 1
+          }],
+          success_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/d3e052709_index.html?payment=success',
+          cancel_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/d3e052709_index.html?payment=cancelled',
+          metadata: { tier }
+        })
       });
       const data = await res.json();
       if (data.url) {
-        window.open(data.url, '_blank');
+        window.location.href = data.url;
       } else {
-        showToast('Checkout coming very soon! Drop your email below to be notified. 📧');
+        showToast('Checkout coming very soon! 📧');
       }
     } catch(e) {
-      showToast('Checkout coming very soon! Drop your email below to be notified. 📧');
+      showToast('Checkout coming very soon! 📧');
+    }
+  }
+
+  async function buyMerch(productKey, productName, price) {
+    showToast('Opening checkout for ' + productName + '... 🛍️');
+    try {
+      const res = await fetch('/api/apps/6a0421bfc04dc7179e198e72/payments/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: [{
+            name: productName,
+            price: Math.round(price * 100),
+            quantity: 1
+          }],
+          success_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/d3e052709_index.html?payment=success',
+          cancel_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/d3e052709_index.html?payment=cancelled',
+          metadata: { product: productKey }
+        })
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        showToast('Shop opening very soon! 🐾');
+      }
+    } catch(e) {
+      showToast('Shop opening very soon! 🐾');
     }
   }
 
