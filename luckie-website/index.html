@@ -599,17 +599,26 @@
     { id: 18, title: "Pro Shot 📸", caption: "Clean white background. Black harness. Pure Luckie. The brand.", image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/5c868dc69_Adobe_Express_20221028_06083109390586660353007.png", tags: ["promo","brand","clean","professional"], likes: 0, featured: true }
   ];
 
-  const posts = [
-    {
-      id: 1,
-      title: "My First Post: Hi, I'm Luckie 🐾",
-      excerpt: "Hey there! I'm Luckie, and this is my corner of the internet. A small dog with big energy and even bigger opinions...",
-      content: "Hey there! I'm Luckie, and this is my corner of the internet. I'm a small dog with big energy and even bigger opinions about car rides, beach walks, and the best spots to take a nap.\n\nMy human decided I deserved my own website (finally, tbh), so here we are. Expect lots of photos, some adventures, and maybe some product recommendations from a dog who's tried them all.\n\nFollow along — it's going to be a good time. 🐾",
-      cover_image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/b0fb03377_20240721_112448.jpg",
-      tags: ["intro", "hello", "about"],
-      date: "July 21, 2024"
+  let posts = [];
+
+  async function loadBlogPosts() {
+    try {
+      const res = await fetch('/api/apps/6a0421bfc04dc7179e198e72/entities/BlogPost/filter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ published: true })
+      });
+      const data = await res.json();
+      posts = (data.records || data || []).map(p => ({
+        ...p,
+        tags: Array.isArray(p.tags) ? p.tags : [],
+        date: p.created_date ? new Date(p.created_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''
+      }));
+    } catch(e) {
+      console.error('Failed to load posts:', e);
+      posts = [];
     }
-  ];
+  }
 
   const products = [
     { id: 1, name: "Luckie Classic Tee", description: "Rock Luckie's face on a soft Bella+Canvas unisex tee. Ships worldwide via Printful.", price: 29.99, category: "Apparel", emoji: "👕", image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/5c868dc69_Adobe_Express_20221028_06083109390586660353007.png", external_url: "https://www.printful.com/dashboard/sync/products" },
@@ -625,7 +634,7 @@
     document.getElementById('nav-' + name).classList.add('active');
     window.scrollTo(0, 0);
     if (name === 'photos') renderPhotos();
-    if (name === 'blog') renderBlog();
+    if (name === 'blog') { if (posts.length) renderBlog(); else loadBlogPosts().then(renderBlog); }
     if (name === 'shop') renderShop();
   }
 
@@ -653,13 +662,18 @@
 
   function renderBlog() {
     const grid = document.getElementById('blog-grid');
+    if (!posts.length) {
+      grid.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">Loading posts... 🐾</p>';
+      return;
+    }
     grid.innerHTML = posts.map(p => `
-      <div class="blog-card" onclick="openPost(${p.id})">
-        <img src="${p.cover_image_url}" alt="${p.title}" />
+      <div class="blog-card" onclick="openPost('${p.id}')">
+        <img src="${p.cover_image_url || ''}" alt="${p.title}" onerror="this.style.display='none'" />
         <div class="blog-info">
           <div class="blog-title">${p.title}</div>
-          <div class="blog-excerpt">${p.excerpt}</div>
+          <div class="blog-excerpt">${p.excerpt || ''}</div>
           <div class="blog-meta">📅 ${p.date} · ${p.tags.map(t => '#'+t).join(' ')}</div>
+          <div style="margin-top:0.8rem;"><span class="btn btn-primary btn-sm" style="font-size:0.8rem;padding:0.4rem 1rem;">Read More 🐾</span></div>
         </div>
       </div>`).join('');
   }
@@ -696,7 +710,26 @@
 
   function openPost(id) {
     const p = posts.find(post => post.id === id);
-    showToast('Blog reader coming soon! ✍️');
+    if (!p) return;
+    // Increment view count silently
+    fetch('/api/apps/6a0421bfc04dc7179e198e72/entities/BlogPost/' + p.id, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ views: (p.views || 0) + 1 })
+    }).catch(() => {});
+    // Show post in modal
+    document.getElementById('post-modal-title').textContent = p.title;
+    document.getElementById('post-modal-date').textContent = '📅 ' + p.date + (p.tags.length ? ' · ' + p.tags.map(t => '#'+t).join(' ') : '');
+    document.getElementById('post-modal-img').src = p.cover_image_url || '';
+    document.getElementById('post-modal-img').style.display = p.cover_image_url ? 'block' : 'none';
+    document.getElementById('post-modal-content').innerHTML = (p.content || '').replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+    document.getElementById('post-modal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePost() {
+    document.getElementById('post-modal').style.display = 'none';
+    document.body.style.overflow = '';
   }
 
   function likePhoto(id, el) {
@@ -727,8 +760,8 @@
             price: tierPrices[tier],
             quantity: 1
           }],
-          success_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/d3e052709_index.html?payment=success',
-          cancel_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/d3e052709_index.html?payment=cancelled',
+          success_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/97494fc3f_index.html?payment=success',
+          cancel_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/97494fc3f_index.html?payment=cancelled',
           metadata: { tier }
         })
       });
@@ -755,8 +788,8 @@
             price: Math.round(price * 100),
             quantity: 1
           }],
-          success_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/d3e052709_index.html?payment=success',
-          cancel_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/d3e052709_index.html?payment=cancelled',
+          success_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/97494fc3f_index.html?payment=success',
+          cancel_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/97494fc3f_index.html?payment=cancelled',
           metadata: { product: productKey }
         })
       });
@@ -794,6 +827,37 @@
 
   // Init
   renderHomePhotos();
+  loadBlogPosts().then(() => {
+    // Pre-render blog in background so it's ready when user clicks
+  });
+
+  // Handle payment redirect
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('payment') === 'success') {
+    showToast('🎉 Payment successful! Welcome to the Luckie fam!');
+    history.replaceState({}, '', window.location.pathname);
+  } else if (urlParams.get('payment') === 'cancelled') {
+    showToast('Payment cancelled. Come back anytime! 🐾');
+    history.replaceState({}, '', window.location.pathname);
+  }
 </script>
+
+  <!-- Blog Post Modal -->
+  <div id="post-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;padding:1rem;">
+    <div style="background:#fff;border-radius:20px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;padding:0;position:relative;">
+      <button onclick="closePost()" style="position:sticky;top:1rem;float:right;margin:1rem;background:#e74c3c;color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.2rem;cursor:pointer;z-index:10;">✕</button>
+      <img id="post-modal-img" src="" alt="" style="width:100%;max-height:320px;object-fit:cover;border-radius:20px 20px 0 0;" />
+      <div style="padding:2rem;">
+        <h2 id="post-modal-title" style="font-family:'Pacifico',cursive;color:#e74c3c;font-size:1.8rem;margin-bottom:0.5rem;"></h2>
+        <div id="post-modal-date" style="color:#999;font-size:0.9rem;margin-bottom:1.5rem;"></div>
+        <div id="post-modal-content" style="line-height:1.8;color:#333;font-size:1rem;"></div>
+        <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid #eee;text-align:center;">
+          <p style="color:#999;margin-bottom:1rem;">Enjoyed this post? Join the Luckie fam! 🐾</p>
+          <button class="btn btn-primary" onclick="closePost();document.getElementById('nav-members').click()">Become a Member</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
