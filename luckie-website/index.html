@@ -599,33 +599,12 @@
     { id: 18, title: "Pro Shot 📸", caption: "Clean white background. Black harness. Pure Luckie. The brand.", image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/5c868dc69_Adobe_Express_20221028_06083109390586660353007.png", tags: ["promo","brand","clean","professional"], likes: 0, featured: true }
   ];
 
-  let posts = [];
+  const posts = [{"id": "6a222e4fdc074dee2d117a8e", "title": "A Day in My Life 🌞", "excerpt": "Wake up, stretch, bark at the mailman, repeat. Here's what a perfect Luckie day actually looks like from sunrise to snack time.", "content": "People always ask what I do all day. The answer? A lot. More than you'd think.\n\nIt starts with the morning stretch — a full-body, paws-extended yawn that lets the whole house know I'm awake and ready. Then breakfast (obviously the highlight), followed by a patrol of the yard to make sure everything's in order.\n\nMid-morning is prime nap time. I've got three spots I rotate: the couch, the sun patch by the window, and my bed. Each has its own vibe.\n\nAfternoon means walk time. This is serious business. There are smells to investigate, squirrels to monitor, and neighbors to greet. I take my route very seriously.\n\nEvening is cuddle hours. My human and I watch TV and I make sure to take up exactly 80% of the couch. It's just how it works.\n\nThat's the Luckie lifestyle. Busy, important, and extremely comfortable. 🐾", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/458c39b65_20230724_161616.jpg", "tags": ["lifestyle", "daily", "vibes"], "date": "July 24, 2023"}, {"id": "6a222e4fdc074dee2d117a8f", "title": "My Favorite Spots in the World 🗺️", "excerpt": "From the dog park to that one perfect patch of grass — Luckie's definitive guide to the best places a dog can be.", "content": "I've been around. Not internationally (yet), but locally? I'm basically an explorer.\n\nSpot #1: The dog park on Tuesdays. Tuesday is when all the good dogs show up. I don't make the rules, that's just how it is.\n\nSpot #2: The beach at golden hour. Sand between the paws, salt in the air, and the most incredible smells you can imagine. Pure heaven.\n\nSpot #3: My human's lap. Technically not a place, but it goes everywhere we go, so it counts.\n\nSpot #4: The kitchen. Always the kitchen. You never know when something delicious might fall off the counter.\n\nSpot #5: Anywhere my human is. Cheesy? Maybe. True? Absolutely. 🐾", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/e451488b1_20240810_085531.jpg", "tags": ["adventure", "places", "favorites"], "date": "August 10, 2024"}, {"id": "6a222e4fdc074dee2d117a90", "title": "Things I Take Very Seriously 🎯", "excerpt": "The mailman. Squirrels. Dinnertime. Luckie's completely reasonable list of top priorities.", "content": "Some dogs are chill. I am not one of those dogs — at least not about certain things.\n\nThe mailman: I don't know what he wants, but I'm watching. Every. Single. Day.\n\nMy food bowl being moved even one inch from its spot: unacceptable. I will not eat until it's corrected.\n\nThe exact time of my walk: 5pm. Not 5:05. Not 4:55. 5pm. My internal clock is perfect.\n\nWho sits next to my human on the couch: this is a matter of territorial importance and I handle it accordingly.\n\nBelly rubs: I take the quality and duration of belly rubs very seriously and will provide immediate feedback if standards drop.\n\nOther than that? Totally relaxed. Super chill. The chillest dog you've ever met. 🐾", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/939caf601_20221022_091536.jpg", "tags": ["humor", "personality", "serious"], "date": "October 22, 2022"}, {"id": "6a042595c8d7ea2055a67430", "title": "My First Post: Hi, I'm Luckie 🐾", "excerpt": "Hey there! I'm Luckie, and this is my corner of the internet.", "content": "Hey there! I'm Luckie, and this is my corner of the internet. I'm a small dog with big energy and even bigger opinions about car rides, beach walks, and the best spots to take a nap.\n\nMy human decided I deserved my own website (finally, tbh), so here we are. Expect lots of photos, some adventures, and maybe some product recommendations from a dog who's tried them all.\n\nFollow along — it's going to be a good time. 🐾", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/b0fb03377_20240721_112448.jpg", "tags": ["intro", "hello", "about"], "date": "May 13, 2026"}];
 
-  async function loadBlogPosts() {
-    try {
-      const res = await fetch('/api/apps/6a0421bfc04dc7179e198e72/entities/BlogPost/filter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ published: true })
-      });
-      const data = await res.json();
-      posts = (data.records || data || []).map(p => ({
-        ...p,
-        tags: Array.isArray(p.tags) ? p.tags : [],
-        date: p.created_date ? new Date(p.created_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''
-      }));
-    } catch(e) {
-      console.error('Failed to load posts:', e);
-      posts = [];
-    }
+  function loadBlogPosts() {
+    // Posts are pre-loaded — returns resolved promise for compatibility
+    return Promise.resolve();
   }
-
-  const products = [
-    { id: 1, name: "Luckie Classic Tee", description: "Rock Luckie's face on a soft Bella+Canvas unisex tee. Ships worldwide via Printful.", price: 29.99, category: "Apparel", emoji: "👕", image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/5c868dc69_Adobe_Express_20221028_06083109390586660353007.png", external_url: "https://www.printful.com/dashboard/sync/products" },
-    { id: 2, name: "Luckie Coffee Mug", description: "Start every morning with Luckie's face on your mug. White glossy, 11oz or 15oz.", price: 19.99, category: "Drinkware", emoji: "☕", image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/5c868dc69_Adobe_Express_20221028_06083109390586660353007.png", external_url: "https://www.printful.com/dashboard/sync/products" },
-    { id: 3, name: "Luckie Hoodie", description: "Cozy Gildan hoodie with Luckie on the front. Because every outfit needs him.", price: 44.99, category: "Apparel", emoji: "🧥", image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/5c868dc69_Adobe_Express_20221028_06083109390586660353007.png", external_url: "https://www.printful.com/dashboard/sync/products" },
-    { id: 4, name: "Luckie Sticker", description: "Kiss-cut vinyl sticker in 3 sizes. Weatherproof. Perfect for laptops, water bottles, anything.", price: 4.99, category: "Stickers", emoji: "✨", image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/f92e71611_BackgroundEraser_20221228_162019803.png", external_url: "https://www.printful.com/dashboard/sync/products" }
-  ];
 
   function showPage(name) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
