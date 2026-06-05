@@ -1,0 +1,6 @@
+{
+  "type": "gmail",
+  "scopes": [
+    "email"
+  ]
+}
