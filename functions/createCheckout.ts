@@ -1,77 +1,55 @@
-import { createClientFromRequest, base44 } from 'npm:@base44/sdk@0.8.25';
+export default async function handler(req: Request): Promise<Response> {
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
 
-const APP_ID = '6a0421bfc04dc7179e198e72';
-
-const TIERS: Record<string, { name: string; price: number; description: string }> = {
-  fan: {
-    name: "Luckie Fan Membership",
-    price: 499,
-    description: "Exclusive behind-the-scenes photos, monthly wallpaper pack, early access & more 🐾"
-  },
-  superfan: {
-    name: "Luckie Super Fan Membership",
-    price: 999,
-    description: "VIP access — video content, custom stickers, Q&A, 10% off merch & annual photo print 👑"
-  }
-};
-
-const MERCH: Record<string, { name: string; price: number; description: string }> = {
-  tee:     { name: "Luckie Classic Tee",  price: 2999, description: "Rock Luckie's face on a soft Bella+Canvas unisex tee. Ships worldwide via Printful." },
-  mug:     { name: "Luckie Coffee Mug",   price: 1999, description: "Start every morning with Luckie's face on your mug. White glossy, 11oz." },
-  hoodie:  { name: "Luckie Hoodie",       price: 4499, description: "Cozy Gildan hoodie with Luckie on the front." },
-  sticker: { name: "Luckie Sticker",      price:  499, description: "Kiss-cut vinyl sticker. Weatherproof. Perfect for laptops, water bottles, anything." },
-};
-
-Deno.serve(async (req) => {
-  // Handle CORS preflight
-  if (req.method === 'OPTIONS') {
-    return new Response(null, {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      }
-    });
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
   }
 
-  try {
-    const client = createClientFromRequest(req);
-    const body = await req.json().catch(() => ({}));
-    const { type, id, success_url, cancel_url } = body;
+  const STRIPE_KEY = Deno.env.get("STRIPE_SECRET_KEY");
+  const SITE_URL = "https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/9a44d4f7c_index.html";
 
-    let item: { name: string; price: number; description: string } | undefined;
+  const body = await req.json();
+  const { type, tier, productName, price } = body;
 
-    if (type === 'tier') {
-      item = TIERS[id];
-    } else if (type === 'merch') {
-      item = MERCH[id];
-    }
+  const params = new URLSearchParams();
+  params.set("success_url", SITE_URL + "?payment=success");
+  params.set("cancel_url", SITE_URL + "?payment=cancelled");
+  params.set("line_items[0][quantity]", "1");
+  params.set("line_items[0][price_data][currency]", "usd");
 
-    if (!item) {
-      return Response.json({ error: `Unknown item: ${type}/${id}` }, { status: 400 });
-    }
-
-    const session = await client.payments.createCheckoutSession({
-      line_items: [{
-        name: item.name,
-        description: item.description,
-        amount: item.price,
-        quantity: 1,
-      }],
-      success_url: success_url || `https://base44.app/api/apps/${APP_ID}/files/mp/public/${APP_ID}/d3e052709_index.html?payment=success`,
-      cancel_url: cancel_url || `https://base44.app/api/apps/${APP_ID}/files/mp/public/${APP_ID}/d3e052709_index.html?payment=cancelled`,
-      metadata: { type, id }
-    });
-
-    return Response.json(
-      { url: session.url },
-      { headers: { 'Access-Control-Allow-Origin': '*' } }
-    );
-  } catch (error) {
-    console.error('Checkout error:', error);
-    return Response.json(
-      { error: error.message },
-      { status: 500, headers: { 'Access-Control-Allow-Origin': '*' } }
-    );
+  if (type === "membership") {
+    const names: Record<string, string> = {
+      fan: "Luckie Fan Membership",
+      superfan: "Luckie Super Fan Membership",
+    };
+    const amounts: Record<string, string> = { fan: "499", superfan: "999" };
+    params.set("mode", "subscription");
+    params.set("line_items[0][price_data][product_data][name]", names[tier] || "Luckie Membership");
+    params.set("line_items[0][price_data][unit_amount]", amounts[tier] || "499");
+    params.set("line_items[0][price_data][recurring][interval]", "month");
+  } else {
+    params.set("mode", "payment");
+    params.set("line_items[0][price_data][product_data][name]", productName);
+    params.set("line_items[0][price_data][unit_amount]", String(Math.round(price * 100)));
   }
-});
+
+  const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${STRIPE_KEY}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: params.toString(),
+  });
+
+  const data = await res.json();
+
+  return new Response(JSON.stringify(res.ok ? { url: data.url } : { error: data.error?.message }), {
+    status: res.ok ? 200 : 500,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
+}
