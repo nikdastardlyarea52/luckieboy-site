@@ -720,67 +720,27 @@
     }
   }
 
-  async function startCheckout(tier) {
-    const tierNames = { fan: 'Fan ($4.99/mo)', superfan: 'Super Fan ($9.99/mo)' };
-    const tierPrices = { fan: 499, superfan: 999 };
-    const tierDescs = {
-      fan: 'Exclusive behind-the-scenes photos, monthly wallpaper pack, early access & more 🐾',
-      superfan: 'VIP access — video content, custom stickers, Q&A, 10% off merch & annual photo print 👑'
+  function startCheckout(tier) {
+    const links = {
+      fan: 'https://buy.stripe.com/test_3cI00k2Q26Sq9iQ0Cdgfu00',
+      superfan: 'https://buy.stripe.com/test_cNi00k62ea4CeDa0Cdgfu01'
     };
-    showToast('Opening checkout for ' + tierNames[tier] + '... 🐾');
-    try {
-      const res = await fetch('/api/apps/6a0421bfc04dc7179e198e72/payments/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          items: [{
-            name: (tier === 'fan' ? 'Luckie Fan Membership' : 'Luckie Super Fan Membership'),
-            description: tierDescs[tier],
-            price: tierPrices[tier],
-            quantity: 1
-          }],
-          success_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/97494fc3f_index.html?payment=success',
-          cancel_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/97494fc3f_index.html?payment=cancelled',
-          metadata: { tier }
-        })
-      });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        showToast('Checkout coming very soon! 📧');
-      }
-    } catch(e) {
-      showToast('Checkout coming very soon! 📧');
-    }
+    if (links[tier]) window.open(links[tier], '_blank');
+    else showToast('Invalid membership tier.');
   }
 
-  async function buyMerch(productKey, productName, price) {
-    showToast('Opening checkout for ' + productName + '... 🛍️');
-    try {
-      const res = await fetch('/api/apps/6a0421bfc04dc7179e198e72/payments/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          items: [{
-            name: productName,
-            price: Math.round(price * 100),
-            quantity: 1
-          }],
-          success_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/97494fc3f_index.html?payment=success',
-          cancel_url: 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/97494fc3f_index.html?payment=cancelled',
-          metadata: { product: productKey }
-        })
-      });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        showToast('Shop opening very soon! 🐾');
-      }
-    } catch(e) {
-      showToast('Shop opening very soon! 🐾');
-    }
+  function buyMerch(productKey, productName, price) {
+    const links = {
+      'luckie_classic_tee': 'https://buy.stripe.com/test_cNicN62Q2b8G7aI98Jgfu02',
+      'luckie_mug': 'https://buy.stripe.com/test_28E9AUduGa4C7aIacNgfu03',
+      'luckie_hoodie': 'https://buy.stripe.com/test_00wdRacqCa4CgLi4Stgfu04',
+      'luckie_sticker_pack': 'https://buy.stripe.com/test_28E28sfCOb8GgLi84Fgfu05'
+    };
+    // Try by key first, then by name slug
+    const slug = productName.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+    const url = links[productKey] || links[slug] || Object.values(links)[0];
+    if (url) window.open(url, '_blank');
+    else showToast('Checkout coming soon!');
   }
 
   function subscribeEmail() {
