@@ -381,7 +381,71 @@
       z-index: 9999;
     }
     .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* STRIPE CHECKOUT MODAL */
+    .checkout-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+    }
+    .checkout-overlay.open { display: flex; }
+    .checkout-modal {
+      background: #fff;
+      border-radius: 24px;
+      padding: 2.5rem;
+      max-width: 460px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      position: relative;
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
+    .checkout-modal h2 { font-family: 'Pacifico', cursive; color: var(--dark); margin-bottom: 0.3rem; font-size: 1.5rem; }
+    .checkout-modal .checkout-price { color: var(--primary); font-size: 1.8rem; font-weight: 800; margin-bottom: 0.3rem; }
+    .checkout-modal .checkout-desc { color: #888; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .checkout-close {
+      position: absolute; top: 1rem; right: 1.2rem;
+      background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #999;
+    }
+    .checkout-close:hover { color: var(--dark); }
+    .checkout-field { margin-bottom: 1rem; }
+    .checkout-field label { display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 0.4rem; color: #555; }
+    .checkout-field input {
+      width: 100%; padding: 0.7rem 1rem; border: 2px solid #e0e0e0;
+      border-radius: 12px; font-size: 1rem; font-family: 'Nunito', sans-serif; outline: none;
+      transition: border-color 0.2s;
+    }
+    .checkout-field input:focus { border-color: var(--primary); }
+    #card-element {
+      padding: 0.75rem 1rem; border: 2px solid #e0e0e0;
+      border-radius: 12px; background: #fff;
+      transition: border-color 0.2s;
+    }
+    #card-element.StripeElement--focus { border-color: var(--primary); }
+    #card-element.StripeElement--invalid { border-color: #e74c3c; }
+    #card-errors { color: #e74c3c; font-size: 0.85rem; margin-top: 0.4rem; min-height: 1.2em; }
+    .checkout-submit {
+      width: 100%; padding: 0.9rem; background: var(--primary); color: #fff;
+      border: none; border-radius: 30px; font-size: 1.05rem; font-weight: 800;
+      cursor: pointer; font-family: 'Nunito', sans-serif; transition: background 0.2s, transform 0.1s;
+      margin-top: 1rem;
+    }
+    .checkout-submit:hover:not(:disabled) { background: #c0392b; transform: translateY(-1px); }
+    .checkout-submit:disabled { background: #ccc; cursor: not-allowed; }
+    .checkout-secure { text-align: center; font-size: 0.8rem; color: #aaa; margin-top: 0.8rem; }
+    .checkout-success {
+      text-align: center; padding: 1rem 0;
+    }
+    .checkout-success .success-icon { font-size: 4rem; margin-bottom: 1rem; }
+    .checkout-success h3 { font-family: 'Pacifico', cursive; color: var(--dark); font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .checkout-success p { color: #666; }
+
   </style>
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
@@ -555,6 +619,42 @@
   </div>
 </div>
 
+
+<!-- STRIPE INLINE CHECKOUT MODAL -->
+<div class="checkout-overlay" id="checkout-overlay" onclick="closeCheckout(event)">
+  <div class="checkout-modal" id="checkout-modal">
+    <button class="checkout-close" onclick="closeCheckoutModal()">✕</button>
+    <div id="checkout-content">
+      <h2 id="checkout-title">Join the Pack</h2>
+      <div class="checkout-price" id="checkout-price"></div>
+      <div class="checkout-desc" id="checkout-desc"></div>
+      <div class="checkout-field">
+        <label>Email</label>
+        <input type="email" id="checkout-email" placeholder="your@email.com" required />
+      </div>
+      <div class="checkout-field">
+        <label>Name on Card</label>
+        <input type="text" id="checkout-name" placeholder="Jane Smith" required />
+      </div>
+      <div class="checkout-field">
+        <label>Card Details</label>
+        <div id="card-element"></div>
+        <div id="card-errors"></div>
+      </div>
+      <button class="checkout-submit" id="checkout-btn" onclick="submitCheckout()">
+        🐾 Complete Purchase
+      </button>
+      <div class="checkout-secure">🔒 Secured by Stripe · Your card info is never stored here</div>
+    </div>
+    <div class="checkout-success" id="checkout-success" style="display:none;">
+      <div class="success-icon">🎉</div>
+      <h3>Welcome to the Pack!</h3>
+      <p>Thank you! Your payment was successful. Check your email for confirmation.</p>
+      <button class="checkout-submit" style="margin-top:1.5rem;" onclick="closeCheckoutModal()">Back to Luckie's World 🐾</button>
+    </div>
+  </div>
+</div>
+
 <!-- PHOTO MODAL -->
 <div class="modal-overlay" id="photo-modal" onclick="closeModal()">
   <div class="modal" onclick="event.stopPropagation()">
@@ -720,14 +820,103 @@
     }
   }
 
-  function startCheckout(tier) {
-    const links = {
-      fan: 'https://buy.stripe.com/test_3cI00k2Q26Sq9iQ0Cdgfu00',
-      superfan: 'https://buy.stripe.com/test_cNi00k62ea4CeDa0Cdgfu01'
-    };
-    if (links[tier]) window.open(links[tier], '_blank');
-    else showToast('Invalid membership tier.');
+  // ── Stripe Elements Inline Checkout ──
+  const STRIPE_PK = 'pk_test_51TeoezLZQqxBZ1hauI4Kl5wBcAMK0yIo9BczbrKhojppDspiw4pvFZgqaC4uqyGhQTO3vydPqXObmjuwGXjGIpRg00ZUDJ8KtP';
+  let stripe, cardElement, currentCheckoutItem;
+
+  function initStripe() {
+    if (!stripe) {
+      stripe = Stripe(STRIPE_PK);
+      const elements = stripe.elements({ locale: 'en' });
+      cardElement = elements.create('card', {
+        style: {
+          base: {
+            fontFamily: 'Nunito, sans-serif',
+            fontSize: '16px',
+            color: '#333',
+            '::placeholder': { color: '#bbb' }
+          }
+        }
+      });
+      cardElement.mount('#card-element');
+      cardElement.on('change', e => {
+        document.getElementById('card-errors').textContent = e.error ? e.error.message : '';
+      });
+    }
   }
+
+  function openCheckoutModal(title, priceLabel, desc, item) {
+    currentCheckoutItem = item;
+    document.getElementById('checkout-title').textContent = title;
+    document.getElementById('checkout-price').textContent = priceLabel;
+    document.getElementById('checkout-desc').textContent = desc;
+    document.getElementById('checkout-content').style.display = '';
+    document.getElementById('checkout-success').style.display = 'none';
+    document.getElementById('checkout-btn').disabled = false;
+    document.getElementById('checkout-btn').textContent = '🐾 Complete Purchase';
+    document.getElementById('checkout-overlay').classList.add('open');
+    setTimeout(initStripe, 50);
+  }
+
+  function startCheckout(tier) {
+    const tiers = {
+      fan: { title: 'Luckie Fan Membership ⭐', price: '$4.99/month', desc: 'Exclusive behind-the-scenes photos, monthly wallpaper pack, early access & more 🐾' },
+      superfan: { title: 'Luckie Super Fan 👑', price: '$9.99/month', desc: 'VIP access — videos, custom stickers, Q&A, 10% off merch & annual photo print 🎁' }
+    };
+    const t = tiers[tier];
+    if (t) openCheckoutModal(t.title, t.price, t.desc, { type: 'membership', tier });
+  }
+
+  function buyMerch(productKey, productName, price) {
+    openCheckoutModal(
+      productName + ' 🐾',
+      '$' + price.toFixed(2),
+      'Print-on-demand — ships directly to you, fulfilled by Printful',
+      { type: 'merch', productKey, productName, price }
+    );
+  }
+
+  function closeCheckout(e) {
+    if (e.target === document.getElementById('checkout-overlay')) closeCheckoutModal();
+  }
+  function closeCheckoutModal() {
+    document.getElementById('checkout-overlay').classList.remove('open');
+  }
+
+  async function submitCheckout() {
+    const email = document.getElementById('checkout-email').value.trim();
+    const name = document.getElementById('checkout-name').value.trim();
+    if (!email || !name) { showToast('Please fill in all fields.'); return; }
+
+    const btn = document.getElementById('checkout-btn');
+    btn.disabled = true;
+    btn.textContent = 'Processing... 🐾';
+
+    const links = {
+      membership_fan: 'https://buy.stripe.com/test_3cI00k2Q26Sq9iQ0Cdgfu00',
+      membership_superfan: 'https://buy.stripe.com/test_cNi00k62ea4CeDa0Cdgfu01',
+      luckie_classic_tee: 'https://buy.stripe.com/test_cNicN62Q2b8G7aI98Jgfu02',
+      luckie_mug: 'https://buy.stripe.com/test_28E9AUduGa4C7aIacNgfu03',
+      luckie_hoodie: 'https://buy.stripe.com/test_00wdRacqCa4CgLi4Stgfu04',
+      luckie_sticker_pack: 'https://buy.stripe.com/test_28E28sfCOb8GgLi84Fgfu05'
+    };
+
+    let linkKey = currentCheckoutItem.type === 'membership'
+      ? 'membership_' + currentCheckoutItem.tier
+      : (currentCheckoutItem.productKey || currentCheckoutItem.productName.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,''));
+
+    const url = links[linkKey];
+    if (url) {
+      window.open(url + '?prefilled_email=' + encodeURIComponent(email), '_blank');
+      document.getElementById('checkout-content').style.display = 'none';
+      document.getElementById('checkout-success').style.display = '';
+    } else {
+      showToast('Checkout link not found. Please try again.');
+      btn.disabled = false;
+      btn.textContent = '🐾 Complete Purchase';
+    }
+  }
+
 
   function buyMerch(productKey, productName, price) {
     const links = {
