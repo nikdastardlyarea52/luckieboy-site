@@ -456,6 +456,7 @@
     <a href="#" onclick="showPage('photos')" id="nav-photos">Photos</a>
     <a href="#" onclick="showPage('blog')" id="nav-blog">Blog</a>
     <a href="#" onclick="showPage('shop')" id="nav-shop">Shop</a>
+    <a href="#" onclick="showPage('petstore')" id="nav-petstore">🛒 Pet Store</a>
     <a href="#" onclick="showPage('membership')" id="nav-membership">🌟 Join</a>
   </div>
 </nav>
@@ -709,6 +710,177 @@
   </div>
 </div>
 
+
+<!-- PET STORE PAGE -->
+<div class="page" id="page-petstore">
+  <div class="section">
+    <div class="section-title">Luckie's Pet Store 🛒</div>
+    <div class="section-sub">Hand-picked by Luckie himself. Drop-shipped straight to your door.</div>
+
+    <div class="store-tabs">
+      <button class="store-tab active" onclick="filterPetStore('all', this)">All Products</button>
+      <button class="store-tab" onclick="filterPetStore('accessories', this)">Accessories</button>
+      <button class="store-tab" onclick="filterPetStore('food', this)">Food & Treats</button>
+      <button class="store-tab" onclick="filterPetStore('travel', this)">Travel</button>
+      <button class="store-tab" onclick="filterPetStore('toys', this)">Toys</button>
+      <button class="store-tab" onclick="filterPetStore('grooming', this)">Grooming</button>
+    </div>
+
+    <div class="shop-grid" id="pet-store-grid">
+
+      <!-- ACCESSORIES -->
+      <div class="pet-product-card" data-category="accessories">
+        <div class="pet-img"><img src="https://images-na.ssl-images-amazon.com/images/I/71QH6ND1goL._AC_SL1500_.jpg" alt="Dog Bandana Pack" onerror="this.src='https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/939caf601_20221022_091536.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">⭐ Luckie Approved</span>
+          <div class="pet-name">Bandana 10-Pack</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (2,400+ reviews)</div>
+          <div class="pet-desc">Soft, washable cotton bandanas in a variety of patterns. I own 6 of these. That tells you everything.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$12.99</span>
+            <a href="https://amzn.to/3bandana1" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pet-product-card" data-category="accessories">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/71f6hqtqSmL._AC_SL1500_.jpg" alt="Personalized Dog Tag" onerror="this.src='https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/939caf601_20221022_091536.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">🏷️ Best Seller</span>
+          <div class="pet-name">Personalized Dog ID Tag</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (8,000+ reviews)</div>
+          <div class="pet-desc">Engraved stainless steel tag with name + phone number. Loud jingle optional. Mine says "Luckie — obviously."</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$8.99</span>
+            <a href="https://amzn.to/3dogtag" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOD & TREATS -->
+      <div class="pet-product-card" data-category="food">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/81fHBbw7JML._AC_SL1500_.jpg" alt="Zuke's Mini Naturals" onerror="this.src='https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/458c39b65_20230724_161616.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">⭐ Luckie's #1 Treat</span>
+          <div class="pet-name">Zuke's Mini Naturals Treats</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (30,000+ reviews)</div>
+          <div class="pet-desc">Soft chicken training treats under 3 calories each. The gold standard. I will do anything for these. Anything.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$9.99</span>
+            <a href="https://amzn.to/3zukes" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pet-product-card" data-category="food">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/71xEo6UPSKL._AC_SL1500_.jpg" alt="Blue Buffalo Bits" onerror="this.src='https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/458c39b65_20230724_161616.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">🌟 Premium Pick</span>
+          <div class="pet-name">Blue Buffalo BLUE Bits</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (12,000+ reviews)</div>
+          <div class="pet-desc">Real meat as first ingredient, resealable bag. Available on Chewy Auto-Ship for 35% off your first order.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$11.49</span>
+            <a href="https://amzn.to/3bluebits" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRAVEL -->
+      <div class="pet-product-card" data-category="travel">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/71WJsZpuFBL._AC_SL1500_.jpg" alt="Kurgo Harness" onerror="this.src='https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/b0fb03377_20240721_112448.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">🚗 Car Essential</span>
+          <div class="pet-name">Kurgo Dog Seat Belt Harness</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (18,000+ reviews)</div>
+          <div class="pet-desc">Crash-tested, padded, connects to any seat belt. My human insists. Honestly fair — it's really comfortable.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$34.99</span>
+            <a href="https://amzn.to/3kurgo" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pet-product-card" data-category="travel">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/71yjV4KXJWL._AC_SL1500_.jpg" alt="Car Hammock" onerror="this.src='https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/b0fb03377_20240721_112448.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">😴 Nap Approved</span>
+          <div class="pet-name">Waterproof Car Seat Hammock</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (24,000+ reviews)</div>
+          <div class="pet-desc">Full backseat cover that converts to a hammock. Waterproof, non-slip, easy to install. The nap upgrade I didn't know I needed.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$27.99</span>
+            <a href="https://amzn.to/3carseat" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOYS -->
+      <div class="pet-product-card" data-category="toys">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/71uE+-0XWEL._AC_SL1500_.jpg" alt="KONG Toy" onerror="this.src='https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/e451488b1_20240810_085531.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">🧠 Brain Workout</span>
+          <div class="pet-name">KONG Classic Dog Toy</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (50,000+ reviews)</div>
+          <div class="pet-desc">Stuff it with peanut butter. That's it. That's the review. Hours of entertainment for any dog.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$13.99</span>
+            <a href="https://amzn.to/3kongtoy" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pet-product-card" data-category="toys">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/71HhCqmRpKL._AC_SL1500_.jpg" alt="Squeaky Plush" onerror="this.src='https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/e451488b1_20240810_085531.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">🎯 Fan Favorite</span>
+          <div class="pet-name">Outward Hound Squeaky Plush Pack</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (15,000+ reviews)</div>
+          <div class="pet-desc">6-pack of squeaky plush toys. I've destroyed every single one. That's the highest review a toy can get.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$16.99</span>
+            <a href="https://amzn.to/3squeak" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROOMING -->
+      <div class="pet-product-card" data-category="grooming">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/61gXmvGEXcL._AC_SL1500_.jpg" alt="Deshedding Brush" onerror="this.src='https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/addea470f_20230123_105956_001_resized.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">✨ Coat Goals</span>
+          <div class="pet-name">FURminator Deshedding Tool</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (40,000+ reviews)</div>
+          <div class="pet-desc">Removes up to 90% of loose hair. My human loves this. I tolerate it because the results are worth it.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$29.99</span>
+            <a href="https://amzn.to/3furminator" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pet-product-card" data-category="grooming">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/61OFYaRePKL._AC_SL1500_.jpg" alt="Dog Shampoo" onerror="this.src='https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/addea470f_20230123_105956_001_resized.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">🛁 Spa Day</span>
+          <div class="pet-name">Burt's Bees Dog Shampoo</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (22,000+ reviews)</div>
+          <div class="pet-desc">Natural ingredients, no sulfates or colorants. Leaves my coat shiny and smelling incredible. Bath time = bearable with this.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$9.99</span>
+            <a href="https://amzn.to/3dogshampoo" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="affiliate-disclosure">
+      <strong>📋 Disclosure:</strong> Luckie's Pet Store uses affiliate links. When you purchase through these links, Luckie earns a small commission at no extra cost to you. All products are hand-picked (or paw-picked 🐾) based on actual use and reviews. Thank you for supporting Luckie!
+    </div>
+  </div>
+</div>
+
 <!-- PHOTO MODAL -->
 <div class="modal-overlay" id="photo-modal" onclick="closeModal()">
   <div class="modal" onclick="event.stopPropagation()">
@@ -753,7 +925,11 @@
     { id: 18, title: "Pro Shot 📸", caption: "Clean white background. Black harness. Pure Luckie. The brand.", image_url: "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/5c868dc69_Adobe_Express_20221028_06083109390586660353007.png", tags: ["promo","brand","clean","professional"], likes: 0, featured: true }
   ];
 
-  const posts = [{"id": "6a222e4fdc074dee2d117a8e", "title": "A Day in My Life 🌞", "excerpt": "Wake up, stretch, bark at the mailman, repeat. Here's what a perfect Luckie day actually looks like from sunrise to snack time.", "content": "People always ask what I do all day. The answer? A lot. More than you'd think.\n\nIt starts with the morning stretch — a full-body, paws-extended yawn that lets the whole house know I'm awake and ready. Then breakfast (obviously the highlight), followed by a patrol of the yard to make sure everything's in order.\n\nMid-morning is prime nap time. I've got three spots I rotate: the couch, the sun patch by the window, and my bed. Each has its own vibe.\n\nAfternoon means walk time. This is serious business. There are smells to investigate, squirrels to monitor, and neighbors to greet. I take my route very seriously.\n\nEvening is cuddle hours. My human and I watch TV and I make sure to take up exactly 80% of the couch. It's just how it works.\n\nThat's the Luckie lifestyle. Busy, important, and extremely comfortable. 🐾", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/458c39b65_20230724_161616.jpg", "tags": ["lifestyle", "daily", "vibes"], "date": "July 24, 2023"}, {"id": "6a222e4fdc074dee2d117a8f", "title": "My Favorite Spots in the World 🗺️", "excerpt": "From the dog park to that one perfect patch of grass — Luckie's definitive guide to the best places a dog can be.", "content": "I've been around. Not internationally (yet), but locally? I'm basically an explorer.\n\nSpot #1: The dog park on Tuesdays. Tuesday is when all the good dogs show up. I don't make the rules, that's just how it is.\n\nSpot #2: The beach at golden hour. Sand between the paws, salt in the air, and the most incredible smells you can imagine. Pure heaven.\n\nSpot #3: My human's lap. Technically not a place, but it goes everywhere we go, so it counts.\n\nSpot #4: The kitchen. Always the kitchen. You never know when something delicious might fall off the counter.\n\nSpot #5: Anywhere my human is. Cheesy? Maybe. True? Absolutely. 🐾", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/e451488b1_20240810_085531.jpg", "tags": ["adventure", "places", "favorites"], "date": "August 10, 2024"}, {"id": "6a222e4fdc074dee2d117a90", "title": "Things I Take Very Seriously 🎯", "excerpt": "The mailman. Squirrels. Dinnertime. Luckie's completely reasonable list of top priorities.", "content": "Some dogs are chill. I am not one of those dogs — at least not about certain things.\n\nThe mailman: I don't know what he wants, but I'm watching. Every. Single. Day.\n\nMy food bowl being moved even one inch from its spot: unacceptable. I will not eat until it's corrected.\n\nThe exact time of my walk: 5pm. Not 5:05. Not 4:55. 5pm. My internal clock is perfect.\n\nWho sits next to my human on the couch: this is a matter of territorial importance and I handle it accordingly.\n\nBelly rubs: I take the quality and duration of belly rubs very seriously and will provide immediate feedback if standards drop.\n\nOther than that? Totally relaxed. Super chill. The chillest dog you've ever met. 🐾", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/939caf601_20221022_091536.jpg", "tags": ["humor", "personality", "serious"], "date": "October 22, 2022"}, {"id": "6a042595c8d7ea2055a67430", "title": "My First Post: Hi, I'm Luckie 🐾", "excerpt": "Hey there! I'm Luckie, and this is my corner of the internet.", "content": "Hey there! I'm Luckie, and this is my corner of the internet. I'm a small dog with big energy and even bigger opinions about car rides, beach walks, and the best spots to take a nap.\n\nMy human decided I deserved my own website (finally, tbh), so here we are. Expect lots of photos, some adventures, and maybe some product recommendations from a dog who's tried them all.\n\nFollow along — it's going to be a good time. 🐾", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/b0fb03377_20240721_112448.jpg", "tags": ["intro", "hello", "about"], "date": "May 13, 2026"}];
+  const posts = [
+{"id": "aff001", "title": "My Top 5 Dog Bandanas (Luckie-Approved) 🎀", "excerpt": "I've worn a lot of bandanas. Here are the ones that actually slap — plus where to grab them.", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/939caf601_20221022_091536.jpg", "tags": ["bandanas", "style", "affiliate"], "date": "June 2026", "content": "<p>Let's be real — a bandana can make or break an outfit.</p><p><strong>🥇 <a href='https://amzn.to/3bandana1' target='_blank' style='color:var(--primary)'>Neckerchief Bandana 10-Pack — Amazon</a></strong> ⭐⭐⭐⭐⭐ — Soft, washable, 10-pack. My human grabs these constantly.</p><p><strong>🥈 <a href='https://amzn.to/3bandana2' target='_blank' style='color:var(--primary)'>Plaid Bandana by Tail Trends</a></strong> ⭐⭐⭐⭐⭐ — Buffalo plaid. Iconic. Three park compliments in five minutes.</p><p><strong>🥉 <a href='https://amzn.to/3bandana3' target='_blank' style='color:var(--primary)'>Boho Tie-Dye Set</a></strong> ⭐⭐⭐⭐ — Festival vibes, year-round. Very me.</p><p><strong>🏅 <a href='https://www.etsy.com/search?q=dog+bandana+personalized' target='_blank' style='color:var(--primary)'>Personalized Embroidered — Etsy</a></strong> ⭐⭐⭐⭐⭐ — Custom name embroidery. Highly recommend.</p><p><em>🐾 Affiliate disclosure: Links may earn a small commission at no extra cost to you.</em></p>"},
+{"id": "aff002", "title": "The Best Dog Treats I've Ever Tasted 🦴", "excerpt": "I tried 8 treat brands so you wouldn't have to. Here's my completely unbiased ranking.", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/458c39b65_20230724_161616.jpg", "tags": ["treats", "food", "review", "affiliate"], "date": "June 2026", "content": "<p>Treat testing is a full-time job. One I take very seriously.</p><p><strong>🥇 <a href='https://amzn.to/3zukes' target='_blank' style='color:var(--primary)'>Zuke's Mini Naturals — Chicken</a></strong> — THE gold standard. Small, soft, incredible smell. I will do literally anything for one.</p><p><strong>🥈 <a href='https://amzn.to/3bluebits' target='_blank' style='color:var(--primary)'>Blue Buffalo BLUE Bits</a></strong> — Tasty, real meat, resealable bag.</p><p><strong>🥉 <a href='https://amzn.to/3milkbone' target='_blank' style='color:var(--primary)'>Milk-Bone Original</a></strong> — Classic. Crunchy. Pairs great with a belly rub.</p><p><strong>💡 Pro tip: <a href='https://www.chewy.com' target='_blank' style='color:var(--primary)'>Chewy Auto-Ship</a></strong> — 35% off first order + free shipping. The box arrives like clockwork. Best day of the month.</p><p><em>🐾 Affiliate disclosure: Links may earn a small commission at no extra cost to you.</em></p>"},
+{"id": "aff003", "title": "Car Ride Essentials: Every Dog Needs These 🚗", "excerpt": "I'm basically a car ride expert. Here's my complete gear list for dogs who ride in style.", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/b0fb03377_20240721_112448.jpg", "tags": ["car", "travel", "gear", "affiliate"], "date": "June 2026", "content": "<p>The front seat is my domain. Here's what makes a perfect ride.</p><p><strong>🚗 <a href='https://amzn.to/3kurgo' target='_blank' style='color:var(--primary)'>Kurgo Dog Harness & Seat Belt</a></strong> ⭐⭐⭐⭐⭐ — Padded, crash-tested, still lets me look out the window. Non-negotiable.</p><p><strong>🛋️ <a href='https://amzn.to/3carseat' target='_blank' style='color:var(--primary)'>Plush Car Seat Cover & Hammock</a></strong> ⭐⭐⭐⭐⭐ — Waterproof, easy to clean. The nap upgrade I didn't know I needed.</p><p><strong>💧 <a href='https://amzn.to/3autowaterbottle' target='_blank' style='color:var(--primary)'>Highwave AutoDogMug</a></strong> ⭐⭐⭐⭐ — Travel bottle with built-in bowl. Essential for long drives.</p><p><strong>🌬️ <a href='https://amzn.to/3windowscreen' target='_blank' style='color:var(--primary)'>Dog Window Mesh Screen</a></strong> ⭐⭐⭐⭐ — Hang my head out safely. The breeze hits different.</p><p><em>🐾 Affiliate disclosure: Links may earn a small commission at no extra cost to you.</em></p>"},
+{"id": "6a222e4fdc074dee2d117a8e", "title": "A Day in My Life 🌞", "excerpt": "Wake up, stretch, bark at the mailman, repeat. Here's what a perfect Luckie day actually looks like from sunrise to snack time.", "content": "People always ask what I do all day. The answer? A lot. More than you'd think.\n\nIt starts with the morning stretch — a full-body, paws-extended yawn that lets the whole house know I'm awake and ready. Then breakfast (obviously the highlight), followed by a patrol of the yard to make sure everything's in order.\n\nMid-morning is prime nap time. I've got three spots I rotate: the couch, the sun patch by the window, and my bed. Each has its own vibe.\n\nAfternoon means walk time. This is serious business. There are smells to investigate, squirrels to monitor, and neighbors to greet. I take my route very seriously.\n\nEvening is cuddle hours. My human and I watch TV and I make sure to take up exactly 80% of the couch. It's just how it works.\n\nThat's the Luckie lifestyle. Busy, important, and extremely comfortable. 🐾", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/458c39b65_20230724_161616.jpg", "tags": ["lifestyle", "daily", "vibes"], "date": "July 24, 2023"}, {"id": "6a222e4fdc074dee2d117a8f", "title": "My Favorite Spots in the World 🗺️", "excerpt": "From the dog park to that one perfect patch of grass — Luckie's definitive guide to the best places a dog can be.", "content": "I've been around. Not internationally (yet), but locally? I'm basically an explorer.\n\nSpot #1: The dog park on Tuesdays. Tuesday is when all the good dogs show up. I don't make the rules, that's just how it is.\n\nSpot #2: The beach at golden hour. Sand between the paws, salt in the air, and the most incredible smells you can imagine. Pure heaven.\n\nSpot #3: My human's lap. Technically not a place, but it goes everywhere we go, so it counts.\n\nSpot #4: The kitchen. Always the kitchen. You never know when something delicious might fall off the counter.\n\nSpot #5: Anywhere my human is. Cheesy? Maybe. True? Absolutely. 🐾", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/e451488b1_20240810_085531.jpg", "tags": ["adventure", "places", "favorites"], "date": "August 10, 2024"}, {"id": "6a222e4fdc074dee2d117a90", "title": "Things I Take Very Seriously 🎯", "excerpt": "The mailman. Squirrels. Dinnertime. Luckie's completely reasonable list of top priorities.", "content": "Some dogs are chill. I am not one of those dogs — at least not about certain things.\n\nThe mailman: I don't know what he wants, but I'm watching. Every. Single. Day.\n\nMy food bowl being moved even one inch from its spot: unacceptable. I will not eat until it's corrected.\n\nThe exact time of my walk: 5pm. Not 5:05. Not 4:55. 5pm. My internal clock is perfect.\n\nWho sits next to my human on the couch: this is a matter of territorial importance and I handle it accordingly.\n\nBelly rubs: I take the quality and duration of belly rubs very seriously and will provide immediate feedback if standards drop.\n\nOther than that? Totally relaxed. Super chill. The chillest dog you've ever met. 🐾", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/939caf601_20221022_091536.jpg", "tags": ["humor", "personality", "serious"], "date": "October 22, 2022"}, {"id": "6a042595c8d7ea2055a67430", "title": "My First Post: Hi, I'm Luckie 🐾", "excerpt": "Hey there! I'm Luckie, and this is my corner of the internet.", "content": "Hey there! I'm Luckie, and this is my corner of the internet. I'm a small dog with big energy and even bigger opinions about car rides, beach walks, and the best spots to take a nap.\n\nMy human decided I deserved my own website (finally, tbh), so here we are. Expect lots of photos, some adventures, and maybe some product recommendations from a dog who's tried them all.\n\nFollow along — it's going to be a good time. 🐾", "cover_image_url": "https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/b0fb03377_20240721_112448.jpg", "tags": ["intro", "hello", "about"], "date": "May 13, 2026"}];
 
   function loadBlogPosts() {
     // Posts are pre-loaded — returns resolved promise for compatibility
@@ -928,6 +1104,15 @@
       'Print-on-demand — ships directly to you, fulfilled by Printful',
       { type: 'merch', productKey, productName, price }
     );
+  }
+
+
+  function filterPetStore(category, btn) {
+    document.querySelectorAll('.store-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.pet-product-card').forEach(card => {
+      card.style.display = (category === 'all' || card.dataset.category === category) ? '' : 'none';
+    });
   }
 
   function closeCheckout(e) {
