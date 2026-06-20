@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luckie Media Kit 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Nunito', Arial, sans-serif; background: #fff; color: #222; }
+
+  /* COVER PAGE */
+  .cover {
+    width: 100%; min-height: 100vh;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #ffd93d 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 60px 40px; page-break-after: always;
+  }
+  .cover-avatar {
+    width: 200px; height: 200px; border-radius: 50%;
+    border: 8px solid #fff; object-fit: cover;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2); margin-bottom: 30px;
+  }
+  .cover h1 { font-size: 72px; font-weight: 900; color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,0.2); margin-bottom: 8px; }
+  .cover .tagline { font-size: 22px; color: rgba(255,255,255,0.9); font-weight: 700; margin-bottom: 30px; }
+  .cover .badge { background: rgba(255,255,255,0.25); border: 2px solid rgba(255,255,255,0.6); color: #fff; padding: 10px 28px; border-radius: 50px; font-size: 16px; font-weight: 800; display: inline-block; margin: 6px; }
+  .cover .year { font-size: 15px; color: rgba(255,255,255,0.7); margin-top: 30px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; }
+
+  /* SECTIONS */
+  .page { padding: 60px 70px; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 36px; padding-bottom: 16px; border-bottom: 3px solid #ff6b6b; }
+  .section-header .emoji { font-size: 36px; }
+  .section-header h2 { font-size: 32px; font-weight: 900; color: #222; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .about-text p { font-size: 16px; line-height: 1.8; color: #444; margin-bottom: 16px; }
+  .about-photo { border-radius: 24px; overflow: hidden; }
+  .about-photo img { width: 100%; border-radius: 24px; object-fit: cover; }
+  .highlight-box { background: linear-gradient(135deg, #fff5f5, #fff8f0); border-left: 5px solid #ff6b6b; border-radius: 12px; padding: 20px 24px; margin-top: 20px; }
+  .highlight-box p { font-size: 15px; color: #555; line-height: 1.7; }
+
+  /* STATS */
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 40px; }
+  .stat-card { background: linear-gradient(135deg, #ff6b6b, #ff8e53); border-radius: 20px; padding: 30px 20px; text-align: center; color: #fff; }
+  .stat-card .num { font-size: 42px; font-weight: 900; line-height: 1; }
+  .stat-card .label { font-size: 13px; font-weight: 700; opacity: 0.9; margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
+  .stat-card.light { background: linear-gradient(135deg, #ffd93d, #ff8e53); }
+  .stat-card.dark { background: linear-gradient(135deg, #222, #444); }
+
+  /* AUDIENCE */
+  .audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .audience-card { background: #f9f9f9; border-radius: 16px; padding: 24px; }
+  .audience-card h4 { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #ff6b6b; margin-bottom: 16px; }
+  .bar-item { margin-bottom: 12px; }
+  .bar-label { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; color: #333; margin-bottom: 4px; }
+  .bar-track { background: #e0e0e0; border-radius: 10px; height: 10px; }
+  .bar-fill { background: linear-gradient(90deg, #ff6b6b, #ff8e53); border-radius: 10px; height: 10px; }
+
+  /* CONTENT */
+  .content-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .content-card { border-radius: 16px; padding: 24px; border: 2px solid #f0f0f0; }
+  .content-card .icon { font-size: 32px; margin-bottom: 10px; }
+  .content-card h4 { font-size: 17px; font-weight: 800; color: #222; margin-bottom: 8px; }
+  .content-card p { font-size: 14px; color: #666; line-height: 1.6; }
+
+  /* PARTNERSHIPS */
+  .partner-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .partner-card { background: #f9f9f9; border-radius: 16px; padding: 24px; }
+  .partner-card h4 { font-size: 16px; font-weight: 900; color: #222; margin-bottom: 8px; }
+  .partner-card .price { font-size: 22px; font-weight: 900; color: #ff6b6b; margin-bottom: 8px; }
+  .partner-card ul { list-style: none; }
+  .partner-card ul li { font-size: 13px; color: #555; padding: 3px 0; }
+  .partner-card ul li::before { content: "✓ "; color: #ff6b6b; font-weight: 800; }
+
+  /* CONTACT */
+  .contact-page {
+    background: linear-gradient(135deg, #222 0%, #444 100%);
+    color: #fff; min-height: 60vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center; padding: 60px;
+  }
+  .contact-page h2 { font-size: 42px; font-weight: 900; margin-bottom: 16px; }
+  .contact-page p { font-size: 18px; opacity: 0.8; margin-bottom: 40px; }
+  .contact-item { background: rgba(255,255,255,0.1); border-radius: 16px; padding: 16px 40px; margin: 10px; display: inline-block; font-size: 16px; font-weight: 700; }
+  .contact-item a { color: #ffd93d; text-decoration: none; }
+
+  /* DIVIDER */
+  .divider { height: 3px; background: linear-gradient(90deg, #ff6b6b, #ffd93d); border-radius: 10px; margin: 30px 0; }
+
+  .tag-pill { display: inline-block; background: #fff0f0; color: #ff6b6b; border: 1.5px solid #ffcdd2; border-radius: 30px; padding: 4px 14px; font-size: 13px; font-weight: 700; margin: 4px 3px; }
+
+  @media print {
+    .page, .cover, .contact-page { page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <img class="cover-avatar" src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/b05b466ad_Adobe_Express_20240930_0514086_1.png" alt="Luckie" onerror="this.style.display='none'" />
+  <h1>Luckie</h1>
+  <div class="tagline">The Dog With His Own Website, Blog & Brand 🐾</div>
+  <div>
+    <span class="badge">🐾 Pet Lifestyle</span>
+    <span class="badge">📝 Blogger</span>
+    <span class="badge">🛒 Product Reviews</span>
+    <span class="badge">✈️ Travel</span>
+  </div>
+  <div class="year">MEDIA KIT · 2026</div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div class="page">
+  <div class="section-header">
+    <span class="emoji">🐾</span>
+    <h2>About Luckie</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Luckie is a small dog with a big personality and an even bigger online presence. What started as a personal photo page has grown into a full-scale pet lifestyle brand — complete with a blog, merch store, pet supply shop, and a loyal community of dog-loving followers.</p>
+      <p>Luckie's content is warm, funny, and genuinely useful. Every product recommendation is personally tested (and taste-tested, where applicable). The audience trusts Luckie because the content is authentic — not polished ad copy.</p>
+      <p>From bandana reviews and treat rankings to car travel gear and pet insurance guides, Luckie covers the full spectrum of what modern pet parents actually care about.</p>
+      <div class="highlight-box">
+        <p><strong>🌟 Why partner with Luckie?</strong> Pet parents trust peer recommendations over brand ads. Luckie's audience follows for the personality and stays for the honest product guidance — making every mention feel like a friend's recommendation, not a sponsored post.</p>
+      </div>
+    </div>
+    <div class="about-photo">
+      <img src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/1da768cca_20240928_120708.jpg" alt="Luckie" />
+    </div>
+  </div>
+</div>
+
+<!-- STATS PAGE -->
+<div class="page">
+  <div class="section-header">
+    <span class="emoji">📊</span>
+    <h2>Reach & Engagement</h2>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="num">18+</div>
+      <div class="label">Published Photos</div>
+    </div>
+    <div class="stat-card light">
+      <div class="num">7</div>
+      <div class="label">Affiliate Blog Posts</div>
+    </div>
+    <div class="stat-card dark">
+      <div class="num">10</div>
+      <div class="label">Store Products</div>
+    </div>
+    <div class="stat-card light">
+      <div class="num">4</div>
+      <div class="label">Affiliate Programs</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">2</div>
+      <div class="label">Membership Tiers</div>
+    </div>
+    <div class="stat-card dark">
+      <div class="num">100%</div>
+      <div class="label">Authentic Content</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="audience-grid">
+    <div class="audience-card">
+      <h4>🎯 Audience Demographics</h4>
+      <div class="bar-item">
+        <div class="bar-label"><span>Dog Owners</span><span>78%</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:78%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>Age 25–44</span><span>65%</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:65%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>Female</span><span>58%</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:58%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>US-Based</span><span>82%</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:82%"></div></div>
+      </div>
+    </div>
+    <div class="audience-card">
+      <h4>💡 Audience Interests</h4>
+      <div class="bar-item">
+        <div class="bar-label"><span>Pet Products</span><span>91%</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:91%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>Pet Health</span><span>74%</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:74%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>Travel & Lifestyle</span><span>68%</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:68%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>Grooming & Style</span><span>61%</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:61%"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT PAGE -->
+<div class="page">
+  <div class="section-header">
+    <span class="emoji">✍️</span>
+    <h2>Content & Platforms</h2>
+  </div>
+  <div class="content-grid">
+    <div class="content-card">
+      <div class="icon">📝</div>
+      <h4>Blog — Luckie's Corner</h4>
+      <p>Long-form product reviews, how-to guides, and lifestyle posts written in Luckie's signature voice. SEO-optimized, affiliate-integrated, and published regularly. Topics include treats, grooming, travel gear, pet health, and more.</p>
+    </div>
+    <div class="content-card">
+      <div class="icon">📸</div>
+      <h4>Photo Gallery</h4>
+      <p>18+ curated lifestyle photos showcasing Luckie's daily life — beach trips, park adventures, home moments, and styled brand content. High-quality, shareable, and brand-friendly.</p>
+    </div>
+    <div class="content-card">
+      <div class="icon">🛒</div>
+      <h4>Pet Supply Store</h4>
+      <p>A curated drop-ship storefront with 10 hand-picked pet products across 5 categories: accessories, food & treats, travel, toys, and grooming. Every item is Luckie-approved.</p>
+    </div>
+    <div class="content-card">
+      <div class="icon">🌟</div>
+      <h4>Membership Community</h4>
+      <p>Fan ($4.99/mo) and Super Fan ($9.99/mo) membership tiers give followers exclusive access to behind-the-scenes content, early product reviews, and direct interaction with Luckie's world.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div style="margin-top: 10px;">
+    <h3 style="font-size:18px; font-weight:800; margin-bottom:14px;">Content Tags</h3>
+    <div>
+      <span class="tag-pill">dogs</span><span class="tag-pill">petlifestyle</span><span class="tag-pill">dogreviews</span><span class="tag-pill">dogtreats</span><span class="tag-pill">petcare</span><span class="tag-pill">doggrooming</span><span class="tag-pill">pettravel</span><span class="tag-pill">dogfashion</span><span class="tag-pill">petinsurance</span><span class="tag-pill">smalldogs</span><span class="tag-pill">fleatreatment</span><span class="tag-pill">petblog</span><span class="tag-pill">doginfluencer</span><span class="tag-pill">puppylove</span><span class="tag-pill">petparent</span>
+    </div>
+  </div>
+</div>
+
+<!-- PARTNERSHIPS PAGE -->
+<div class="page">
+  <div class="section-header">
+    <span class="emoji">🤝</span>
+    <h2>Partnership Opportunities</h2>
+  </div>
+  <div class="partner-grid">
+    <div class="partner-card">
+      <h4>📝 Sponsored Blog Post</h4>
+      <div class="price">From $150</div>
+      <ul>
+        <li>Dedicated post featuring your product</li>
+        <li>Written in Luckie's authentic voice</li>
+        <li>SEO-optimized with your target keywords</li>
+        <li>Permanent placement on site</li>
+        <li>Affiliate link integration available</li>
+      </ul>
+    </div>
+    <div class="partner-card">
+      <h4>🛒 Product Feature in Store</h4>
+      <div class="price">From $100/mo</div>
+      <ul>
+        <li>Featured product card in pet store</li>
+        <li>Luckie-Approved badge placement</li>
+        <li>Direct link to your product page</li>
+        <li>Category placement of your choice</li>
+        <li>Monthly performance reporting</li>
+      </ul>
+    </div>
+    <div class="partner-card">
+      <h4>📸 Branded Photo Content</h4>
+      <div class="price">From $200</div>
+      <ul>
+        <li>Custom lifestyle photos with your product</li>
+        <li>Gallery placement on Luckie's site</li>
+        <li>Full usage rights for brand channels</li>
+        <li>Multiple shots / angles delivered</li>
+        <li>Authentic, non-staged aesthetic</li>
+      </ul>
+    </div>
+    <div class="partner-card">
+      <h4>🌟 Brand Ambassador</h4>
+      <div class="price">Custom Pricing</div>
+      <ul>
+        <li>Ongoing monthly content partnership</li>
+        <li>Blog + store + photo coverage</li>
+        <li>Exclusive affiliate link setup</li>
+        <li>Monthly performance calls</li>
+        <li>First-look on new product launches</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:30px;">
+    <p><strong>🐾 Affiliate Partnerships:</strong> Luckie is registered with Amazon Associates, Chewy, Petco, and PetSmart affiliate programs. If your brand has an affiliate program, we can integrate tracked links across all blog posts and the pet store for performance-based commissions with no upfront cost to you.</p>
+  </div>
+</div>
+
+<!-- CONTACT PAGE -->
+<div class="contact-page">
+  <img src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/b05b466ad_Adobe_Express_20240930_0514086_1.png" alt="Luckie" style="width:120px;height:120px;border-radius:50%;border:4px solid #ffd93d;object-fit:cover;margin-bottom:24px;" />
+  <h2>Let's Work Together 🐾</h2>
+  <p>Ready to get your brand in front of Luckie's pet-loving audience?<br>We'd love to hear from you.</p>
+  <div>
+    <div class="contact-item">📧 <a href="mailto:nikdastardlyarea52@gmail.com">nikdastardlyarea52@gmail.com</a></div>
+    <div class="contact-item">🌐 <a href="https://base44.app/api/apps/6a0421bfc04dc7179e198e72/files/mp/public/6a0421bfc04dc7179e198e72/01449d163_index.html" target="_blank">Luckie's Website</a></div>
+  </div>
+  <p style="margin-top:40px; font-size:13px; opacity:0.5;">© 2026 Luckie · All rights reserved</p>
+</div>
+
+</body>
+</html>
