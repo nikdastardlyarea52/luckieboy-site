@@ -548,66 +548,117 @@
 <div class="page" id="page-shop">
   <div class="section">
     <div class="section-title">Luckie's Shop 🛍️</div>
-    <div class="section-sub">Wear the dog. Be the vibe. Zero inventory needed — print-on-demand!</div>
-    <div class="shop-grid" id="shop-grid">
-      
-        <div class="product-card">
-          <div class="product-img">
-            <img src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/7b9f89359_generated_image.png" alt="Luckie Classic Tee" onerror="this.parentElement.innerHTML='🐾'" />
-          </div>
-          <div class="product-info">
-            <div class="product-name">Luckie Classic Tee</div>
-            <div class="product-desc">Rock Luckie's iconic pop-art look on a soft Bella+Canvas unisex tee. Ships worldwide via Printful.</div>
-            <div class="product-bottom">
-              <span class="price">$29.99</span>
-              <button class="btn btn-primary btn-sm" onclick="buyMerch('luckie_classic_tee', 'Luckie Classic Tee', 29.99)">Buy Now 🐾</button>
-            </div>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-img">
-            <img src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/36cf37064_generated_image.png" alt="Luckie Coffee Mug" onerror="this.parentElement.innerHTML='🐾'" />
-          </div>
-          <div class="product-info">
-            <div class="product-name">Luckie Coffee Mug</div>
-            <div class="product-desc">Start every morning with Luckie's face on your mug. White glossy ceramic, 11oz or 15oz.</div>
-            <div class="product-bottom">
-              <span class="price">$19.99</span>
-              <button class="btn btn-primary btn-sm" onclick="buyMerch('luckie_mug', 'Luckie Coffee Mug', 19.99)">Buy Now 🐾</button>
-            </div>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-img">
-            <img src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/562e96184_generated_image.png" alt="Luckie Hoodie" onerror="this.parentElement.innerHTML='🐾'" />
-          </div>
-          <div class="product-info">
-            <div class="product-name">Luckie Hoodie</div>
-            <div class="product-desc">Cozy navy hoodie with Luckie printed on the front. Because every outfit needs him.</div>
-            <div class="product-bottom">
-              <span class="price">$44.99</span>
-              <button class="btn btn-primary btn-sm" onclick="buyMerch('luckie_hoodie', 'Luckie Hoodie', 44.99)">Buy Now 🐾</button>
-            </div>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-img">
-            <img src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/52690b137_generated_image.png" alt="Luckie Sticker" onerror="this.parentElement.innerHTML='🐾'" />
-          </div>
-          <div class="product-info">
-            <div class="product-name">Luckie Sticker</div>
-            <div class="product-desc">Kiss-cut vinyl sticker in 3 sizes. Weatherproof. Perfect for laptops, water bottles, anything.</div>
-            <div class="product-bottom">
-              <span class="price">$4.99</span>
-              <button class="btn btn-primary btn-sm" onclick="buyMerch('luckie_sticker_pack', 'Luckie Sticker', 4.99)">Buy Now 🐾</button>
-            </div>
-          </div>
-        </div>
+    <div class="section-sub">Wear the dog. Be the vibe. Every order ships directly to you.</div>
+
+    <!-- Promo Banner -->
+    <div class="shop-banner">
+      <div>
+        <strong>🐾 Free Shipping on orders over $40</strong><br>
+        <span>Print-on-demand — made fresh for every order via Printful</span>
+      </div>
+      <div style="font-size:1.8rem;">🎉</div>
     </div>
 
-    <div style="background: #fff3cd; border-radius: 16px; padding: 2rem; margin-top: 3rem; border-left: 4px solid var(--accent);">
-      <h3 style="font-weight:800; margin-bottom:0.5rem;">💡 How the Shop Works</h3>
-      <p style="color:#666; line-height:1.7;">Products are fulfilled via <strong>Printful</strong> print-on-demand — zero upfront inventory. Luckie's face gets printed and shipped only when someone orders. 🐾</p>
+    <!-- Trust badges -->
+    <div class="shop-trust">
+      <div class="shop-trust-item">🔒 Secure Checkout</div>
+      <div class="shop-trust-item">🚚 Ships Worldwide</div>
+      <div class="shop-trust-item">🖨️ Print-on-Demand</div>
+      <div class="shop-trust-item">↩️ Easy Returns</div>
+    </div>
+
+    <div class="shop-grid" id="shop-grid">
+
+      <!-- Tee -->
+      <div class="product-card">
+        <div class="product-badge bestseller">Bestseller</div>
+        <div class="product-img">
+          <img src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/7b9f89359_generated_image.png" alt="Luckie Classic Tee" onerror="this.parentElement.innerHTML='🐾'" />
+        </div>
+        <div class="product-info">
+          <div class="product-category">Apparel</div>
+          <div class="product-name">Luckie Classic Tee</div>
+          <div class="product-desc">Soft Bella+Canvas unisex tee with Luckie's face. Runs true to size. Unisex S–3XL.</div>
+          <div class="product-shipping">✅ Ships in 3–7 business days</div>
+          <div class="product-bottom">
+            <span class="price">$29.99</span>
+            <button class="btn btn-sm btn-buy" onclick="buyMerch('luckie_classic_tee', 'Luckie Classic Tee', 29.99)">Buy Now 🐾</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mug -->
+      <div class="product-card">
+        <div class="product-badge new">Fan Fave</div>
+        <div class="product-img">
+          <img src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/36cf37064_generated_image.png" alt="Luckie Coffee Mug" onerror="this.parentElement.innerHTML='🐾'" />
+        </div>
+        <div class="product-info">
+          <div class="product-category">Drinkware</div>
+          <div class="product-name">Luckie Coffee Mug</div>
+          <div class="product-desc">White glossy ceramic, 11oz or 15oz. Start every morning with Luckie's face. Microwave & dishwasher safe.</div>
+          <div class="product-shipping">✅ Ships in 3–7 business days</div>
+          <div class="product-bottom">
+            <span class="price">$19.99</span>
+            <button class="btn btn-sm btn-buy" onclick="buyMerch('luckie_mug', 'Luckie Coffee Mug', 19.99)">Buy Now 🐾</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hoodie -->
+      <div class="product-card">
+        <div class="product-img">
+          <img src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/562e96184_generated_image.png" alt="Luckie Hoodie" onerror="this.parentElement.innerHTML='🐾'" />
+        </div>
+        <div class="product-info">
+          <div class="product-category">Apparel</div>
+          <div class="product-name">Luckie Hoodie</div>
+          <div class="product-desc">Cozy Gildan 18500 pullover hoodie with Luckie printed on the front. Runs slightly large — size down if unsure.</div>
+          <div class="product-shipping">✅ Ships in 3–7 business days</div>
+          <div class="product-bottom">
+            <span class="price">$44.99</span>
+            <button class="btn btn-sm btn-buy" onclick="buyMerch('luckie_hoodie', 'Luckie Hoodie', 44.99)">Buy Now 🐾</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticker -->
+      <div class="product-card">
+        <div class="product-badge" style="background:#9b59b6;">Best Value</div>
+        <div class="product-img">
+          <img src="https://media.base44.com/images/public/6a0421bfc04dc7179e198e72/52690b137_generated_image.png" alt="Luckie Sticker" onerror="this.parentElement.innerHTML='🐾'" />
+        </div>
+        <div class="product-info">
+          <div class="product-category">Accessories</div>
+          <div class="product-name">Luckie Sticker</div>
+          <div class="product-desc">Kiss-cut vinyl sticker in 3 sizes. Weatherproof, UV-resistant. Perfect for laptops, water bottles, car bumpers.</div>
+          <div class="product-shipping">✅ Ships in 2–5 business days</div>
+          <div class="product-bottom">
+            <span class="price">$4.99</span>
+            <button class="btn btn-sm btn-buy" onclick="buyMerch('luckie_sticker_pack', 'Luckie Sticker', 4.99)">Buy Now 🐾</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom info strip -->
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:2.5rem; justify-content:center;">
+      <div style="background:#f8f9fa; border-radius:12px; padding:1rem 1.5rem; text-align:center; flex:1; min-width:180px;">
+        <div style="font-size:1.5rem;">🖨️</div>
+        <div style="font-weight:800; margin:0.3rem 0;">Print-on-Demand</div>
+        <div style="font-size:0.83rem; color:#666;">Made fresh — no stock sitting in a warehouse</div>
+      </div>
+      <div style="background:#f8f9fa; border-radius:12px; padding:1rem 1.5rem; text-align:center; flex:1; min-width:180px;">
+        <div style="font-size:1.5rem;">🌍</div>
+        <div style="font-weight:800; margin:0.3rem 0;">Ships Worldwide</div>
+        <div style="font-size:0.83rem; color:#666;">Fulfilled via Printful to 200+ countries</div>
+      </div>
+      <div style="background:#f8f9fa; border-radius:12px; padding:1rem 1.5rem; text-align:center; flex:1; min-width:180px;">
+        <div style="font-size:1.5rem;">🔒</div>
+        <div style="font-weight:800; margin:0.3rem 0;">Secure Checkout</div>
+        <div style="font-size:0.83rem; color:#666;">Powered by Stripe — 100% safe & encrypted</div>
+      </div>
     </div>
   </div>
 </div>
@@ -1103,14 +1154,7 @@
     if (t) openCheckoutModal(t.title, t.price, t.desc, { type: 'membership', tier });
   }
 
-  function buyMerch(productKey, productName, price) {
-    openCheckoutModal(
-      productName + ' 🐾',
-      '$' + price.toFixed(2),
-      'Print-on-demand — ships directly to you, fulfilled by Printful',
-      { type: 'merch', productKey, productName, price }
-    );
-  }
+  // buyMerch handled below via direct Stripe links
 
 
   function filterPetStore(category, btn) {
