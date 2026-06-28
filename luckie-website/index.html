@@ -11,9 +11,9 @@
     :root {
       --primary: #e74c3c;
       --accent: #f39c12;
-      --dark: #1a1a2e;
+      --dark: #f0ede8;
       --light: #fef9f0;
-      --text: #333;
+      --text: #222;
       --card-bg: #fff;
       --shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
@@ -30,7 +30,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
     .nav-logo {
       font-family: 'Pacifico', cursive;
@@ -61,8 +61,8 @@
 
     /* HERO */
     .hero {
-      background: linear-gradient(135deg, var(--dark) 0%, #16213e 50%, #0f3460 100%);
-      color: white;
+      background: linear-gradient(135deg, #f0ede8 0%, #e8e2d9 50%, #f5f0ea 100%);
+      color: #222;
       padding: 5rem 2rem 4rem;
       text-align: center;
       position: relative;
@@ -97,7 +97,7 @@
     .hero h1 span { color: var(--accent); }
     .hero .tagline {
       font-size: 1.2rem;
-      color: #ccc;
+      color: #555;
       margin-bottom: 2rem;
     }
     .hero-stats {
@@ -123,8 +123,8 @@
     }
     .btn-primary { background: var(--primary); color: white; }
     .btn-primary:hover { background: #c0392b; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(231,76,60,0.4); }
-    .btn-outline { background: transparent; color: white; border: 2px solid white; }
-    .btn-outline:hover { background: white; color: var(--dark); transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: #333; border: 2px solid #333; }
+    .btn-outline:hover { background: #333; color: #fff; transform: translateY(-2px); }
     .btn-accent { background: var(--accent); color: white; }
     .btn-accent:hover { background: #e67e22; transform: translateY(-2px); }
 
