@@ -1182,12 +1182,12 @@
     btn.textContent = 'Processing... 🐾';
 
     const links = {
-      membership_fan: 'https://buy.stripe.com/test_3cI00k2Q26Sq9iQ0Cdgfu00',
-      membership_superfan: 'https://buy.stripe.com/test_cNi00k62ea4CeDa0Cdgfu01',
-      luckie_classic_tee: 'https://buy.stripe.com/test_cNicN62Q2b8G7aI98Jgfu02',
-      luckie_mug: 'https://buy.stripe.com/test_28E9AUduGa4C7aIacNgfu03',
-      luckie_hoodie: 'https://buy.stripe.com/test_00wdRacqCa4CgLi4Stgfu04',
-      luckie_sticker_pack: 'https://buy.stripe.com/test_28E28sfCOb8GgLi84Fgfu05'
+      membership_fan: 'https://buy.stripe.com/6oU00kfyE1pYdlj2OMb3q05',
+      membership_superfan: 'https://buy.stripe.com/4gM7sM3PWd8G2GF752b3q06',
+      luckie_classic_tee: 'https://buy.stripe.com/eVqeVe7280lUftr2OMb3q01',
+      luckie_mug: 'https://buy.stripe.com/eVq7sM5Y4b0ychfcpmb3q04',
+      luckie_hoodie: 'https://buy.stripe.com/eVq14o86cecK9539dab3q03',
+      luckie_sticker_pack: 'https://buy.stripe.com/5kQ00kdqw8Sqa974WUb3q00'
     };
 
     let linkKey = currentCheckoutItem.type === 'membership'
@@ -1209,10 +1209,10 @@
 
   function buyMerch(productKey, productName, price) {
     const links = {
-      'luckie_classic_tee': 'https://buy.stripe.com/test_cNicN62Q2b8G7aI98Jgfu02',
-      'luckie_mug': 'https://buy.stripe.com/test_28E9AUduGa4C7aIacNgfu03',
-      'luckie_hoodie': 'https://buy.stripe.com/test_00wdRacqCa4CgLi4Stgfu04',
-      'luckie_sticker_pack': 'https://buy.stripe.com/test_28E28sfCOb8GgLi84Fgfu05'
+      'luckie_classic_tee': 'https://buy.stripe.com/eVqeVe7280lUftr2OMb3q01',
+      'luckie_mug': 'https://buy.stripe.com/eVq7sM5Y4b0ychfcpmb3q04',
+      'luckie_hoodie': 'https://buy.stripe.com/eVq14o86cecK9539dab3q03',
+      'luckie_sticker_pack': 'https://buy.stripe.com/5kQ00kdqw8Sqa974WUb3q00'
     };
     // Try by key first, then by name slug
     const slug = productName.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
