@@ -1207,19 +1207,97 @@
   }
 
 
+  // Product config: variants per size → Stripe links
+  const PRODUCT_VARIANTS = {
+    'luckie_classic_tee': {
+      name: 'Luckie Classic Tee',
+      price: '$29.99',
+      type: 'apparel',
+      sizes: ['S','M','L','XL','2XL','3XL'],
+      // All sizes go to same payment link; size captured via metadata/note
+      link: 'https://buy.stripe.com/eVqeVe7280lUftr2OMb3q01'
+    },
+    'luckie_hoodie': {
+      name: 'Luckie Hoodie',
+      price: '$44.99',
+      type: 'apparel',
+      sizes: ['S','M','L','XL'],
+      link: 'https://buy.stripe.com/eVq14o86cecK9539dab3q03'
+    },
+    'luckie_mug': {
+      name: 'Luckie Coffee Mug',
+      price: '$19.99',
+      type: 'size',
+      sizes: ['11 oz','15 oz'],
+      link: 'https://buy.stripe.com/eVq7sM5Y4b0ychfcpmb3q04'
+    },
+    'luckie_sticker_pack': {
+      name: 'Luckie Sticker',
+      price: '$4.99',
+      type: 'size',
+      sizes: ['3″×3″','4″×4″','5.5″×5.5″'],
+      link: 'https://buy.stripe.com/5kQ00kdqw8Sqa974WUb3q00'
+    }
+  };
+
+  let _currentProduct = null;
+  let _selectedSize = null;
+
   function buyMerch(productKey, productName, price) {
-    const links = {
-      'luckie_classic_tee': 'https://buy.stripe.com/eVqeVe7280lUftr2OMb3q01',
-      'luckie_mug': 'https://buy.stripe.com/eVq7sM5Y4b0ychfcpmb3q04',
-      'luckie_hoodie': 'https://buy.stripe.com/eVq14o86cecK9539dab3q03',
-      'luckie_sticker_pack': 'https://buy.stripe.com/5kQ00kdqw8Sqa974WUb3q00'
-    };
-    // Try by key first, then by name slug
-    const slug = productName.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
-    const url = links[productKey] || links[slug] || Object.values(links)[0];
-    if (url) window.open(url, '_blank');
-    else showToast('Checkout coming soon!');
+    const product = PRODUCT_VARIANTS[productKey];
+    if (!product) { showToast('Checkout coming soon!'); return; }
+    _currentProduct = product;
+    _selectedSize = null;
+
+    // Populate modal
+    document.getElementById('size-modal-title').textContent = product.name;
+    document.getElementById('size-modal-price').textContent = product.price;
+
+    const container = document.getElementById('size-options');
+    container.innerHTML = '';
+    product.sizes.forEach(size => {
+      const btn = document.createElement('button');
+      btn.textContent = size;
+      btn.style.cssText = 'border:2px solid #ddd;background:#fff;border-radius:10px;padding:0.5rem 1rem;font-size:0.95rem;font-weight:600;cursor:pointer;color:#333;transition:all 0.15s;';
+      btn.onclick = () => {
+        container.querySelectorAll('button').forEach(b => {
+          b.style.borderColor = '#ddd';
+          b.style.background = '#fff';
+          b.style.color = '#333';
+        });
+        btn.style.borderColor = '#e05c1a';
+        btn.style.background = '#fff5f0';
+        btn.style.color = '#e05c1a';
+        _selectedSize = size;
+      };
+      container.appendChild(btn);
+    });
+
+    // Show modal
+    const modal = document.getElementById('size-modal');
+    modal.style.display = 'flex';
   }
+
+  function closeSizeModal() {
+    document.getElementById('size-modal').style.display = 'none';
+    _currentProduct = null;
+    _selectedSize = null;
+  }
+
+  function confirmSize() {
+    if (!_selectedSize) {
+      showToast('Please pick a size first! 👆');
+      return;
+    }
+    const url = _currentProduct.link + '?prefilled_promo_code=&metadata[size]=' + encodeURIComponent(_selectedSize);
+    closeSizeModal();
+    window.open(url, '_blank');
+  }
+
+  // Close modal on backdrop click
+  document.getElementById('size-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeSizeModal();
+  });
 
   function subscribeEmail() {
     const email = document.getElementById('hero-email').value;
@@ -1275,6 +1353,23 @@
       </div>
     </div>
   </div>
+
+
+<!-- SIZE PICKER MODAL -->
+<div id="size-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.55);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:18px;padding:2rem 2rem 1.5rem;max-width:380px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,0.2);text-align:center;position:relative;">
+    <button onclick="closeSizeModal()" style="position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#888;">✕</button>
+    <div style="font-size:2rem;margin-bottom:0.3rem;">🐾</div>
+    <h3 id="size-modal-title" style="margin:0 0 0.3rem;font-size:1.2rem;color:#111;font-family:'Pacifico',cursive;"></h3>
+    <p id="size-modal-price" style="margin:0 0 1.2rem;color:#7a2800;font-weight:700;font-size:1.1rem;"></p>
+    <p style="margin:0 0 0.8rem;font-size:0.9rem;color:#555;font-weight:600;">Pick your size:</p>
+    <div id="size-options" style="display:flex;gap:0.6rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.4rem;"></div>
+    <button id="size-confirm-btn" onclick="confirmSize()" style="background:#e05c1a;color:#fff;border:none;border-radius:30px;padding:0.75rem 2rem;font-size:1rem;font-weight:700;cursor:pointer;width:100%;transition:background 0.2s;" onmouseover="this.style.background='#c04a10'" onmouseout="this.style.background='#e05c1a'">
+      Continue to Checkout →
+    </button>
+    <p style="margin:0.8rem 0 0;font-size:0.75rem;color:#aaa;">Fulfilled by Printful · Ships to 200+ countries</p>
+  </div>
+</div>
 
 </body>
 </html>
