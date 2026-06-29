@@ -42,7 +42,7 @@
     .nav-logo span { color: var(--accent); }
     .nav-links { display: flex; gap: 1.5rem; }
     .nav-links a {
-      color: #ccc;
+      color: #111;
       text-decoration: none;
       font-weight: 700;
       font-size: 0.95rem;
@@ -50,7 +50,11 @@
       border-radius: 20px;
       transition: all 0.2s;
     }
-    .nav-links a:hover, .nav-links a.active {
+    .nav-links a:hover {
+      color: #e05c1a;
+      background: rgba(224,92,26,0.08);
+    }
+    .nav-links a.active {
       color: #fff;
       background: var(--primary);
     }
