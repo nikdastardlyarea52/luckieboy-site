@@ -242,25 +242,6 @@
       max-width: 500px;
       margin: 0 auto;
     }
-    .donate-amounts {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
-    }
-    .donate-amt-btn {
-      padding: 0.9rem 0.5rem;
-      border-radius: 12px;
-      border: 2px solid var(--primary);
-      background: transparent;
-      color: var(--primary);
-      font-weight: 800;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .donate-amt-btn:hover { background: rgba(255,107,53,0.1); }
-    .donate-amt-btn.active { background: var(--primary); color: #fff; }
     .donate-custom { margin-bottom: 1.5rem; }
     .donate-custom label, .donate-field label {
       display: block;
@@ -806,19 +787,11 @@
     <div class="section-sub">Every dollar helps fund Luckie's adventures, vet care, and the causes he champions for shelter pups. Give whatever feels right — no amount is too small.</div>
 
     <div class="donate-card">
-      <div class="donate-amounts" id="donate-amounts">
-        <button type="button" class="donate-amt-btn" data-amount="5" onclick="selectDonateAmount(5, this)">$5</button>
-        <button type="button" class="donate-amt-btn" data-amount="10" onclick="selectDonateAmount(10, this)">$10</button>
-        <button type="button" class="donate-amt-btn active" data-amount="25" onclick="selectDonateAmount(25, this)">$25</button>
-        <button type="button" class="donate-amt-btn" data-amount="50" onclick="selectDonateAmount(50, this)">$50</button>
-        <button type="button" class="donate-amt-btn" data-amount="100" onclick="selectDonateAmount(100, this)">$100</button>
-      </div>
-
       <div class="donate-custom">
-        <label for="donate-custom-amount">Or enter a custom amount</label>
+        <label for="donate-custom-amount">Donation amount</label>
         <div class="donate-custom-input">
           <span>$</span>
-          <input type="number" id="donate-custom-amount" min="1" step="1" placeholder="25" oninput="selectCustomDonateAmount()" />
+          <input type="number" id="donate-custom-amount" min="1" step="1" placeholder="25" value="25" />
         </div>
       </div>
 
@@ -835,7 +808,7 @@
         <input type="text" id="donate-message" placeholder="Go get 'em, Luckie! 🐾" maxlength="200" />
       </div>
 
-      <button class="btn btn-primary" style="width:100%;" id="donate-submit-btn" onclick="submitDonation()">❤️ Donate $25</button>
+      <button class="btn btn-primary" style="width:100%;" id="donate-submit-btn" onclick="submitDonation()">❤️ Donate</button>
       <div class="donate-note">Securely processed by Stripe. You'll be redirected to complete your donation.</div>
     </div>
   </div>
@@ -1425,28 +1398,10 @@
 
   const SUBSCRIBE_API = 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/functions/subscribe';
   const DONATE_API = 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/functions/createDonation';
-  let selectedDonateAmount = 25;
-
-  function selectDonateAmount(amount, btn) {
-    selectedDonateAmount = amount;
-    document.querySelectorAll('.donate-amt-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('donate-custom-amount').value = '';
-    document.getElementById('donate-submit-btn').textContent = '❤️ Donate $' + amount;
-  }
-
-  function selectCustomDonateAmount() {
-    const val = Number(document.getElementById('donate-custom-amount').value);
-    document.querySelectorAll('.donate-amt-btn').forEach(b => b.classList.remove('active'));
-    if (val > 0) {
-      selectedDonateAmount = val;
-      document.getElementById('donate-submit-btn').textContent = '❤️ Donate $' + val;
-    }
-  }
 
   function submitDonation() {
-    const amount = selectedDonateAmount;
-    if (!amount || amount < 1) { showToast('Please choose or enter an amount! 💛'); return; }
+    const amount = Number(document.getElementById('donate-custom-amount').value);
+    if (!amount || amount < 1) { showToast('Please enter an amount! 💛'); return; }
 
     const name = document.getElementById('donate-name').value.trim();
     const email = document.getElementById('donate-email').value.trim();
