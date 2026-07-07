@@ -233,6 +233,73 @@
     .product-card .price { font-size: 1.3rem; font-weight: 800; color: var(--primary); }
     .btn-sm { padding: 0.4rem 1.2rem; font-size: 0.9rem; border-radius: 20px; }
 
+    /* DONATE */
+    .donate-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .donate-amounts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .donate-amt-btn {
+      padding: 0.9rem 0.5rem;
+      border-radius: 12px;
+      border: 2px solid var(--primary);
+      background: transparent;
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .donate-amt-btn:hover { background: rgba(255,107,53,0.1); }
+    .donate-amt-btn.active { background: var(--primary); color: #fff; }
+    .donate-custom { margin-bottom: 1.5rem; }
+    .donate-custom label, .donate-field label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+      color: var(--dark);
+    }
+    .donate-custom-input {
+      display: flex;
+      align-items: center;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      padding: 0.6rem 1rem;
+      background: #fff;
+    }
+    .donate-custom-input span { font-weight: 800; color: var(--dark); margin-right: 0.4rem; }
+    .donate-custom-input input {
+      border: none;
+      outline: none;
+      font-size: 1.1rem;
+      width: 100%;
+      font-weight: 700;
+    }
+    .donate-field { margin-bottom: 1.2rem; }
+    .donate-field input {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      font-size: 1rem;
+    }
+    .donate-note {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 1rem;
+    }
+
     /* MEMBERSHIP */
     .membership-grid {
       display: grid;
@@ -464,6 +531,7 @@
     <a href="#" onclick="showPage('shop')" id="nav-shop">Shop</a>
     <a href="#" onclick="showPage('petstore')" id="nav-petstore">🛒 Pet Store</a>
     <a href="#" onclick="showPage('membership')" id="nav-membership">🌟 Join</a>
+    <a href="#" onclick="showPage('donate')" id="nav-donate">❤️ Donate</a>
   </div>
 </nav>
 
@@ -731,6 +799,47 @@
   </div>
 </div>
 
+
+<div class="page" id="page-donate">
+  <div class="section">
+    <div class="section-title">Support Luckie's Cause ❤️</div>
+    <div class="section-sub">Every dollar helps fund Luckie's adventures, vet care, and the causes he champions for shelter pups. Give whatever feels right — no amount is too small.</div>
+
+    <div class="donate-card">
+      <div class="donate-amounts" id="donate-amounts">
+        <button type="button" class="donate-amt-btn" data-amount="5" onclick="selectDonateAmount(5, this)">$5</button>
+        <button type="button" class="donate-amt-btn" data-amount="10" onclick="selectDonateAmount(10, this)">$10</button>
+        <button type="button" class="donate-amt-btn active" data-amount="25" onclick="selectDonateAmount(25, this)">$25</button>
+        <button type="button" class="donate-amt-btn" data-amount="50" onclick="selectDonateAmount(50, this)">$50</button>
+        <button type="button" class="donate-amt-btn" data-amount="100" onclick="selectDonateAmount(100, this)">$100</button>
+      </div>
+
+      <div class="donate-custom">
+        <label for="donate-custom-amount">Or enter a custom amount</label>
+        <div class="donate-custom-input">
+          <span>$</span>
+          <input type="number" id="donate-custom-amount" min="1" step="1" placeholder="25" oninput="selectCustomDonateAmount()" />
+        </div>
+      </div>
+
+      <div class="donate-field">
+        <label>Your name (optional)</label>
+        <input type="text" id="donate-name" placeholder="Your name" />
+      </div>
+      <div class="donate-field">
+        <label>Email (optional, for a receipt)</label>
+        <input type="email" id="donate-email" placeholder="your@email.com" />
+      </div>
+      <div class="donate-field">
+        <label>Message for Luckie (optional)</label>
+        <input type="text" id="donate-message" placeholder="Go get 'em, Luckie! 🐾" maxlength="200" />
+      </div>
+
+      <button class="btn btn-primary" style="width:100%;" id="donate-submit-btn" onclick="submitDonation()">❤️ Donate $25</button>
+      <div class="donate-note">Securely processed by Stripe. You'll be redirected to complete your donation.</div>
+    </div>
+  </div>
+</div>
 
 <!-- STRIPE INLINE CHECKOUT MODAL -->
 <div class="checkout-overlay" id="checkout-overlay" onclick="closeCheckout(event)">
@@ -1315,6 +1424,62 @@
 
 
   const SUBSCRIBE_API = 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/functions/subscribe';
+  const DONATE_API = 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/functions/createDonation';
+  let selectedDonateAmount = 25;
+
+  function selectDonateAmount(amount, btn) {
+    selectedDonateAmount = amount;
+    document.querySelectorAll('.donate-amt-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('donate-custom-amount').value = '';
+    document.getElementById('donate-submit-btn').textContent = '❤️ Donate $' + amount;
+  }
+
+  function selectCustomDonateAmount() {
+    const val = Number(document.getElementById('donate-custom-amount').value);
+    document.querySelectorAll('.donate-amt-btn').forEach(b => b.classList.remove('active'));
+    if (val > 0) {
+      selectedDonateAmount = val;
+      document.getElementById('donate-submit-btn').textContent = '❤️ Donate $' + val;
+    }
+  }
+
+  function submitDonation() {
+    const amount = selectedDonateAmount;
+    if (!amount || amount < 1) { showToast('Please choose or enter an amount! 💛'); return; }
+
+    const name = document.getElementById('donate-name').value.trim();
+    const email = document.getElementById('donate-email').value.trim();
+    const message = document.getElementById('donate-message').value.trim();
+
+    const btn = document.getElementById('donate-submit-btn');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Redirecting to secure checkout... 🐾';
+
+    fetch(DONATE_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount, name, email, message })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        showToast(data.error || 'Something went wrong. Try again!');
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      showToast('Network error. Try again?');
+      btn.disabled = false;
+      btn.textContent = originalText;
+    });
+  }
+
 
   function subscribeEmail() {
     const emailInput = document.getElementById('hero-email');

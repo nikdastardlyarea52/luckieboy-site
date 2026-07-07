@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Apparel",
+        "Accessories",
+        "Digital",
+        "Stickers",
+        "Other"
+      ]
+    },
+    "available": {
+      "type": "boolean",
+      "default": true
+    },
+    "external_url": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "name": "MerchProduct"
+}
