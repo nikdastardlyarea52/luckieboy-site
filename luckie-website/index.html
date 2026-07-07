@@ -1314,55 +1314,50 @@
   });
 
 
+  const SUBSCRIBE_API = 'https://base44.app/api/apps/6a0421bfc04dc7179e198e72/functions/subscribe';
+
   function subscribeEmail() {
-    const email = document.getElementById('hero-email').value;
+    const emailInput = document.getElementById('hero-email');
+    const email = emailInput.value.trim();
     if (!email || !email.includes('@')) { showToast('Please enter a valid email! 📧'); return; }
-    
-    fetch('https://base44.app/api/apps/6a0421bfc04dc7179e198e72/functions/subscribe', {
+
+    fetch(SUBSCRIBE_API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, tier: 'free' })
+      body: JSON.stringify({ email, tier: 'free', notes: 'Joined via hero email signup' })
     })
     .then(r => r.json())
     .then(data => {
       if (data.success) {
         showToast('🎉 You\'re in the pack! Welcome, ' + email.split('@')[0] + '!');
-        document.getElementById('hero-email').value = '';
+        emailInput.value = '';
       } else {
-        showToast('Something went wrong. Try again!');
+        showToast('Oops! ' + (data.error || 'Something went wrong'));
       }
     })
-    .catch(err => { console.error(err); showToast('Oops! Try again.'); });
+    .catch(err => { console.error(err); showToast('Network error. Try again?'); });
   }
 
   function subscribeMember() {
-    const email = document.getElementById('member-email').value;
+    const emailInput = document.getElementById('member-email');
+    const email = emailInput.value.trim();
     if (!email || !email.includes('@')) { showToast('Please enter a valid email! 📧'); return; }
-    showToast('🌟 You\'ll be first to know!');
-    document.getElementById('member-email').value = '';
-  }
 
-  }
-
-  function subscribeMember() {
-    const email = document.getElementById('member-email').value.trim();
-    if (!email || !email.includes('@')) { showToast('Please enter a valid email! 📧'); return; }
-    
     fetch(SUBSCRIBE_API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, tier: 'free', notes: 'Wants membership notifications' })
     })
     .then(r => r.json())
-    .then(d => {
-      if (d.success) {
+    .then(data => {
+      if (data.success) {
         showToast('🌟 You\'ll be first to know!');
-        document.getElementById('member-email').value = '';
+        emailInput.value = '';
       } else {
-        showToast('Oops! ' + (d.error || 'Something went wrong'));
+        showToast('Oops! ' + (data.error || 'Something went wrong'));
       }
     })
-    .catch(e => showToast('Network error. Try again?'));
+    .catch(err => { console.error(err); showToast('Network error. Try again?'); });
   }
 
   function showToast(msg) {
