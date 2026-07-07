@@ -1412,6 +1412,16 @@
     btn.disabled = true;
     btn.textContent = 'Redirecting to secure checkout... 🐾';
 
+    // Open the tab synchronously (within the click gesture) so Safari/Chrome
+    // don't block the redirect once the fetch resolves asynchronously.
+    let checkoutTab;
+    try {
+      checkoutTab = window.open('', '_blank');
+      if (checkoutTab) {
+        checkoutTab.document.write('<!DOCTYPE html><html><head><title>Redirecting...</title><style>body{font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#faf6f0;color:#333;}</style></head><body><p>Redirecting you to secure checkout... 🐾</p></body></html>');
+      }
+    } catch (e) { checkoutTab = null; }
+
     fetch(DONATE_API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -1420,8 +1430,15 @@
     .then(r => r.json())
     .then(data => {
       if (data.url) {
-        window.location.href = data.url;
+        if (checkoutTab && !checkoutTab.closed) {
+          checkoutTab.location.href = data.url;
+        } else {
+          window.location.href = data.url;
+        }
+        btn.disabled = false;
+        btn.textContent = originalText;
       } else {
+        if (checkoutTab && !checkoutTab.closed) checkoutTab.close();
         showToast(data.error || 'Something went wrong. Try again!');
         btn.disabled = false;
         btn.textContent = originalText;
@@ -1429,6 +1446,7 @@
     })
     .catch(err => {
       console.error(err);
+      if (checkoutTab && !checkoutTab.closed) checkoutTab.close();
       showToast('Network error. Try again?');
       btn.disabled = false;
       btn.textContent = originalText;
