@@ -14,6 +14,12 @@ const PAYMENT_LINK_URL_TO_PRINTFUL: Record<string, { sync_variant_id: number; na
   "5kQ00kdqw8Sqa974WUb3q00": { sync_variant_id: 5311188969, name: "Luckie Sticker" },
 };
 
+// Maps membership payment link suffixes → tier names
+const PAYMENT_LINK_TO_MEMBERSHIP: Record<string, string> = {
+  "6oU00kfyE1pYdlj2OMb3q05": "Fan",
+  "4gM7sM3PWd8G2GF752b3q06": "Super Fan",
+};
+
 async function createPrintfulOrder(
   syncVariantId: number,
   customerName: string,
@@ -91,13 +97,51 @@ Deno.serve(async (req: Request) => {
   const customerName = session.customer_details?.name || "Customer";
   const email = session.customer_details?.email || "";
   const address = session.customer_details?.address;
+  const paymentLinkId: string = session.payment_link || "";
 
+  // Check if this is a membership subscription
+  let membershipTier: string | undefined;
+  for (const [suffix, tier] of Object.entries(PAYMENT_LINK_TO_MEMBERSHIP)) {
+    if (paymentLinkId.endsWith(suffix)) {
+      membershipTier = tier;
+      break;
+    }
+  }
+
+  if (membershipTier) {
+    // Create Subscriber record for membership
+    try {
+      const existing = await base44.asServiceRole.entities.Subscriber.filter({ email });
+      if (existing && existing.length > 0) {
+        // Update existing subscriber to membership tier
+        await base44.asServiceRole.entities.Subscriber.update(existing[0].id, {
+          tier: membershipTier,
+          active: true,
+        });
+        console.log(`Updated subscriber ${email} to tier: ${membershipTier}`);
+      } else {
+        // Create new subscriber
+        await base44.asServiceRole.entities.Subscriber.create({
+          email,
+          name: customerName || email.split("@")[0],
+          tier: membershipTier,
+          active: true,
+          notes: `Stripe subscription via membership purchase`,
+        });
+        console.log(`Created subscriber ${email} with tier: ${membershipTier}`);
+      }
+    } catch (err: any) {
+      console.error("Subscriber creation error:", err.message);
+    }
+    return new Response(JSON.stringify({ received: true, membership: membershipTier }), { status: 200 });
+  }
+
+  // No address = likely membership, skip Printful
   if (!address) {
     return new Response(JSON.stringify({ received: true, note: "no address" }), { status: 200 });
   }
 
-  // Match product from payment_link ID
-  const paymentLinkId: string = session.payment_link || "";
+  // Handle merch orders with Printful
   let product: { sync_variant_id: number; name: string } | undefined;
 
   for (const [suffix, prod] of Object.entries(PAYMENT_LINK_URL_TO_PRINTFUL)) {
@@ -126,9 +170,8 @@ Deno.serve(async (req: Request) => {
   }
 
   if (!product) {
-    // Memberships don't need Printful
-    console.log("No merch product matched — likely a membership, skipping Printful.");
-    return new Response(JSON.stringify({ received: true, note: "membership or unmatched" }), { status: 200 });
+    console.log("No merch product matched — skipping Printful.");
+    return new Response(JSON.stringify({ received: true, note: "unmatched product" }), { status: 200 });
   }
 
   console.log(`Creating Printful order: ${product.name} for ${customerName}`);
