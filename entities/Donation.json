@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "donor_name": {
+      "type": "string"
+    },
+    "donor_email": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "message": {
+      "type": "string"
+    },
+    "stripe_session_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "amount"
+  ],
+  "name": "Donation"
+}

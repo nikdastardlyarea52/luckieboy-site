@@ -99,6 +99,24 @@ Deno.serve(async (req: Request) => {
   const address = session.customer_details?.address;
   const paymentLinkId: string = session.payment_link || "";
 
+  // 0. Check if this is a donation (created dynamically, not via a static Payment Link)
+  if (session.metadata?.type === "donation") {
+    try {
+      const amount = (session.amount_total || 0) / 100;
+      await base44.asServiceRole.entities.Donation.create({
+        donor_name: session.metadata?.donor_name || customerName || "Anonymous",
+        donor_email: email,
+        amount,
+        message: session.metadata?.donor_message || "",
+        stripe_session_id: session.id,
+      });
+      console.log(`Donation logged: $${amount} from ${email || "anonymous"}`);
+    } catch (err: any) {
+      console.error("Donation logging error:", err.message);
+    }
+    return new Response(JSON.stringify({ received: true, type: "donation" }), { status: 200 });
+  }
+
   // Check if this is a membership subscription
   let membershipTier: string | undefined;
   for (const [suffix, tier] of Object.entries(PAYMENT_LINK_TO_MEMBERSHIP)) {
