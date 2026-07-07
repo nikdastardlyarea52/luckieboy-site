@@ -1412,42 +1412,37 @@
     btn.disabled = true;
     btn.textContent = 'Redirecting to secure checkout... 🐾';
 
-    // Open the tab synchronously (within the click gesture) so Safari/Chrome
-    // don't block the redirect once the fetch resolves asynchronously.
-    let checkoutTab;
-    try {
-      checkoutTab = window.open('', '_blank');
-      if (checkoutTab) {
-        checkoutTab.document.write('<!DOCTYPE html><html><head><title>Redirecting...</title><style>body{font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#faf6f0;color:#333;}</style></head><body><p>Redirecting you to secure checkout... 🐾</p></body></html>');
-      }
-    } catch (e) { checkoutTab = null; }
+    // Stay in the SAME tab the whole time — opening a second tab causes mobile
+    // browsers to freeze/throttle this tab's JS in the background, which
+    // silently kills the fetch before it can redirect anywhere.
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     fetch(DONATE_API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount, name, email, message })
+      body: JSON.stringify({ amount, name, email, message }),
+      signal: controller.signal
     })
     .then(r => r.json())
     .then(data => {
+      clearTimeout(timeoutId);
       if (data.url) {
-        if (checkoutTab && !checkoutTab.closed) {
-          checkoutTab.location.href = data.url;
-        } else {
-          window.location.href = data.url;
-        }
-        btn.disabled = false;
-        btn.textContent = originalText;
+        window.location.href = data.url;
       } else {
-        if (checkoutTab && !checkoutTab.closed) checkoutTab.close();
         showToast(data.error || 'Something went wrong. Try again!');
         btn.disabled = false;
         btn.textContent = originalText;
       }
     })
     .catch(err => {
+      clearTimeout(timeoutId);
       console.error(err);
-      if (checkoutTab && !checkoutTab.closed) checkoutTab.close();
-      showToast('Network error. Try again?');
+      if (err.name === 'AbortError') {
+        showToast('This is taking too long. Please try again! 🐾');
+      } else {
+        showToast('Network error. Try again?');
+      }
       btn.disabled = false;
       btn.textContent = originalText;
     });
