@@ -1410,24 +1410,39 @@
     const btn = document.getElementById('donate-submit-btn');
     const originalText = btn.textContent;
     btn.disabled = true;
-    btn.textContent = 'Redirecting to secure checkout... 🐾';
+    btn.textContent = 'Contacting server... 🐾';
 
-    // Stay in the SAME tab the whole time — opening a second tab causes mobile
-    // browsers to freeze/throttle this tab's JS in the background, which
-    // silently kills the fetch before it can redirect anywhere.
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    let settled = false;
+    const startTime = Date.now();
+
+    // Independent watchdog — fires no matter what happens to the fetch/abort
+    // logic below, so the button can NEVER get stuck forever.
+    const watchdog = setInterval(() => {
+      if (settled) { clearInterval(watchdog); return; }
+      const elapsed = Math.round((Date.now() - startTime) / 1000);
+      if (elapsed >= 20) {
+        settled = true;
+        clearInterval(watchdog);
+        showToast('This is taking too long. Please try again! 🐾');
+        btn.disabled = false;
+        btn.textContent = originalText;
+      } else if (btn && !settled) {
+        btn.textContent = 'Contacting server (' + elapsed + 's)... 🐾';
+      }
+    }, 1000);
 
     fetch(DONATE_API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount, name, email, message }),
-      signal: controller.signal
+      body: JSON.stringify({ amount, name, email, message })
     })
     .then(r => r.json())
     .then(data => {
-      clearTimeout(timeoutId);
+      if (settled) return;
+      settled = true;
+      clearInterval(watchdog);
       if (data.url) {
+        btn.textContent = 'Redirecting now... 🐾';
         window.location.href = data.url;
       } else {
         showToast(data.error || 'Something went wrong. Try again!');
@@ -1436,13 +1451,11 @@
       }
     })
     .catch(err => {
-      clearTimeout(timeoutId);
+      if (settled) return;
+      settled = true;
+      clearInterval(watchdog);
       console.error(err);
-      if (err.name === 'AbortError') {
-        showToast('This is taking too long. Please try again! 🐾');
-      } else {
-        showToast('Network error. Try again?');
-      }
+      showToast('Network error. Try again?');
       btn.disabled = false;
       btn.textContent = originalText;
     });
