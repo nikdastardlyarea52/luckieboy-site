@@ -2,7 +2,7 @@
   functions = "netlify/functions"
 
 [[redirects]]
-  from = "/api/createDonation"
+  from = "/api/create-donation"
   to = "/.netlify/functions/create-donation"
   status = 200
   force = true
@@ -16,5 +16,11 @@
 [[redirects]]
   from = "/api/stripe-webhook"
   to = "/.netlify/functions/stripe-webhook"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/track-view"
+  to = "/.netlify/functions/track-view"
   status = 200
   force = true
