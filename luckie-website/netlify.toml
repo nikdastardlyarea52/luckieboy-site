@@ -1,0 +1,11 @@
+[[redirects]]
+  from = "/api/createDonation"
+  to = "https://base44.app/api/apps/6a0421bfc04dc7179e198e72/functions/createDonation"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/subscribe"
+  to = "https://base44.app/api/apps/6a0421bfc04dc7179e198e72/functions/subscribe"
+  status = 200
+  force = true
