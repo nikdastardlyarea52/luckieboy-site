@@ -1,0 +1,4 @@
+/api/create-donation  /.netlify/functions/create-donation  200!
+/api/subscribe  /.netlify/functions/subscribe  200!
+/api/stripe-webhook  /.netlify/functions/stripe-webhook  200!
+/api/track-view  /.netlify/functions/track-view  200!
