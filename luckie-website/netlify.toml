@@ -1,11 +1,20 @@
+[build]
+  functions = "netlify/functions"
+
 [[redirects]]
   from = "/api/createDonation"
-  to = "https://base44.app/api/apps/6a0421bfc04dc7179e198e72/functions/createDonation"
+  to = "/.netlify/functions/create-donation"
   status = 200
   force = true
 
 [[redirects]]
   from = "/api/subscribe"
-  to = "https://base44.app/api/apps/6a0421bfc04dc7179e198e72/functions/subscribe"
+  to = "/.netlify/functions/subscribe"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/stripe-webhook"
+  to = "/.netlify/functions/stripe-webhook"
   status = 200
   force = true
