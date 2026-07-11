@@ -27,9 +27,9 @@ module.exports = async (req, res) => {
 
     const unitAmount = Math.round(amount * 100);
     const params = new URLSearchParams();
+    params.set('ui_mode', 'embedded');
     params.set('mode', 'payment');
-    params.set('success_url', SITE_URL + '?donation=success');
-    params.set('cancel_url', SITE_URL + '?donation=cancelled');
+    params.set('return_url', SITE_URL + '?donation=success');
     params.set('line_items[0][quantity]', '1');
     params.set('line_items[0][price_data][currency]', 'usd');
     params.set('line_items[0][price_data][unit_amount]', String(unitAmount));
@@ -56,7 +56,7 @@ module.exports = async (req, res) => {
       return res.status(500).json({ error: data.error?.message || 'Stripe error' });
     }
 
-    return res.status(200).json({ url: data.url });
+    return res.status(200).json({ clientSecret: data.client_secret });
   } catch (err) {
     console.error('create-donation error:', err.message);
     return res.status(500).json({ error: err.message });
