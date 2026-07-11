@@ -1480,6 +1480,11 @@
     btn.disabled = true;
     btn.textContent = 'Loading...';
 
+    // Show modal immediately with spinner
+    document.getElementById('stripe-checkout-container').innerHTML = '<div style="text-align:center;padding:40px 0;"><div style="font-size:2rem;">⏳</div><p style="margin-top:12px;color:#666;">Loading secure checkout...</p></div>';
+    document.getElementById('donate-modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+
     try {
       const res = await fetch('/api/create-donation', {
         method: 'POST',
@@ -1495,10 +1500,8 @@
       checkoutInstance = await stripeInstance.initEmbeddedCheckout({ clientSecret: data.clientSecret });
       checkoutInstance.mount('#stripe-checkout-container');
 
-      document.getElementById('donate-modal-overlay').classList.add('open');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      document.body.style.overflow = 'hidden';
     } catch (err) {
+      closeDonateModal();
       showToast('Something went wrong. Try again!');
       console.error(err);
     } finally {
