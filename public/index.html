@@ -763,26 +763,6 @@
   </div>
 </div>
 
-
-
-
-      <div class="donate-field">
-        <label>Your name (optional)</label>
-        <input type="text" id="donate-name" placeholder="Your name" />
-      </div>
-      <div class="donate-field">
-        <label>Email (optional, for a receipt)</label>
-        <input type="email" id="donate-email" placeholder="your@email.com" />
-      </div>
-      <div class="donate-field">
-        <label>Message for Luckie (optional)</label>
-        <input type="text" id="donate-message" placeholder="Go get 'em, Luckie! 🐾" maxlength="200" />
-      </div>
-
-      <button class="btn btn-primary" style="width:100%;" id="donate-submit-btn" onclick="submitDonation()">❤️ Donate</button>
-      <div class="donate-note">Securely processed by Stripe. You'll be redirected to complete your donation.</div>
-    </div>
-  </div>
 </div>
 
 <!-- STRIPE INLINE CHECKOUT MODAL -->
@@ -1368,70 +1348,6 @@
 
 
   const SUBSCRIBE_API = '/api/subscribe';
-  const DONATE_API = '/api/create-donation';
-
-  function submitDonation() {
-    const amount = Number(document.getElementById('donate-custom-amount').value);
-    if (!amount || amount < 1) { showToast('Please enter an amount! 💛'); return; }
-
-    const name = document.getElementById('donate-name').value.trim();
-    const email = document.getElementById('donate-email').value.trim();
-    const message = document.getElementById('donate-message').value.trim();
-
-    const btn = document.getElementById('donate-submit-btn');
-    const originalText = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = 'Contacting server... 🐾';
-
-    let settled = false;
-    const startTime = Date.now();
-
-    // Independent watchdog — fires no matter what happens to the fetch/abort
-    // logic below, so the button can NEVER get stuck forever.
-    const watchdog = setInterval(() => {
-      if (settled) { clearInterval(watchdog); return; }
-      const elapsed = Math.round((Date.now() - startTime) / 1000);
-      if (elapsed >= 20) {
-        settled = true;
-        clearInterval(watchdog);
-        showToast('This is taking too long. Please try again! 🐾');
-        btn.disabled = false;
-        btn.textContent = originalText;
-      } else if (btn && !settled) {
-        btn.textContent = 'Contacting server (' + elapsed + 's)... 🐾';
-      }
-    }, 1000);
-
-    fetch(DONATE_API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount, name, email, message })
-    })
-    .then(r => r.json())
-    .then(data => {
-      if (settled) return;
-      settled = true;
-      clearInterval(watchdog);
-      if (data.url) {
-        btn.textContent = 'Redirecting now... 🐾';
-        window.location.href = data.url;
-      } else {
-        showToast(data.error || 'Something went wrong. Try again!');
-        btn.disabled = false;
-        btn.textContent = originalText;
-      }
-    })
-    .catch(err => {
-      if (settled) return;
-      settled = true;
-      clearInterval(watchdog);
-      console.error(err);
-      showToast('Network error. Try again?');
-      btn.disabled = false;
-      btn.textContent = originalText;
-    });
-  }
-
 
   function subscribeEmail() {
     const emailInput = document.getElementById('hero-email');
