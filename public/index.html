@@ -1472,28 +1472,13 @@
   
 
 
-  // ---- DONATE OVERLAY ----
+  // ---- DONATE ----
   function launchDonateModal() {
     const amountInput = document.getElementById('donate-amount-input');
     const amount = Number(amountInput.value);
     if (!amount || amount < 1) { showToast('Enter an amount first! 💛'); amountInput.focus(); return; }
-
-    // Build Stripe Payment Link URL with prefilled amount
-    // Using prefilled_amount param (in cents)
     const cents = Math.round(amount * 100);
-    const url = 'https://donate.stripe.com/dRm14ogCI0lU4ON60Yb3q07?prefilled_amount=' + cents;
-
-    document.getElementById('donate-iframe').src = url;
-    document.getElementById('donate-iframe-overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
-    document.querySelector('.bottom-donate-bar').style.display = 'none';
-  }
-
-  function closeDonateOverlay() {
-    document.getElementById('donate-iframe-overlay').classList.remove('open');
-    document.getElementById('donate-iframe').src = '';
-    document.body.style.overflow = '';
-    document.querySelector('.bottom-donate-bar').style.display = '';
+    window.location.href = 'https://donate.stripe.com/dRm14ogCI0lU4ON60Yb3q07?prefilled_amount=' + cents;
   }
 
 </script>
@@ -1547,16 +1532,5 @@
       <div id="stripe-checkout-container"></div>
     </div>
   </div>
-
-
-  <!-- Donate Fullscreen Overlay -->
-  <div id="donate-iframe-overlay">
-    <div id="donate-iframe-header">
-      <button onclick="closeDonateOverlay()">✕</button>
-      <span>❤️ Support Luckie</span>
-    </div>
-    <iframe id="donate-iframe" src="" allowpaymentrequest></iframe>
-  </div>
-
 </body>
 </html>
