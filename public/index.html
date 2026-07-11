@@ -233,53 +233,7 @@
     .product-card .price { font-size: 1.3rem; font-weight: 800; color: var(--primary); }
     .btn-sm { padding: 0.4rem 1.2rem; font-size: 0.9rem; border-radius: 20px; }
 
-    /* DONATE */
-    .donate-card {
-      background: var(--card-bg);
-      border-radius: 20px;
-      padding: 2.5rem;
-      box-shadow: var(--shadow);
-      max-width: 500px;
-      margin: 0 auto;
-    }
-    .donate-custom { margin-bottom: 1.5rem; }
-    .donate-custom label, .donate-field label {
-      display: block;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-      font-size: 0.9rem;
-      color: var(--dark);
-    }
-    .donate-custom-input {
-      display: flex;
-      align-items: center;
-      border: 2px solid #ddd;
-      border-radius: 12px;
-      padding: 0.6rem 1rem;
-      background: #fff;
-    }
-    .donate-custom-input span { font-weight: 800; color: var(--dark); margin-right: 0.4rem; }
-    .donate-custom-input input {
-      border: none;
-      outline: none;
-      font-size: 1.1rem;
-      width: 100%;
-      font-weight: 700;
-    }
-    .donate-field { margin-bottom: 1.2rem; }
-    .donate-field input {
-      width: 100%;
-      padding: 0.7rem 1rem;
-      border: 2px solid #ddd;
-      border-radius: 12px;
-      font-size: 1rem;
-    }
-    .donate-note {
-      text-align: center;
-      font-size: 0.8rem;
-      color: #888;
-      margin-top: 1rem;
-    }
+    
 
     /* MEMBERSHIP */
     .membership-grid {
@@ -542,7 +496,6 @@
     <a href="#" onclick="showPage('shop')" id="nav-shop">Shop</a>
     <a href="#" onclick="showPage('petstore')" id="nav-petstore">🛒 Pet Store</a>
     <a href="#" onclick="showPage('membership')" id="nav-membership">🌟 Join</a>
-    <a href="#" onclick="showPage('donate')" id="nav-donate">❤️ Donate</a>
   </div>
 </nav>
 
@@ -811,19 +764,7 @@
 </div>
 
 
-<div class="page" id="page-donate">
-  <div class="section">
-    <div class="section-title">Support Luckie's Cause ❤️</div>
-    <div class="section-sub">Every dollar helps fund Luckie's adventures, vet care, and the causes he champions for shelter pups. Give whatever feels right — no amount is too small.</div>
 
-    <div class="donate-card">
-      <div class="donate-custom">
-        <label for="donate-custom-amount">Donation amount</label>
-        <div class="donate-custom-input">
-          <span>$</span>
-          <input type="number" id="donate-custom-amount" min="1" step="1" placeholder="25" value="25" />
-        </div>
-      </div>
 
       <div class="donate-field">
         <label>Your name (optional)</label>
