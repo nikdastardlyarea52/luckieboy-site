@@ -501,29 +501,30 @@
     /* FLOATING DONATE BUTTON */
     .float-donate {
       position: fixed;
-      bottom: 24px;
+      bottom: 80px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 9999;
+      z-index: 99999;
       background: #e05c00;
-      color: #fff;
+      color: #fff !important;
       border: none;
       border-radius: 50px;
       padding: 14px 32px;
       font-size: 1rem;
       font-weight: 700;
       letter-spacing: 0.03em;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
       cursor: pointer;
-      text-decoration: none;
+      text-decoration: none !important;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
     }
-    .float-donate:hover { background: #bf4e00; transform: translateX(-50%) translateY(-2px); }
+    .float-donate:hover { background: #bf4e00; transform: translateX(-50%) translateY(-2px); color:#fff !important; }
     @media (max-width: 600px) {
-      .float-donate { bottom: 16px; padding: 13px 26px; font-size: 0.95rem; }
+      .float-donate { bottom: 72px; padding: 13px 26px; font-size: 0.95rem; }
     }
 
   </style>
