@@ -461,36 +461,23 @@
       z-index: 99999;
       background: #fff;
       border-top: 1px solid #eee;
-      padding: 10px 16px;
+      padding: 12px 20px;
       box-shadow: 0 -2px 12px rgba(0,0,0,0.10);
-      display: flex;
-      gap: 8px;
-      align-items: center;
     }
-    .bottom-donate-bar input[type=number] {
-      flex: 1;
-      border: 2px solid #e05c00;
-      border-radius: 50px;
-      padding: 12px 16px;
-      font-size: 1rem;
-      font-weight: 600;
-      outline: none;
-      min-width: 0;
-    }
-    .bottom-donate-bar input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
-    .bottom-donate-bar button {
+    .bottom-donate-bar a {
+      display: block;
+      width: 100%;
       background: #e05c00;
-      color: #fff;
-      border: none;
+      color: #fff !important;
+      text-align: center;
       border-radius: 50px;
-      padding: 12px 22px;
+      padding: 14px;
       font-size: 1rem;
       font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-      flex-shrink: 0;
+      text-decoration: none !important;
+      letter-spacing: 0.03em;
+      box-shadow: 0 4px 14px rgba(224,92,0,0.35);
     }
-    .bottom-donate-bar button:disabled { opacity: 0.6; }
     body { padding-bottom: 80px; }
 
     
@@ -1472,14 +1459,7 @@
   
 
 
-  // ---- DONATE ----
-  function launchDonateModal() {
-    const amountInput = document.getElementById('donate-amount-input');
-    const amount = Number(amountInput.value);
-    if (!amount || amount < 1) { showToast('Enter an amount first! 💛'); amountInput.focus(); return; }
-    const cents = Math.round(amount * 100);
-    window.location.href = 'https://donate.stripe.com/dRm14ogCI0lU4ON60Yb3q07?prefilled_amount=' + cents;
-  }
+  
 
 </script>
 
@@ -1520,8 +1500,7 @@
 
   <!-- Fixed Bottom Donate Bar -->
   <div class="bottom-donate-bar">
-    <input type="number" id="donate-amount-input" placeholder="$ Amount" min="1" max="5000" step="1" />
-    <button id="donate-launch-btn" onclick="launchDonateModal()">❤️ Donate</button>
+    <a href="https://donate.stripe.com/dRm14ogCI0lU4ON60Yb3q07" target="_blank" rel="noopener">❤️ Donate to Luckie</a>
   </div>
 
   <!-- Stripe Embedded Checkout Modal -->
