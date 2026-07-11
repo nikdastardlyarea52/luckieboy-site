@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name='impact-site-verification' value='33d4d5eb-a9c1-4f9b-9e12-5ce4ba387c02'>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luckie 🐾 | The One & Only</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #e74c3c;
+      --accent: #f39c12;
+      --dark: #f0ede8;
+      --light: #fef9f0;
+      --text: #222;
+      --card-bg: #fff;
+      --shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Nunito', sans-serif; background: #ffffff; color: var(--text); }
+
+    /* NAV */
+    nav {
+      background: var(--dark);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .nav-logo {
+      font-family: 'Pacifico', cursive;
+      color: #1a1a1a;
+      font-size: 1.6rem;
+      padding: 1rem 0;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a {
+      color: #111;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover {
+      color: #e05c1a;
+      background: rgba(224,92,26,0.08);
+    }
+    .nav-links a.active {
+      color: #fff;
+      background: var(--primary);
+    }
+
+    /* PAGE SYSTEM */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #f0ede8 0%, #e8e2d9 50%, #f5f0ea 100%);
+      color: #222;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '🐾';
+      font-size: 15rem;
+      position: absolute;
+      top: -3rem;
+      right: -3rem;
+      opacity: 0.05;
+      transform: rotate(20deg);
+    }
+    .hero-avatar {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 5px solid var(--accent);
+      object-fit: cover;
+      object-position: center top;
+      margin: 0 auto 1.5rem;
+      display: block;
+      box-shadow: 0 0 40px rgba(243,156,18,0.5);
+      background: rgba(255,255,255,0.05);
+    }
+    .hero h1 { color: #111;
+      font-family: 'Pacifico', cursive;
+      font-size: 3.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 span { color: #7a2800; }
+    .hero .tagline {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-bottom: 2.5rem;
+    }
+    .stat { text-align: center; }
+    .stat .num { font-size: 2rem; font-weight: 800; color: var(--accent); }
+    .stat .label { font-size: 0.85rem; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
+    .hero-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      padding: 0.75rem 2rem;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: #c0392b; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(231,76,60,0.4); }
+    .btn-outline { background: transparent; color: #333; border: 2px solid #333; }
+    .btn-outline:hover { background: #333; color: #fff; transform: translateY(-2px); }
+    .btn-accent { background: var(--accent); color: white; }
+    .btn-accent:hover { background: #e67e22; transform: translateY(-2px); }
+
+    /* SECTION */
+    .section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      font-family: 'Pacifico', cursive;
+      font-size: 2rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .section-sub { color: #888; margin-bottom: 2.5rem; font-size: 1.05rem; }
+
+    /* PHOTO GRID */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .photo-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .photo-card:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
+    .photo-card img { width: 100%; height: 280px; object-fit: cover; }
+    .photo-card .photo-info { padding: 1rem 1.2rem; }
+    .photo-card .photo-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 0.3rem; }
+    .photo-card .photo-caption { color: #777; font-size: 0.9rem; margin-bottom: 0.8rem; }
+    .photo-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      background: #f0f0f0;
+      color: #555;
+      border-radius: 20px;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .photo-like {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 0.8rem;
+      cursor: pointer;
+    }
+
+    /* BLOG */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    .blog-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    .blog-card:hover { transform: translateY(-4px); }
+    .blog-card img { width: 100%; height: 220px; object-fit: cover; }
+    .blog-card .blog-info { padding: 1.5rem; }
+    .blog-card .blog-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .blog-card .blog-excerpt { color: #777; font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.5; }
+    .blog-card .blog-meta { font-size: 0.8rem; color: #aaa; }
+
+    /* SHOP */
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
+    .product-card:hover { transform: translateY(-4px); }
+    .product-card .product-img {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(135deg, #e74c3c22, #f39c1222);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+    }
+    .product-card .product-img img { width: 100%; height: 100%; object-fit: cover; }
+    .product-card .product-info { padding: 1.2rem; }
+    .product-card .product-name { font-weight: 800; font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .product-card .product-desc { color: #777; font-size: 0.9rem; margin-bottom: 1rem; }
+    .product-card .product-bottom { display: flex; justify-content: space-between; align-items: center; }
+    .product-card .price { font-size: 1.3rem; font-weight: 800; color: var(--primary); }
+    .btn-sm { padding: 0.4rem 1.2rem; font-size: 0.9rem; border-radius: 20px; }
+
+    /* DONATE */
+    .donate-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .donate-custom { margin-bottom: 1.5rem; }
+    .donate-custom label, .donate-field label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+      color: var(--dark);
+    }
+    .donate-custom-input {
+      display: flex;
+      align-items: center;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      padding: 0.6rem 1rem;
+      background: #fff;
+    }
+    .donate-custom-input span { font-weight: 800; color: var(--dark); margin-right: 0.4rem; }
+    .donate-custom-input input {
+      border: none;
+      outline: none;
+      font-size: 1.1rem;
+      width: 100%;
+      font-weight: 700;
+    }
+    .donate-field { margin-bottom: 1.2rem; }
+    .donate-field input {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      font-size: 1rem;
+    }
+    .donate-note {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 1rem;
+    }
+
+    /* MEMBERSHIP */
+    .membership-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .tier-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+      position: relative;
+      transition: transform 0.2s;
+    }
+    .tier-card:hover { transform: translateY(-5px); }
+    .tier-card.featured {
+      background: linear-gradient(135deg, var(--dark), #0f3460);
+      color: white;
+      border: 3px solid var(--accent);
+    }
+    .tier-card.featured .tier-desc { color: #ccc; }
+    .tier-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.2rem 1rem;
+      border-radius: 20px;
+    }
+    .tier-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .tier-name { font-family: 'Pacifico', cursive; font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .tier-price { font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem; }
+    .tier-card.featured .tier-price { color: var(--accent); }
+    .tier-price span { font-size: 0.9rem; font-weight: 400; color: #888; }
+    .tier-card.featured .tier-price span { color: #aaa; }
+    .tier-desc { color: #777; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .tier-features { list-style: none; text-align: left; margin-bottom: 1.5rem; }
+    .tier-features li { padding: 0.3rem 0; font-size: 0.9rem; }
+    .tier-features li::before { content: '✅ '; }
+
+    /* EMAIL SIGNUP */
+    .email-signup {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 20px;
+      padding: 3rem;
+      text-align: center;
+      color: white;
+      margin: 2rem 0;
+    }
+    .email-signup h2 { font-family: 'Pacifico', cursive; font-size: 2rem; margin-bottom: 0.5rem; }
+    .email-signup p { margin-bottom: 1.5rem; font-size: 1.05rem; opacity: 0.9; }
+    .email-form { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+    .email-form input {
+      padding: 0.75rem 1.5rem;
+      border-radius: 30px;
+      border: none;
+      font-size: 1rem;
+      font-family: 'Nunito', sans-serif;
+      min-width: 280px;
+      outline: none;
+    }
+    .email-form .btn { background: var(--dark); color: white; }
+    .email-form .btn:hover { background: #0f3460; }
+
+    /* ABOUT */
+    .about-section { 
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    @media (max-width: 700px) {
+      .about-section { grid-template-columns: 1fr; gap: 2rem; }
+      .hero h1 { color: #111; font-size: 2.5rem; }
+      .hero-stats { gap: 1.5rem; }
+      nav { flex-direction: column; padding: 0.5rem 1rem; gap: 0.5rem; }
+      .nav-links { flex-wrap: wrap; justify-content: center; gap: 0.3rem; }
+    }
+    .about-img { width: 100%; border-radius: 20px; box-shadow: var(--shadow); }
+    .about-text h2 { font-family: 'Pacifico', cursive; font-size: 2rem; margin-bottom: 1rem; color: var(--dark); }
+    .about-text p { color: #666; line-height: 1.8; margin-bottom: 1rem; }
+    .fun-facts { background: #fff; border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); margin-top: 1rem; }
+    .fun-facts h3 { font-weight: 800; margin-bottom: 0.8rem; }
+    .fun-fact { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem; font-size: 0.95rem; }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      color: #aaa;
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: white;
+      border-radius: 20px;
+      max-width: 600px;
+      width: 90%;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .modal img { width: 100%; max-height: 400px; object-fit: cover; }
+    .modal-body { padding: 1.5rem; }
+    .modal-body h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .modal-body p { color: #666; line-height: 1.6; margin-bottom: 1rem; }
+    .modal-close {
+      float: right;
+      background: #eee;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--dark);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 700;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s;
+      z-index: 9999;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* STRIPE CHECKOUT MODAL */
+    .checkout-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+    }
+    .checkout-overlay.open { display: flex; }
+    .checkout-modal {
+      background: #fff;
+      border-radius: 24px;
+      padding: 2.5rem;
+      max-width: 460px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      position: relative;
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
+    .checkout-modal h2 { font-family: 'Pacifico', cursive; color: var(--dark); margin-bottom: 0.3rem; font-size: 1.5rem; }
+    .checkout-modal .checkout-price { color: var(--primary); font-size: 1.8rem; font-weight: 800; margin-bottom: 0.3rem; }
+    .checkout-modal .checkout-desc { color: #888; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .checkout-close {
+      position: absolute; top: 1rem; right: 1.2rem;
+      background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #999;
+    }
+    .checkout-close:hover { color: var(--dark); }
+    .checkout-field { margin-bottom: 1rem; }
+    .checkout-field label { display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 0.4rem; color: #555; }
+    .checkout-field input {
+      width: 100%; padding: 0.7rem 1rem; border: 2px solid #e0e0e0;
+      border-radius: 12px; font-size: 1rem; font-family: 'Nunito', sans-serif; outline: none;
+      transition: border-color 0.2s;
+    }
+    .checkout-field input:focus { border-color: var(--primary); }
+    #card-element {
+      padding: 0.75rem 1rem; border: 2px solid #e0e0e0;
+      border-radius: 12px; background: #fff;
+      transition: border-color 0.2s;
+    }
+    #card-element.StripeElement--focus { border-color: var(--primary); }
+    #card-element.StripeElement--invalid { border-color: #e74c3c; }
+    #card-errors { color: #e74c3c; font-size: 0.85rem; margin-top: 0.4rem; min-height: 1.2em; }
+    .checkout-submit {
+      width: 100%; padding: 0.9rem; background: var(--primary); color: #fff;
+      border: none; border-radius: 30px; font-size: 1.05rem; font-weight: 800;
+      cursor: pointer; font-family: 'Nunito', sans-serif; transition: background 0.2s, transform 0.1s;
+      margin-top: 1rem;
+    }
+    .checkout-submit:hover:not(:disabled) { background: #c0392b; transform: translateY(-1px); }
+    .checkout-submit:disabled { background: #ccc; cursor: not-allowed; }
+    .checkout-secure { text-align: center; font-size: 0.8rem; color: #aaa; margin-top: 0.8rem; }
+    .checkout-success {
+      text-align: center; padding: 1rem 0;
+    }
+    .checkout-success .success-icon { font-size: 4rem; margin-bottom: 1rem; }
+    .checkout-success h3 { font-family: 'Pacifico', cursive; color: var(--dark); font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .checkout-success p { color: #666; }
+
+  </style>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>(function(i,m,p,a,c,t){c.ire_o=p;c[p]=c[p]||function(){(c[p].a=c[p].a||[]).push(arguments)};t=a.createElement(m);var z=a.getElementsByTagName(m)[0];t.async=1;t.src=i;z.parentNode.insertBefore(t,z)})('https://utt.impactcdn.com/P-A7424495-b53d-4d53-b521-600a1ae183431.js','script','impactStat',document,window);impactStat('transformLinks');impactStat('trackImpression');</script>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')" style="display:flex;align-items:center;gap:0.5rem;"><img src="/images/c1f661c7a_1781974138985_260620095938_260620100446_260620100927.png" style="height:52px;width:auto;" alt="Luckie logo" />Luckie<span>🐾</span></a>
+  <div class="nav-links">
+    <a href="#" onclick="showPage('home')" class="active" id="nav-home">Home</a>
+    <a href="#" onclick="showPage('photos')" id="nav-photos">Photos</a>
+    <a href="#" onclick="showPage('blog')" id="nav-blog">Blog</a>
+    <a href="#" onclick="showPage('shop')" id="nav-shop">Shop</a>
+    <a href="#" onclick="showPage('petstore')" id="nav-petstore">🛒 Pet Store</a>
+    <a href="#" onclick="showPage('membership')" id="nav-membership">🌟 Join</a>
+    <a href="#" onclick="showPage('donate')" id="nav-donate">❤️ Donate</a>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <img class="hero-avatar" src="/images/5c868dc69_Adobe_Express_20221028_06083109390586660353007.png" alt="Luckie" />
+    <h1>Hi, I'm <span>Luckie</span> 🐾</h1>
+    <p class="tagline">The internet's most stylish little dog. Living big. Napping bigger.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="num">18+</div><div class="label">Photos</div></div>
+      <div class="stat"><div class="num">100%</div><div class="label">Treat Motivated</div></div>
+      <div class="stat"><div class="num">24/7</div><div class="label">Vibes Only</div></div>
+    </div>
+    <div class="hero-btns">
+      <button class="btn btn-primary" onclick="showPage('photos')">📸 See My Photos</button>
+      <button class="btn btn-outline" onclick="showPage('membership')">🌟 Join the Pack</button>
+      <button class="btn btn-accent" onclick="showPage('shop')">🛍️ Get Merch</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="about-section">
+      <img class="about-img" src="/images/b0fb03377_20240721_112448.jpg" alt="Luckie chilling" />
+      <div class="about-text">
+        <h2>About Me 🐾</h2>
+        <p>Hey! I'm Luckie — a small dog with enormous personality and absolutely zero chill (except during nap time, which is sacred).</p>
+        <p>I love car rides, beach walks, wearing stylish bandanas, and judging people from a comfortable distance. My human finally gave me my own website, which is honestly overdue.</p>
+        <p>Follow along for photos, adventures, and maybe some unsolicited opinions on dog food.</p>
+        <div class="fun-facts">
+          <h3>🐶 Fun Facts</h3>
+          <div class="fun-fact">🎽 Favorite accessory: bandanas (obviously)</div>
+          <div class="fun-fact">🚗 Happiest place: the front seat</div>
+          <div class="fun-fact">🏖️ Favorite activity: beach patrol</div>
+          <div class="fun-fact">😴 Daily naps: too many to count</div>
+          <div class="fun-fact">🦴 Motivation level: treat-dependent</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Photos Preview -->
+  <div style="background: #f8f4ef; padding: 4rem 0;">
+    <div class="section">
+      <div class="section-title">Latest Snaps 📸</div>
+      <div class="section-sub">Fresh content from Luckie's camera roll</div>
+      <div class="photo-grid" id="home-photos"></div>
+      <div style="text-align:center; margin-top: 2rem;">
+        <button class="btn btn-primary" onclick="showPage('photos')">See All Photos →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Signup -->
+  <div class="section">
+    <div class="email-signup">
+      <h2>Join the Pack 🐾</h2>
+      <p>Get Luckie's latest adventures, exclusive content, and tail-wagging updates straight to your inbox.</p>
+      <div class="email-form">
+        <input type="email" id="hero-email" placeholder="your@email.com" />
+        <button class="btn" onclick="subscribeEmail()">Subscribe Free</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHOTOS PAGE -->
+<div class="page" id="page-photos">
+  <div class="section">
+    <div class="section-title">Photo Gallery 📸</div>
+    <div class="section-sub">Every pic is a masterpiece. Fight me.</div>
+    <div class="photo-grid" id="photos-grid"></div>
+  </div>
+</div>
+
+<!-- BLOG PAGE -->
+<div class="page" id="page-blog">
+  <div class="section">
+    <div class="section-title">Luckie's Blog ✍️</div>
+    <div class="section-sub">Thoughts, adventures, and deep nap-time reflections</div>
+    <div class="blog-grid" id="blog-grid"></div>
+  </div>
+</div>
+
+<!-- SHOP PAGE -->
+<div class="page" id="page-shop">
+  <div class="section">
+    <div class="section-title">Luckie's Shop 🛍️</div>
+    <div class="section-sub">Wear the dog. Be the vibe. Every order ships directly to you.</div>
+
+    <!-- Promo Banner -->
+    <div class="shop-banner">
+      <div>
+        <strong>🐾 Free Shipping on orders over $40</strong><br>
+        <span>Print-on-demand — made fresh for every order via Printful</span>
+      </div>
+      <div style="font-size:1.8rem;">🎉</div>
+    </div>
+
+    <!-- Trust badges -->
+    <div class="shop-trust">
+      <div class="shop-trust-item">🔒 Secure Checkout</div>
+      <div class="shop-trust-item">🚚 Ships Worldwide</div>
+      <div class="shop-trust-item">🖨️ Print-on-Demand</div>
+      <div class="shop-trust-item">↩️ Easy Returns</div>
+    </div>
+
+    <div class="shop-grid" id="shop-grid">
+
+      <!-- Tee -->
+      <div class="product-card">
+        <div class="product-badge bestseller">Bestseller</div>
+        <div class="product-img">
+          <img src="/images/d0677283e_generated_image.png" alt="Luckie Classic Tee" onerror="this.parentElement.innerHTML='🐾'" />
+        </div>
+        <div class="product-info">
+          <div class="product-category">Apparel</div>
+          <div class="product-name">Luckie Classic Tee</div>
+          <div class="product-desc">Soft Bella+Canvas unisex tee with Luckie's face. Runs true to size. Unisex S–3XL.</div>
+          <div class="product-shipping">✅ Ships in 3–7 business days</div>
+          <div class="product-bottom">
+            <span class="price">$29.99</span>
+            <button class="btn btn-sm btn-buy" onclick="buyMerch('luckie_classic_tee', 'Luckie Classic Tee', 29.99)">Buy Now 🐾</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mug -->
+      <div class="product-card">
+        <div class="product-badge new">Fan Fave</div>
+        <div class="product-img">
+          <img src="/images/60f91f1ab_generated_image.png" alt="Luckie Coffee Mug" onerror="this.parentElement.innerHTML='🐾'" />
+        </div>
+        <div class="product-info">
+          <div class="product-category">Drinkware</div>
+          <div class="product-name">Luckie Coffee Mug</div>
+          <div class="product-desc">White glossy ceramic, 11oz or 15oz. Start every morning with Luckie's face. Microwave & dishwasher safe.</div>
+          <div class="product-shipping">✅ Ships in 3–7 business days</div>
+          <div class="product-bottom">
+            <span class="price">$19.99</span>
+            <button class="btn btn-sm btn-buy" onclick="buyMerch('luckie_mug', 'Luckie Coffee Mug', 19.99)">Buy Now 🐾</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hoodie -->
+      <div class="product-card">
+        <div class="product-img">
+          <img src="/images/2be3b00ef_generated_image.png" alt="Luckie Hoodie" onerror="this.parentElement.innerHTML='🐾'" />
+        </div>
+        <div class="product-info">
+          <div class="product-category">Apparel</div>
+          <div class="product-name">Luckie Hoodie</div>
+          <div class="product-desc">Cozy Gildan 18500 pullover hoodie with Luckie printed on the front. Runs slightly large — size down if unsure.</div>
+          <div class="product-shipping">✅ Ships in 3–7 business days</div>
+          <div class="product-bottom">
+            <span class="price">$44.99</span>
+            <button class="btn btn-sm btn-buy" onclick="buyMerch('luckie_hoodie', 'Luckie Hoodie', 44.99)">Buy Now 🐾</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticker -->
+      <div class="product-card">
+        <div class="product-badge" style="background:#9b59b6;">Best Value</div>
+        <div class="product-img">
+          <img src="/images/7f09415b7_generated_image.png" alt="Luckie Sticker" onerror="this.parentElement.innerHTML='🐾'" />
+        </div>
+        <div class="product-info">
+          <div class="product-category">Accessories</div>
+          <div class="product-name">Luckie Sticker</div>
+          <div class="product-desc">Kiss-cut vinyl sticker in 3 sizes. Weatherproof, UV-resistant. Perfect for laptops, water bottles, car bumpers.</div>
+          <div class="product-shipping">✅ Ships in 2–5 business days</div>
+          <div class="product-bottom">
+            <span class="price">$4.99</span>
+            <button class="btn btn-sm btn-buy" onclick="buyMerch('luckie_sticker_pack', 'Luckie Sticker', 4.99)">Buy Now 🐾</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom info strip -->
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:2.5rem; justify-content:center;">
+      <div style="background:#f8f9fa; border-radius:12px; padding:1rem 1.5rem; text-align:center; flex:1; min-width:180px;">
+        <div style="font-size:1.5rem;">🖨️</div>
+        <div style="font-weight:800; margin:0.3rem 0;">Print-on-Demand</div>
+        <div style="font-size:0.83rem; color:#666;">Made fresh — no stock sitting in a warehouse</div>
+      </div>
+      <div style="background:#f8f9fa; border-radius:12px; padding:1rem 1.5rem; text-align:center; flex:1; min-width:180px;">
+        <div style="font-size:1.5rem;">🌍</div>
+        <div style="font-weight:800; margin:0.3rem 0;">Ships Worldwide</div>
+        <div style="font-size:0.83rem; color:#666;">Fulfilled via Printful to 200+ countries</div>
+      </div>
+      <div style="background:#f8f9fa; border-radius:12px; padding:1rem 1.5rem; text-align:center; flex:1; min-width:180px;">
+        <div style="font-size:1.5rem;">🔒</div>
+        <div style="font-weight:800; margin:0.3rem 0;">Secure Checkout</div>
+        <div style="font-size:0.83rem; color:#666;">Powered by Stripe — 100% safe & encrypted</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MEMBERSHIP PAGE -->
+<div class="page" id="page-membership">
+  <div class="section">
+    <div class="section-title">Join the Pack 🌟</div>
+    <div class="section-sub">Pick your tier. Get closer to Luckie. It's that simple.</div>
+
+    <div class="membership-grid">
+      <div class="tier-card">
+        <div class="tier-icon">🐶</div>
+        <div class="tier-name">Free Pup</div>
+        <div class="tier-price">$0 <span>/month</span></div>
+        <div class="tier-desc">Join the pack at no cost. You're in the family.</div>
+        <ul class="tier-features">
+          <li>Access to public photos</li>
+          <li>Weekly email updates</li>
+          <li>Luckie's blog posts</li>
+        </ul>
+        <button class="btn btn-outline" style="width:100%;color:var(--dark);border-color:var(--dark);" onclick="subscribeEmail()">Join Free</button>
+      </div>
+
+      <div class="tier-card featured">
+        <div class="tier-badge">Most Popular</div>
+        <div class="tier-icon">⭐</div>
+        <div class="tier-name">Fan</div>
+        <div class="tier-price">$4.99 <span>/month</span></div>
+        <div class="tier-desc">The real fans. You know who you are.</div>
+        <ul class="tier-features">
+          <li>Everything in Free</li>
+          <li>Exclusive behind-the-scenes photos</li>
+          <li>Monthly wallpaper pack</li>
+          <li>Early access to new content</li>
+          <li>Name in Luckie's credits 🐾</li>
+        </ul>
+        <button class="btn btn-accent" style="width:100%;" onclick="startCheckout('fan')">Become a Fan — $4.99/mo</button>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-icon">👑</div>
+        <div class="tier-name">Super Fan</div>
+        <div class="tier-price">$9.99 <span>/month</span></div>
+        <div class="tier-desc">VIP access. The inner circle. Luckie's ride-or-die.</div>
+        <ul class="tier-features">
+          <li>Everything in Fan</li>
+          <li>Monthly video content</li>
+          <li>Custom Luckie digital stickers</li>
+          <li>Direct Q&A with Luckie's human</li>
+          <li>10% off all merch</li>
+          <li>Annual photo print gift 🎁</li>
+        </ul>
+        <button class="btn btn-primary" style="width:100%;" onclick="startCheckout('superfan')">Go Super Fan — $9.99/mo</button>
+      </div>
+    </div>
+
+    <div class="email-signup">
+      <h2>Get Notified When We Launch 🚀</h2>
+      <p>Paid memberships are coming soon. Drop your email to be first in line.</p>
+      <div class="email-form">
+        <input type="email" id="member-email" placeholder="your@email.com" />
+        <button class="btn" onclick="subscribeMember()">Notify Me</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="page" id="page-donate">
+  <div class="section">
+    <div class="section-title">Support Luckie's Cause ❤️</div>
+    <div class="section-sub">Every dollar helps fund Luckie's adventures, vet care, and the causes he champions for shelter pups. Give whatever feels right — no amount is too small.</div>
+
+    <div class="donate-card">
+      <div class="donate-custom">
+        <label for="donate-custom-amount">Donation amount</label>
+        <div class="donate-custom-input">
+          <span>$</span>
+          <input type="number" id="donate-custom-amount" min="1" step="1" placeholder="25" value="25" />
+        </div>
+      </div>
+
+      <div class="donate-field">
+        <label>Your name (optional)</label>
+        <input type="text" id="donate-name" placeholder="Your name" />
+      </div>
+      <div class="donate-field">
+        <label>Email (optional, for a receipt)</label>
+        <input type="email" id="donate-email" placeholder="your@email.com" />
+      </div>
+      <div class="donate-field">
+        <label>Message for Luckie (optional)</label>
+        <input type="text" id="donate-message" placeholder="Go get 'em, Luckie! 🐾" maxlength="200" />
+      </div>
+
+      <button class="btn btn-primary" style="width:100%;" id="donate-submit-btn" onclick="submitDonation()">❤️ Donate</button>
+      <div class="donate-note">Securely processed by Stripe. You'll be redirected to complete your donation.</div>
+    </div>
+  </div>
+</div>
+
+<!-- STRIPE INLINE CHECKOUT MODAL -->
+<div class="checkout-overlay" id="checkout-overlay" onclick="closeCheckout(event)">
+  <div class="checkout-modal" id="checkout-modal">
+    <button class="checkout-close" onclick="closeCheckoutModal()">✕</button>
+    <div id="checkout-content">
+      <h2 id="checkout-title">Join the Pack</h2>
+      <div class="checkout-price" id="checkout-price"></div>
+      <div class="checkout-desc" id="checkout-desc"></div>
+      <div class="checkout-field">
+        <label>Email</label>
+        <input type="email" id="checkout-email" placeholder="your@email.com" required />
+      </div>
+      <div class="checkout-field">
+        <label>Name on Card</label>
+        <input type="text" id="checkout-name" placeholder="Jane Smith" required />
+      </div>
+      <div class="checkout-field">
+        <label>Card Details</label>
+        <div id="card-element"></div>
+        <div id="card-errors"></div>
+      </div>
+      <button class="checkout-submit" id="checkout-btn" onclick="submitCheckout()">
+        🐾 Complete Purchase
+      </button>
+      <div class="checkout-secure">🔒 Secured by Stripe · Your card info is never stored here</div>
+    </div>
+    <div class="checkout-success" id="checkout-success" style="display:none;">
+      <div class="success-icon">🎉</div>
+      <h3>Welcome to the Pack!</h3>
+      <p>Thank you! Your payment was successful. Check your email for confirmation.</p>
+      <button class="checkout-submit" style="margin-top:1.5rem;" onclick="closeCheckoutModal()">Back to Luckie's World 🐾</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- PET STORE PAGE -->
+<div class="page" id="page-petstore">
+  <div class="section">
+    <div class="section-title">Luckie's Pet Store 🛒</div>
+    <div class="section-sub">Hand-picked by Luckie himself. Drop-shipped straight to your door.</div>
+
+    <div class="store-tabs">
+      <button class="store-tab active" onclick="filterPetStore('all', this)">All Products</button>
+      <button class="store-tab" onclick="filterPetStore('accessories', this)">Accessories</button>
+      <button class="store-tab" onclick="filterPetStore('food', this)">Food & Treats</button>
+      <button class="store-tab" onclick="filterPetStore('travel', this)">Travel</button>
+      <button class="store-tab" onclick="filterPetStore('toys', this)">Toys</button>
+      <button class="store-tab" onclick="filterPetStore('grooming', this)">Grooming</button>
+    </div>
+
+    <div class="shop-grid" id="pet-store-grid">
+
+      <!-- ACCESSORIES -->
+      <div class="pet-product-card" data-category="accessories">
+        <div class="pet-img"><img src="https://images-na.ssl-images-amazon.com/images/I/71QH6ND1goL._AC_SL1500_.jpg" alt="Dog Bandana Pack" onerror="this.src='/images/939caf601_20221022_091536.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">⭐ Luckie Approved</span>
+          <div class="pet-name">Bandana 10-Pack</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (2,400+ reviews)</div>
+          <div class="pet-desc">Soft, washable cotton bandanas in a variety of patterns. I own 6 of these. That tells you everything.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$12.99</span>
+            <a href="https://amzn.to/3bandana1" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pet-product-card" data-category="accessories">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/71f6hqtqSmL._AC_SL1500_.jpg" alt="Personalized Dog Tag" onerror="this.src='/images/939caf601_20221022_091536.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">🏷️ Best Seller</span>
+          <div class="pet-name">Personalized Dog ID Tag</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (8,000+ reviews)</div>
+          <div class="pet-desc">Engraved stainless steel tag with name + phone number. Loud jingle optional. Mine says "Luckie — obviously."</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$8.99</span>
+            <a href="https://amzn.to/3dogtag" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOD & TREATS -->
+      <div class="pet-product-card" data-category="food">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/81fHBbw7JML._AC_SL1500_.jpg" alt="Zuke's Mini Naturals" onerror="this.src='/images/458c39b65_20230724_161616.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">⭐ Luckie's #1 Treat</span>
+          <div class="pet-name">Zuke's Mini Naturals Treats</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (30,000+ reviews)</div>
+          <div class="pet-desc">Soft chicken training treats under 3 calories each. The gold standard. I will do anything for these. Anything.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$9.99</span>
+            <a href="https://amzn.to/3zukes" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pet-product-card" data-category="food">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/71xEo6UPSKL._AC_SL1500_.jpg" alt="Blue Buffalo Bits" onerror="this.src='/images/458c39b65_20230724_161616.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">🌟 Premium Pick</span>
+          <div class="pet-name">Blue Buffalo BLUE Bits</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (12,000+ reviews)</div>
+          <div class="pet-desc">Real meat as first ingredient, resealable bag. Available on Chewy Auto-Ship for 35% off your first order.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$11.49</span>
+            <a href="https://amzn.to/3bluebits" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRAVEL -->
+      <div class="pet-product-card" data-category="travel">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/71WJsZpuFBL._AC_SL1500_.jpg" alt="Kurgo Harness" onerror="this.src='/images/b0fb03377_20240721_112448.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">🚗 Car Essential</span>
+          <div class="pet-name">Kurgo Dog Seat Belt Harness</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (18,000+ reviews)</div>
+          <div class="pet-desc">Crash-tested, padded, connects to any seat belt. My human insists. Honestly fair — it's really comfortable.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$34.99</span>
+            <a href="https://amzn.to/3kurgo" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pet-product-card" data-category="travel">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/71yjV4KXJWL._AC_SL1500_.jpg" alt="Car Hammock" onerror="this.src='/images/b0fb03377_20240721_112448.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">😴 Nap Approved</span>
+          <div class="pet-name">Waterproof Car Seat Hammock</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (24,000+ reviews)</div>
+          <div class="pet-desc">Full backseat cover that converts to a hammock. Waterproof, non-slip, easy to install. The nap upgrade I didn't know I needed.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$27.99</span>
+            <a href="https://amzn.to/3carseat" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOYS -->
+      <div class="pet-product-card" data-category="toys">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/71uE+-0XWEL._AC_SL1500_.jpg" alt="KONG Toy" onerror="this.src='/images/e451488b1_20240810_085531.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">🧠 Brain Workout</span>
+          <div class="pet-name">KONG Classic Dog Toy</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (50,000+ reviews)</div>
+          <div class="pet-desc">Stuff it with peanut butter. That's it. That's the review. Hours of entertainment for any dog.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$13.99</span>
+            <a href="https://amzn.to/3kongtoy" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pet-product-card" data-category="toys">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/71HhCqmRpKL._AC_SL1500_.jpg" alt="Squeaky Plush" onerror="this.src='/images/e451488b1_20240810_085531.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">🎯 Fan Favorite</span>
+          <div class="pet-name">Outward Hound Squeaky Plush Pack</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (15,000+ reviews)</div>
+          <div class="pet-desc">6-pack of squeaky plush toys. I've destroyed every single one. That's the highest review a toy can get.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$16.99</span>
+            <a href="https://amzn.to/3squeak" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROOMING -->
+      <div class="pet-product-card" data-category="grooming">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/61gXmvGEXcL._AC_SL1500_.jpg" alt="Deshedding Brush" onerror="this.src='/images/addea470f_20230123_105956_001_resized.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">✨ Coat Goals</span>
+          <div class="pet-name">FURminator Deshedding Tool</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (40,000+ reviews)</div>
+          <div class="pet-desc">Removes up to 90% of loose hair. My human loves this. I tolerate it because the results are worth it.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$29.99</span>
+            <a href="https://amzn.to/3furminator" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pet-product-card" data-category="grooming">
+        <div class="pet-img"><img src="https://m.media-amazon.com/images/I/61OFYaRePKL._AC_SL1500_.jpg" alt="Dog Shampoo" onerror="this.src='/images/addea470f_20230123_105956_001_resized.jpg'" /></div>
+        <div class="pet-info">
+          <span class="pet-badge">🛁 Spa Day</span>
+          <div class="pet-name">Burt's Bees Dog Shampoo</div>
+          <div class="pet-rating">⭐⭐⭐⭐⭐ (22,000+ reviews)</div>
+          <div class="pet-desc">Natural ingredients, no sulfates or colorants. Leaves my coat shiny and smelling incredible. Bath time = bearable with this.</div>
+          <div class="pet-bottom">
+            <span class="pet-price">$9.99</span>
+            <a href="https://amzn.to/3dogshampoo" target="_blank" class="btn btn-primary btn-sm">Shop Now 🐾</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="affiliate-disclosure">
+      <strong>📋 Disclosure:</strong> Luckie's Pet Store uses affiliate links. When you purchase through these links, Luckie earns a small commission at no extra cost to you. All products are hand-picked (or paw-picked 🐾) based on actual use and reviews. Thank you for supporting Luckie!
+    </div>
+  </div>
+</div>
+
+<!-- PHOTO MODAL -->
+<div class="modal-overlay" id="photo-modal" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <img id="modal-img" src="" alt="" />
+    <div class="modal-body">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h2 id="modal-title"></h2>
+      <p id="modal-caption"></p>
+      <div id="modal-tags" class="photo-tags"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<footer>
+  <p>🐾 <strong>Luckie</strong> — The Original Good Boy</p>
+  <p style="margin-top:0.5rem; font-size:0.8rem;">Made with ❤️ | All photos © their respective humans</p>
+</footer>
+
+<script>
+  // Sample data (will be replaced with API calls)
+  const photos = [
+    { id: 1, title: "Ride or Die 🚗", caption: "Living my best life in the front seat. Don't @ me.", image_url: "/images/b0fb03377_20240721_112448.jpg", tags: ["car","vibes","bandana","silly"], likes: 47, featured: true },
+    { id: 2, title: "Beach Walk Boss 🏖️", caption: "Strutting through the sand like I own the place. Because I do.", image_url: "/images/e451488b1_20240810_085531.jpg", tags: ["beach","walk","outdoors","adventure"], likes: 62, featured: true },
+    { id: 3, title: "Watch Out Now! ⚡", caption: "Pop art Luckie. Red harness, skull bowtie, wrist watch, and a look that says 'I know exactly what I\'m doing.' Iconic.", image_url: "/images/b05b466ad_Adobe_Express_20240930_0514086_1.png", tags: ["popart","styled","bowtie","watch","iconic"], likes: 0, featured: true },
+    { id: 4, title: "Naptime in the Front Seat 😴", caption: "Don't wake me. I will bark. Car rides are for sleeping, not talking.", image_url: "/images/bda078a60_20240721_112449.jpg", tags: ["car","nap","sleepy","vibes"], likes: 0, featured: false },
+    { id: 5, title: "Bed Boss 🛏️", caption: "Claimed this bed. It's mine now. The fireplace behind me is just my ambiance.", image_url: "/images/ee61d1b06_20240214_125725.jpg", tags: ["bed","cozy","indoor","relax"], likes: 0, featured: false },
+    { id: 6, title: "Baby Luckie 🥺", caption: "Wrapped in a blue blanket like the tiny royalty I am. The beginning of an era.", image_url: "/images/addea470f_20230123_105956_001_resized.jpg", tags: ["puppy","baby","blanket","throwback"], likes: 0, featured: false },
+    { id: 7, title: "Head Scratches Approved ✋", caption: "Fine. You may pet me. But only because I allow it.", image_url: "/images/611bef4c5_20240928_12030711.jpg", tags: ["pets","love","outdoors","bowtie"], likes: 0, featured: true },
+    { id: 8, title: "Cozy Stripes 😌", caption: "Striped shirt, blanket nest, Coleman bag in the background. Living that cozy outdoor life.", image_url: "/images/458c39b65_20230724_161616.jpg", tags: ["cozy","stripes","blanket","chill"], likes: 0, featured: false },
+    { id: 9, title: "Spent 💤", caption: "Draped over the laptop like a North Face model who\'s had enough. Relatable content.", image_url: "/images/828ab2d98_20250330_1447271.png", tags: ["tired","laptop","northface","mood","relatable"], likes: 0, featured: true },
+    { id: 10, title: "Holiday Sweater Season 🎄", caption: "Red snowflake sweater on a floral comforter. This is what holiday cheer looks like.", image_url: "/images/d39e30cae_20221204_120821_001.jpg", tags: ["christmas","sweater","holiday","cozy"], likes: 0, featured: false },
+    { id: 11, title: "Serape Lewk 👅", caption: "Background removed. Tongue out. Colorful serape sweater. This is a full look and I will not be taking questions.", image_url: "/images/f92e71611_BackgroundEraser_20221228_162019803.png", tags: ["serape","styled","cutout","tongue","fashion"], likes: 0, featured: true },
+    { id: 12, title: "Dock Walk 🌊", caption: "Black harness, waterfront backdrop. Every step a statement.", image_url: "/images/939caf601_20221022_091536.jpg", tags: ["dock","waterfront","harness","walk"], likes: 0, featured: false },
+    { id: 13, title: "Main Character Energy 👑", caption: "Red harness. Gold chain. Skull bowtie. Tiny watch. Looking up like the world owes him something. It does.", image_url: "/images/1da768cca_20240928_120708.jpg", tags: ["styled","attitude","chain","bowtie","watch"], likes: 0, featured: true },
+    { id: 14, title: "Puffer Jacket Vibes 🧥", caption: "Bundled up and unbothered. The VL puffer jacket is doing serious work.", image_url: "/images/233540331_IMG_20230314_093918414_PORTRAIT.jpg", tags: ["puffer","jacket","cozy","bundled"], likes: 0, featured: false },
+    { id: 15, title: "CEO Lounge Mode 😎", caption: "Skull bowtie. Watch. Fully reclined. This dog has places to be and chooses not to go.", image_url: "/images/ed3df9207_20240928_120848.jpg", tags: ["ceo","lounge","bowtie","watch","relax"], likes: 0, featured: false },
+    { id: 16, title: "No Trespassing (Except Me) 🚫", caption: "Signs don\'t apply to dogs in serape sweaters. Moving on.", image_url: "/images/ab71ceffe_20221228_143858.jpg", tags: ["street","sweater","serape","outdoor","rebel"], likes: 0, featured: false },
+    { id: 17, title: "Christmas Eve Hibernation 🎅", caption: "Chin on the blanket, Christmas tree glowing behind me. Do not disturb. I am recharging.", image_url: "/images/18528531f_20221224_163441.jpg", tags: ["christmas","holiday","cozy","blanket","festive"], likes: 0, featured: true },
+    { id: 18, title: "Pro Shot 📸", caption: "Clean white background. Black harness. Pure Luckie. The brand.", image_url: "/images/5c868dc69_Adobe_Express_20221028_06083109390586660353007.png", tags: ["promo","brand","clean","professional"], likes: 0, featured: true },
+    { id: 19, title: "Bed Mode Activated 🛏️", caption: "Full body flatten on the fuzzy blanket. Harness on, alarm off. This is how Luckie recharges.", image_url: "/images/5d030a84a_20260606_100412.jpg", tags: ["bed","cozy","blanket","relax","harness"], likes: 0, featured: false },
+    { id: 20, title: "Yellow Bandana Energy 🌟", caption: "Couch curl with a yellow bandana and that signature side-eye. Unbothered and stylish.", image_url: "/images/637822a7d_IMG_20260330_184852307.jpg", tags: ["bandana","couch","chill","yellow","sideeye"], likes: 0, featured: true },
+    { id: 21, title: "Living Room Patrol 🐾", caption: "Standing guard by the couch with the yellow bandana. Nobody gets past without approval.", image_url: "/images/42ae90331_IMG_20260330_184839000.jpg", tags: ["livingroom","patrol","bandana","standing","yellow"], likes: 0, featured: false },
+    { id: 22, title: "Rainbow Leash Run 🌈", caption: "Parking lot, rainbow leash, blue toy clenched in his teeth. Nobody told him where to be — he decided.", image_url: "/images/c4423cbbc_IMG_20251022_135436598_HDR.jpg", tags: ["walk","leash","toy","parkinglo","outdoor"], likes: 0, featured: false },
+    { id: 23, title: "Hotel Royalty 👑", caption: "Claimed the chair before anyone else could. This is his room now.", image_url: "/images/25694f148_IMG_20250825_031344738.jpg", tags: ["hotel","chair","sitting","royalty","travel"], likes: 0, featured: true },
+    { id: 24, title: "The Archives 📸", caption: "Eight moments, one legend. Patio walks, blue harness, blanket naps, red harness swagger — this is the Luckie cinematic universe.", image_url: "/images/f39d0805f_20221022_091342-COLLAGE.jpg", tags: ["collage","archive","moments","harness","memories"], likes: 0, featured: false },
+    { id: 25, title: "Block Owner 🏙️", caption: "Standing tall on the grass strip, red harness, ears up. This sidewalk? His.", image_url: "/images/031217684_IMG_20241118_153308401.jpg", tags: ["outdoor","grass","redharness","walk","street"], likes: 0, featured: false },
+    { id: 26, title: "Chin Up, King 👆", caption: "Red harness, paw-print bowtie, gold chain, tracker on deck. Looking up like the vibe is beneath him.", image_url: "/images/d211105a4_20240928_120711.jpg", tags: ["redharness","bowtie","chain","tracker","outdoor"], likes: 0, featured: true },
+    { id: 27, title: "Tub Peek 🛁", caption: "Paws on the rim, ears alert, judging whoever's on the other side of the camera. Bath time is a negotiation.", image_url: "/images/9fa3a4e91_IMG_20241101_2223514862.jpg", tags: ["bath","bathtub","peeking","funny","cute"], likes: 0, featured: true },
+    { id: 28, title: "Backpack Throne 👜", caption: "Red harness, bowtie, watch on wrist, reclined on a blanket-covered backpack. This dog packs light and lives heavy.", image_url: "/images/8761c1e50_20240928_120848.jpg", tags: ["outdoor","backpack","relaxing","bowtie","watch"], likes: 0, featured: false }
+  ];
+
+  const posts = [
+{"id": "aff008", "title": "Summer Heat Safety: How to Keep Your Dog Cool When It's 100°F Outside 🌡️", "excerpt": "Hot pavement burns paws. Dehydration sneaks up fast. Here's everything you need to keep your dog safe and cool this summer — gear Luckie actually uses.", "cover_image_url": "/images/458c39b65_20230724_161616.jpg", "tags": ["summer", "safety", "health", "affiliate"], "date": "June 2026", "content": "<p>Summer looks fun on Instagram. But 100°F pavement? That's a paw emergency waiting to happen. Here's the real heat survival guide — tested by yours truly. 🐾</p><h3 style='margin:1.2rem 0 0.5rem;color:var(--primary)'>🌡️ The #1 Rule: Test the Pavement First</h3><p>Press the back of your hand on the sidewalk for 7 seconds. If you can't hold it there, neither can your dog's paws. Walk early morning or after sunset. That's it. That's the rule.</p><h3 style='margin:1.2rem 0 0.5rem;color:var(--primary)'>🥇 Paw Protection</h3><p><strong><a href='https://amzn.to/3musherwax' target='_blank' style='color:var(--accent)'>Musher's Secret Paw Wax — Amazon</a></strong> ⭐⭐⭐⭐⭐ — A thick wax balm that creates a barrier between hot pavement and paw pads. Rub it in before walks, wipe off after. I don't love having my paws touched but this stuff genuinely works.</p><p><strong><a href='https://amzn.to/3dogboots' target='_blank' style='color:var(--accent)'>QUMY Dog Boots — Amazon</a></strong> ⭐⭐⭐⭐ — I protested wearing these. My paws thanked me later. Anti-slip soles, velcro straps, actually stay on. Start with 5-minute sessions so your dog adjusts.</p><h3 style='margin:1.2rem 0 0.5rem;color:var(--primary)'>💧 Hydration is Non-Negotiable</h3><p><strong><a href='https://amzn.to/3ruffwearwater' target='_blank' style='color:var(--accent)'>Ruffwear Quencher Travel Bowl — Amazon</a></strong> ⭐⭐⭐⭐⭐ — Folds flat, clips to a bag, holds 24oz. Never leave home without it in summer. Dogs overheat way faster than humans do.</p><p><strong><a href='https://www.chewy.com/s?query=dog+water+fountain+outdoor' target='_blank' style='color:var(--accent)'>Outdoor Dog Water Fountain — Chewy</a></strong> ⭐⭐⭐⭐ — Motion-activated, attaches to your hose. Set it up in the yard and dogs self-serve all day. Game changer for backyard time.</p><h3 style='margin:1.2rem 0 0.5rem;color:var(--primary)'>❄️ Cooling Gear That Actually Works</h3><p><strong><a href='https://amzn.to/3coolingmat' target='_blank' style='color:var(--accent)'>Green Pet Shop Cooling Mat — Amazon</a></strong> ⭐⭐⭐⭐⭐ — Pressure-activated, no water or electricity needed. I dragged mine to three different spots in the house before settling. I nap on it every afternoon now.</p><p><strong><a href='https://amzn.to/3ruffwearcoolingvest' target='_blank' style='color:var(--accent)'>Ruffwear Swamp Cooler Vest — Amazon</a></strong> ⭐⭐⭐⭐⭐ — Soak in cold water, wring out, put it on. Evaporative cooling keeps core temp down on walks. This one is 100% worth it if you live somewhere brutally hot.</p><h3 style='margin:1.2rem 0 0.5rem;color:var(--primary)'>🏠 Indoor Cooling</h3><p><strong><a href='https://amzn.to/3dogpaddlingpool' target='_blank' style='color:var(--accent)'>Foldable Dog Paddling Pool — Amazon</a></strong> ⭐⭐⭐⭐ — Tiny backyard? No problem. Fill it halfway and let your dog splash around. Luckie rating: suspicious at first, absolutely obsessed now.</p><p><strong><a href='https://www.chewy.com/s?query=frozen+dog+treats+kong' target='_blank' style='color:var(--accent)'>KONG Classic + Freeze-Dried Filling — Chewy</a></strong> ⭐⭐⭐⭐⭐ — Stuff it, freeze it overnight, hand it over. Keeps dogs occupied AND cools them from the inside out. Peanut butter + banana is the move.</p><h3 style='margin:1.2rem 0 0.5rem;color:var(--primary)'>⚠️ Signs of Heatstroke (Know These)</h3><ul style='margin:0.5rem 0 1rem 1.2rem;line-height:2'><li>Excessive panting that won't stop</li><li>Drooling way more than normal</li><li>Stumbling or seeming disoriented</li><li>Bright red or pale gums</li><li>Vomiting or collapsing</li></ul><p><strong>If you see any of these: get to a vet immediately.</strong> Move your dog to shade, apply cool (not ice cold) water to paws and belly, and keep air circulating.</p><p style='margin-top:1.5rem'><em>🐾 Affiliate disclosure: Links may earn a small commission at no extra cost to you. Luckie personally supervised all cooling gear testing from the comfort of his mat.</em></p>"},
+{"id": "aff001", "title": "My Top 5 Dog Bandanas (Luckie-Approved) 🎀", "excerpt": "I've worn a lot of bandanas. Here are the ones that actually slap — plus where to grab them.", "cover_image_url": "/images/939caf601_20221022_091536.jpg", "tags": ["bandanas", "style", "affiliate"], "date": "June 2026", "content": "<p>Let's be real — a bandana can make or break an outfit.</p><p><strong>🥇 <a href='https://amzn.to/3bandana1' target='_blank' style='color:var(--primary)'>Neckerchief Bandana 10-Pack — Amazon</a></strong> ⭐⭐⭐⭐⭐ — Soft, washable, 10-pack. My human grabs these constantly.</p><p><strong>🥈 <a href='https://amzn.to/3bandana2' target='_blank' style='color:var(--primary)'>Plaid Bandana by Tail Trends</a></strong> ⭐⭐⭐⭐⭐ — Buffalo plaid. Iconic. Three park compliments in five minutes.</p><p><strong>🥉 <a href='https://amzn.to/3bandana3' target='_blank' style='color:var(--primary)'>Boho Tie-Dye Set</a></strong> ⭐⭐⭐⭐ — Festival vibes, year-round. Very me.</p><p><strong>🏅 <a href='https://www.etsy.com/search?q=dog+bandana+personalized' target='_blank' style='color:var(--primary)'>Personalized Embroidered — Etsy</a></strong> ⭐⭐⭐⭐⭐ — Custom name embroidery. Highly recommend.</p><p><em>🐾 Affiliate disclosure: Links may earn a small commission at no extra cost to you.</em></p>"},
+{"id": "aff002", "title": "The Best Dog Treats I've Ever Tasted 🦴", "excerpt": "I tried 8 treat brands so you wouldn't have to. Here's my completely unbiased ranking.", "cover_image_url": "/images/458c39b65_20230724_161616.jpg", "tags": ["treats", "food", "review", "affiliate"], "date": "June 2026", "content": "<p>Treat testing is a full-time job. One I take very seriously.</p><p><strong>🥇 <a href='https://amzn.to/3zukes' target='_blank' style='color:var(--primary)'>Zuke's Mini Naturals — Chicken</a></strong> — THE gold standard. Small, soft, incredible smell. I will do literally anything for one.</p><p><strong>🥈 <a href='https://amzn.to/3bluebits' target='_blank' style='color:var(--primary)'>Blue Buffalo BLUE Bits</a></strong> — Tasty, real meat, resealable bag.</p><p><strong>🥉 <a href='https://amzn.to/3milkbone' target='_blank' style='color:var(--primary)'>Milk-Bone Original</a></strong> — Classic. Crunchy. Pairs great with a belly rub.</p><p><strong>💡 Pro tip: <a href='https://www.chewy.com' target='_blank' style='color:var(--primary)'>Chewy Auto-Ship</a></strong> — 35% off first order + free shipping. The box arrives like clockwork. Best day of the month.</p><p><em>🐾 Affiliate disclosure: Links may earn a small commission at no extra cost to you.</em></p>"},
+{"id": "aff003", "title": "Car Ride Essentials: Every Dog Needs These 🚗", "excerpt": "I'm basically a car ride expert. Here's my complete gear list for dogs who ride in style.", "cover_image_url": "/images/b0fb03377_20240721_112448.jpg", "tags": ["car", "travel", "gear", "affiliate"], "date": "June 2026", "content": "<p>The front seat is my domain. Here's what makes a perfect ride.</p><p><strong>🚗 <a href='https://amzn.to/3kurgo' target='_blank' style='color:var(--primary)'>Kurgo Dog Harness & Seat Belt</a></strong> ⭐⭐⭐⭐⭐ — Padded, crash-tested, still lets me look out the window. Non-negotiable.</p><p><strong>🛋️ <a href='https://amzn.to/3carseat' target='_blank' style='color:var(--primary)'>Plush Car Seat Cover & Hammock</a></strong> ⭐⭐⭐⭐⭐ — Waterproof, easy to clean. The nap upgrade I didn't know I needed.</p><p><strong>💧 <a href='https://amzn.to/3autowaterbottle' target='_blank' style='color:var(--primary)'>Highwave AutoDogMug</a></strong> ⭐⭐⭐⭐ — Travel bottle with built-in bowl. Essential for long drives.</p><p><strong>🌬️ <a href='https://amzn.to/3windowscreen' target='_blank' style='color:var(--primary)'>Dog Window Mesh Screen</a></strong> ⭐⭐⭐⭐ — Hang my head out safely. The breeze hits different.</p><p><em>🐾 Affiliate disclosure: Links may earn a small commission at no extra cost to you.</em></p>"},
+{"id": "aff004", "title": "Does Your Dog Need Pet Insurance? (Luckie's Honest Take) 🏥", "excerpt": "I had a vet scare last year. My human was NOT prepared for that bill. Here's what we learned the hard way.", "cover_image_url": "/images/611bef4c5_20240928_12030711.jpg", "tags": ["insurance", "health", "affiliate"], "date": "June 2026", "content": "<p>One random Tuesday, I ate something I shouldn't have. (It smelled incredible.) What followed was an $800 emergency vet visit. My human was not prepared.</p><p><strong>🥇 <a href='https://www.healthypaws.com' target='_blank' style='color:var(--primary)'>Healthy Paws Pet Insurance</a></strong> — Our top pick. Covers 90% of bills after deductible, no annual limits, ~$30/month for small dogs.</p><p><strong>🥈 <a href='https://www.lemonade.com/pet' target='_blank' style='color:var(--primary)'>Lemonade Pet</a></strong> — AI-powered claims paid in minutes. Plans start around $10/month.</p><p><strong>🥉 <a href='https://trupanion.com' target='_blank' style='color:var(--primary)'>Trupanion</a></strong> — Pays the vet directly so you never front the money. Best for older dogs.</p><p><strong>🏅 <a href='https://www.chewy.com/b/careplus-pet-insurance-wellness-plans-14607' target='_blank' style='color:var(--primary)'>Chewy CarePlus</a></strong> — Wellness + insurance bundled. Great if you're already a Chewy customer.</p><p><strong>The honest truth:</strong> Get it while your dog is young before any pre-existing conditions kick in. Monthly premiums always beat a $3,000 surgery bill.</p><p><em>🐾 Affiliate disclosure: Links may earn a commission at no extra cost to you.</em></p>"},
+{"id": "aff005", "title": "Flea & Tick Season: What Actually Works (Tested on Me) 🦟", "excerpt": "Nobody talks about flea season until it's too late. Here's the prevention gear that actually keeps bugs away.", "cover_image_url": "/images/addea470f_20230123_105956_001_resized.jpg", "tags": ["flea", "tick", "health", "affiliate"], "date": "June 2026", "content": "<p>Flea and tick prevention: spend $20 now or $500 at the vet later. Easy math.</p><p><strong>🥇 <a href='https://amzn.to/3nexgard' target='_blank' style='color:var(--primary)'>NexGard Chewables — Amazon</a></strong> ⭐⭐⭐⭐⭐ — Once-a-month beef-flavored chew. I genuinely look forward to this one. Kills fleas in 8 hours.</p><p><strong>🥈 <a href='https://www.chewy.com/s?query=frontline+plus' target='_blank' style='color:var(--primary)'>Frontline Plus — Chewy</a></strong> ⭐⭐⭐⭐⭐ — Waterproof topical, kills fleas + ticks + lice. Auto-Ship = 35% off first order.</p><p><strong>🥉 <a href='https://amzn.to/3seresto' target='_blank' style='color:var(--primary)'>Seresto Collar — Amazon</a></strong> ⭐⭐⭐⭐⭐ — 8 months of protection in one collar. Set it and forget it.</p><p><strong>💡 Pro tip:</strong> Treat your yard too — <a href='https://amzn.to/3wondercide' target='_blank' style='color:var(--primary)'>Wondercide Yard Spray</a> is non-toxic and kills at the source.</p><p><em>🐾 Affiliate disclosure: Links may earn a small commission. Luckie personally endorses the NexGard beef flavor.</em></p>"},
+{"id": "aff006", "title": "The Ultimate Dog Grooming Kit (For Dogs Who Take Appearance Seriously) ✂️", "excerpt": "I didn't get this fluffy by accident. Here's the exact toolkit my human uses to keep me looking like a show dog.", "cover_image_url": "/images/addea470f_20230123_105956_001_resized.jpg", "tags": ["grooming", "beauty", "gear", "affiliate"], "date": "June 2026", "content": "<p>Grooming isn't vanity. It's self-care. And I take my self-care very seriously.</p><p><strong>✂️ <a href='https://amzn.to/3andisgrinder' target='_blank' style='color:var(--primary)'>Andis Pro Nail Grinder — Amazon</a></strong> ⭐⭐⭐⭐⭐ — Quiet, rechargeable, multiple speeds. Changed everything. No more split nails.</p><p><strong>🛁 <a href='https://www.chewy.com/s?query=burts+bees+dog+shampoo' target='_blank' style='color:var(--primary)'>Burt's Bees Shampoo — Chewy</a></strong> ⭐⭐⭐⭐⭐ — Natural, no sulfates, incredible smell. My coat is noticeably shinier since switching.</p><p><strong>🪮 <a href='https://amzn.to/3furminator' target='_blank' style='color:var(--primary)'>FURminator Deshedding Brush — Amazon</a></strong> ⭐⭐⭐⭐⭐ — Removes 90% of loose hair. I resist it. The results are undeniable.</p><p><strong>💨 <a href='https://amzn.to/3xpowerdryer' target='_blank' style='color:var(--primary)'>XPOWER Dog Dryer — Amazon</a></strong> ⭐⭐⭐⭐ — Low noise, variable speed, dries in half the time. Bath day is now tolerable.</p><p><strong>🌿 <a href='https://www.chewy.com/s?query=tropiclean+waterless+shampoo' target='_blank' style='color:var(--primary)'>TropiClean Waterless Shampoo — Chewy</a></strong> ⭐⭐⭐⭐⭐ — Spray on, brush out, smell great. No bath required.</p><p><em>🐾 Affiliate disclosure: Links may earn a small commission. Luckie supervised every product test personally.</em></p>"},
+{"id": "6a222e4fdc074dee2d117a8e", "title": "A Day in My Life 🌞", "excerpt": "Wake up, stretch, bark at the mailman, repeat. Here's what a perfect Luckie day actually looks like from sunrise to snack time.", "content": "People always ask what I do all day. The answer? A lot. More than you'd think.\n\nIt starts with the morning stretch — a full-body, paws-extended yawn that lets the whole house know I'm awake and ready. Then breakfast (obviously the highlight), followed by a patrol of the yard to make sure everything's in order.\n\nMid-morning is prime nap time. I've got three spots I rotate: the couch, the sun patch by the window, and my bed. Each has its own vibe.\n\nAfternoon means walk time. This is serious business. There are smells to investigate, squirrels to monitor, and neighbors to greet. I take my route very seriously.\n\nEvening is cuddle hours. My human and I watch TV and I make sure to take up exactly 80% of the couch. It's just how it works.\n\nThat's the Luckie lifestyle. Busy, important, and extremely comfortable. 🐾", "cover_image_url": "/images/458c39b65_20230724_161616.jpg", "tags": ["lifestyle", "daily", "vibes"], "date": "July 24, 2023"}, {"id": "6a222e4fdc074dee2d117a8f", "title": "My Favorite Spots in the World 🗺️", "excerpt": "From the dog park to that one perfect patch of grass — Luckie's definitive guide to the best places a dog can be.", "content": "I've been around. Not internationally (yet), but locally? I'm basically an explorer.\n\nSpot #1: The dog park on Tuesdays. Tuesday is when all the good dogs show up. I don't make the rules, that's just how it is.\n\nSpot #2: The beach at golden hour. Sand between the paws, salt in the air, and the most incredible smells you can imagine. Pure heaven.\n\nSpot #3: My human's lap. Technically not a place, but it goes everywhere we go, so it counts.\n\nSpot #4: The kitchen. Always the kitchen. You never know when something delicious might fall off the counter.\n\nSpot #5: Anywhere my human is. Cheesy? Maybe. True? Absolutely. 🐾", "cover_image_url": "/images/e451488b1_20240810_085531.jpg", "tags": ["adventure", "places", "favorites"], "date": "August 10, 2024"}, {"id": "6a222e4fdc074dee2d117a90", "title": "Things I Take Very Seriously 🎯", "excerpt": "The mailman. Squirrels. Dinnertime. Luckie's completely reasonable list of top priorities.", "content": "Some dogs are chill. I am not one of those dogs — at least not about certain things.\n\nThe mailman: I don't know what he wants, but I'm watching. Every. Single. Day.\n\nMy food bowl being moved even one inch from its spot: unacceptable. I will not eat until it's corrected.\n\nThe exact time of my walk: 5pm. Not 5:05. Not 4:55. 5pm. My internal clock is perfect.\n\nWho sits next to my human on the couch: this is a matter of territorial importance and I handle it accordingly.\n\nBelly rubs: I take the quality and duration of belly rubs very seriously and will provide immediate feedback if standards drop.\n\nOther than that? Totally relaxed. Super chill. The chillest dog you've ever met. 🐾", "cover_image_url": "/images/939caf601_20221022_091536.jpg", "tags": ["humor", "personality", "serious"], "date": "October 22, 2022"}, {"id": "6a042595c8d7ea2055a67430", "title": "My First Post: Hi, I'm Luckie 🐾", "excerpt": "Hey there! I'm Luckie, and this is my corner of the internet.", "content": "Hey there! I'm Luckie, and this is my corner of the internet. I'm a small dog with big energy and even bigger opinions about car rides, beach walks, and the best spots to take a nap.\n\nMy human decided I deserved my own website (finally, tbh), so here we are. Expect lots of photos, some adventures, and maybe some product recommendations from a dog who's tried them all.\n\nFollow along — it's going to be a good time. 🐾", "cover_image_url": "/images/b0fb03377_20240721_112448.jpg", "tags": ["intro", "hello", "about"], "date": "May 13, 2026"}];
+
+  function loadBlogPosts() {
+    // Posts are pre-loaded — returns resolved promise for compatibility
+    return Promise.resolve();
+  }
+
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    document.getElementById('nav-' + name).classList.add('active');
+    window.scrollTo(0, 0);
+    if (name === 'photos') renderPhotos();
+    if (name === 'blog') { if (posts.length) renderBlog(); else loadBlogPosts().then(renderBlog); }
+    if (name === 'shop') renderShop();
+  }
+
+  function renderPhotos() {
+    const grid = document.getElementById('photos-grid');
+    grid.innerHTML = photos.map(p => photoCard(p)).join('');
+  }
+
+  function renderHomePhotos() {
+    const grid = document.getElementById('home-photos');
+    grid.innerHTML = photos.filter(p => p.featured).map(p => photoCard(p)).join('');
+  }
+
+  function photoCard(p) {
+    return `<div class="photo-card" onclick="openModal(${p.id})">
+      <img src="${p.image_url}" alt="${p.title}" loading="lazy" />
+      <div class="photo-info">
+        <div class="photo-title">${p.title}</div>
+        <div class="photo-caption">${p.caption}</div>
+        <div class="photo-tags">${p.tags.map(t => `<span class="tag">#${t}</span>`).join('')}</div>
+        <div class="photo-like" onclick="event.stopPropagation(); likePhoto(${p.id}, this)">❤️ <span>${p.likes}</span></div>
+      </div>
+    </div>`;
+  }
+
+  function renderBlog() {
+    const grid = document.getElementById('blog-grid');
+    if (!posts.length) {
+      grid.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">Loading posts... 🐾</p>';
+      return;
+    }
+    grid.innerHTML = posts.map(p => `
+      <div class="blog-card" onclick="openPost('${p.id}')">
+        <img src="${p.cover_image_url || ''}" alt="${p.title}" onerror="this.style.display='none'" />
+        <div class="blog-info">
+          <div class="blog-title">${p.title}</div>
+          <div class="blog-excerpt">${p.excerpt || ''}</div>
+          <div class="blog-meta">📅 ${p.date} · ${p.tags.map(t => '#'+t).join(' ')}</div>
+          <div style="margin-top:0.8rem;"><span class="btn btn-primary btn-sm" style="font-size:0.8rem;padding:0.4rem 1rem;">Read More 🐾</span></div>
+        </div>
+      </div>`).join('');
+  }
+
+  function renderShop_disabled() {
+    const grid = document.getElementById('shop-grid');
+    grid.innerHTML = products.map(p => `
+      <div class="product-card">
+        <div class="product-img">${p.image_url ? `<img src="${p.image_url}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;padding:1rem;" />` : p.emoji}</div>
+        <div class="product-info">
+          <div class="product-name">${p.name}</div>
+          <div class="product-desc">${p.description}</div>
+          <div class="product-bottom">
+            <div class="price">$${p.price}</div>
+            <button class="btn btn-primary btn-sm" onclick="buyMerch('${p.id || p.name.toLowerCase().replace(/ /g,'_')}', '${p.name}', ${p.price})">Buy Now 🐾</button>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  function openModal(id) {
+    const p = photos.find(ph => ph.id === id);
+    if (!p) return;
+    document.getElementById('modal-img').src = p.image_url;
+    document.getElementById('modal-title').textContent = p.title;
+    document.getElementById('modal-caption').textContent = p.caption;
+    document.getElementById('modal-tags').innerHTML = p.tags.map(t => `<span class="tag">#${t}</span>`).join('');
+    document.getElementById('photo-modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('photo-modal').classList.remove('open');
+  }
+
+  function openPost(id) {
+    const p = posts.find(post => post.id === id);
+    if (!p) return;
+    // Increment view count silently
+    fetch('/api/track-view', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ postId: p.id })
+    }).catch(() => {});
+    // Show post in modal
+    document.getElementById('post-modal-title').textContent = p.title;
+    document.getElementById('post-modal-date').textContent = '📅 ' + p.date + (p.tags.length ? ' · ' + p.tags.map(t => '#'+t).join(' ') : '');
+    document.getElementById('post-modal-img').src = p.cover_image_url || '';
+    document.getElementById('post-modal-img').style.display = p.cover_image_url ? 'block' : 'none';
+    document.getElementById('post-modal-content').innerHTML = (p.content || '').replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+    document.getElementById('post-modal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePost() {
+    document.getElementById('post-modal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  function likePhoto(id, el) {
+    const p = photos.find(ph => ph.id === id);
+    if (p) {
+      p.likes++;
+      el.querySelector('span').textContent = p.likes;
+      showToast('❤️ Liked!');
+    }
+  }
+
+  // ── Stripe Elements Inline Checkout ──
+  const STRIPE_PK = 'pk_live_51TeoecLF2YzSnF30CM4nl9utG5cWuxt6WGDLE1yEs5qaCUm92bAjJL91cmWBVXhynefN9EOnENEPFw0HxcscvDh400LCzDOqj5';
+  let stripe, cardElement, currentCheckoutItem;
+
+  function initStripe() {
+    if (!stripe) {
+      stripe = Stripe(STRIPE_PK);
+      const elements = stripe.elements({ locale: 'en' });
+      cardElement = elements.create('card', {
+        style: {
+          base: {
+            fontFamily: 'Nunito, sans-serif',
+            fontSize: '16px',
+            color: '#333',
+            '::placeholder': { color: '#bbb' }
+          }
+        }
+      });
+      cardElement.mount('#card-element');
+      cardElement.on('change', e => {
+        document.getElementById('card-errors').textContent = e.error ? e.error.message : '';
+      });
+    }
+  }
+
+  function openCheckoutModal(title, priceLabel, desc, item) {
+    currentCheckoutItem = item;
+    document.getElementById('checkout-title').textContent = title;
+    document.getElementById('checkout-price').textContent = priceLabel;
+    document.getElementById('checkout-desc').textContent = desc;
+    document.getElementById('checkout-content').style.display = '';
+    document.getElementById('checkout-success').style.display = 'none';
+    document.getElementById('checkout-btn').disabled = false;
+    document.getElementById('checkout-btn').textContent = '🐾 Complete Purchase';
+    document.getElementById('checkout-overlay').classList.add('open');
+    setTimeout(initStripe, 50);
+  }
+
+  function startCheckout(tier) {
+    const tiers = {
+      fan: { title: 'Luckie Fan Membership ⭐', price: '$4.99/month', desc: 'Exclusive behind-the-scenes photos, monthly wallpaper pack, early access & more 🐾' },
+      superfan: { title: 'Luckie Super Fan 👑', price: '$9.99/month', desc: 'VIP access — videos, custom stickers, Q&A, 10% off merch & annual photo print 🎁' }
+    };
+    const t = tiers[tier];
+    if (t) openCheckoutModal(t.title, t.price, t.desc, { type: 'membership', tier });
+  }
+
+  // buyMerch handled below via direct Stripe links
+
+
+  function filterPetStore(category, btn) {
+    document.querySelectorAll('.store-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.pet-product-card').forEach(card => {
+      card.style.display = (category === 'all' || card.dataset.category === category) ? '' : 'none';
+    });
+  }
+
+  function closeCheckout(e) {
+    if (e.target === document.getElementById('checkout-overlay')) closeCheckoutModal();
+  }
+  function closeCheckoutModal() {
+    document.getElementById('checkout-overlay').classList.remove('open');
+  }
+
+  async function submitCheckout() {
+    const email = document.getElementById('checkout-email').value.trim();
+    const name = document.getElementById('checkout-name').value.trim();
+    if (!email || !name) { showToast('Please fill in all fields.'); return; }
+
+    const btn = document.getElementById('checkout-btn');
+    btn.disabled = true;
+    btn.textContent = 'Processing... 🐾';
+
+    const links = {
+      membership_fan: 'https://buy.stripe.com/6oU00kfyE1pYdlj2OMb3q05',
+      membership_superfan: 'https://buy.stripe.com/4gM7sM3PWd8G2GF752b3q06',
+      luckie_classic_tee: 'https://buy.stripe.com/eVqeVe7280lUftr2OMb3q01',
+      luckie_mug: 'https://buy.stripe.com/eVq7sM5Y4b0ychfcpmb3q04',
+      luckie_hoodie: 'https://buy.stripe.com/eVq14o86cecK9539dab3q03',
+      luckie_sticker_pack: 'https://buy.stripe.com/5kQ00kdqw8Sqa974WUb3q00'
+    };
+
+    let linkKey = currentCheckoutItem.type === 'membership'
+      ? 'membership_' + currentCheckoutItem.tier
+      : (currentCheckoutItem.productKey || currentCheckoutItem.productName.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,''));
+
+    const url = links[linkKey];
+    if (url) {
+      window.open(url + '?prefilled_email=' + encodeURIComponent(email), '_blank');
+      document.getElementById('checkout-content').style.display = 'none';
+      document.getElementById('checkout-success').style.display = '';
+    } else {
+      showToast('Checkout link not found. Please try again.');
+      btn.disabled = false;
+      btn.textContent = '🐾 Complete Purchase';
+    }
+  }
+
+
+  // Product config: variants per size → Stripe links
+  const PRODUCT_VARIANTS = {
+    'luckie_classic_tee': {
+      name: 'Luckie Classic Tee',
+      price: '$29.99',
+      type: 'apparel',
+      sizes: ['S','M','L','XL','2XL','3XL'],
+      // All sizes go to same payment link; size captured via metadata/note
+      link: 'https://buy.stripe.com/eVqeVe7280lUftr2OMb3q01'
+    },
+    'luckie_hoodie': {
+      name: 'Luckie Hoodie',
+      price: '$44.99',
+      type: 'apparel',
+      sizes: ['S','M','L','XL'],
+      link: 'https://buy.stripe.com/eVq14o86cecK9539dab3q03'
+    },
+    'luckie_mug': {
+      name: 'Luckie Coffee Mug',
+      price: '$19.99',
+      type: 'size',
+      sizes: ['11 oz','15 oz'],
+      link: 'https://buy.stripe.com/eVq7sM5Y4b0ychfcpmb3q04'
+    },
+    'luckie_sticker_pack': {
+      name: 'Luckie Sticker',
+      price: '$4.99',
+      type: 'size',
+      sizes: ['3″×3″','4″×4″','5.5″×5.5″'],
+      link: 'https://buy.stripe.com/5kQ00kdqw8Sqa974WUb3q00'
+    }
+  };
+
+  let _currentProduct = null;
+  let _selectedSize = null;
+
+  function buyMerch(productKey, productName, price) {
+    const product = PRODUCT_VARIANTS[productKey];
+    if (!product) { showToast('Checkout coming soon!'); return; }
+    _currentProduct = product;
+    _selectedSize = null;
+
+    // Populate modal
+    document.getElementById('size-modal-title').textContent = product.name;
+    document.getElementById('size-modal-price').textContent = product.price;
+
+    const container = document.getElementById('size-options');
+    container.innerHTML = '';
+    product.sizes.forEach(size => {
+      const btn = document.createElement('button');
+      btn.textContent = size;
+      btn.style.cssText = 'border:2px solid #ddd;background:#fff;border-radius:10px;padding:0.5rem 1rem;font-size:0.95rem;font-weight:600;cursor:pointer;color:#333;transition:all 0.15s;';
+      btn.onclick = () => {
+        container.querySelectorAll('button').forEach(b => {
+          b.style.borderColor = '#ddd';
+          b.style.background = '#fff';
+          b.style.color = '#333';
+        });
+        btn.style.borderColor = '#e05c1a';
+        btn.style.background = '#fff5f0';
+        btn.style.color = '#e05c1a';
+        _selectedSize = size;
+      };
+      container.appendChild(btn);
+    });
+
+    // Show modal
+    const modal = document.getElementById('size-modal');
+    modal.style.display = 'flex';
+  }
+
+  function closeSizeModal() {
+    document.getElementById('size-modal').style.display = 'none';
+    _currentProduct = null;
+    _selectedSize = null;
+  }
+
+  function confirmSize() {
+    if (!_selectedSize) {
+      showToast('Please pick a size first! 👆');
+      return;
+    }
+    const url = _currentProduct.link + '?prefilled_promo_code=&metadata[size]=' + encodeURIComponent(_selectedSize);
+    closeSizeModal();
+    window.open(url, '_blank');
+  }
+
+  // Close modal on backdrop click
+  document.getElementById('size-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeSizeModal();
+  });
+
+
+  const SUBSCRIBE_API = '/api/subscribe';
+  const DONATE_API = '/api/create-donation';
+
+  function submitDonation() {
+    const amount = Number(document.getElementById('donate-custom-amount').value);
+    if (!amount || amount < 1) { showToast('Please enter an amount! 💛'); return; }
+
+    const name = document.getElementById('donate-name').value.trim();
+    const email = document.getElementById('donate-email').value.trim();
+    const message = document.getElementById('donate-message').value.trim();
+
+    const btn = document.getElementById('donate-submit-btn');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Contacting server... 🐾';
+
+    let settled = false;
+    const startTime = Date.now();
+
+    // Independent watchdog — fires no matter what happens to the fetch/abort
+    // logic below, so the button can NEVER get stuck forever.
+    const watchdog = setInterval(() => {
+      if (settled) { clearInterval(watchdog); return; }
+      const elapsed = Math.round((Date.now() - startTime) / 1000);
+      if (elapsed >= 20) {
+        settled = true;
+        clearInterval(watchdog);
+        showToast('This is taking too long. Please try again! 🐾');
+        btn.disabled = false;
+        btn.textContent = originalText;
+      } else if (btn && !settled) {
+        btn.textContent = 'Contacting server (' + elapsed + 's)... 🐾';
+      }
+    }, 1000);
+
+    fetch(DONATE_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount, name, email, message })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (settled) return;
+      settled = true;
+      clearInterval(watchdog);
+      if (data.url) {
+        btn.textContent = 'Redirecting now... 🐾';
+        window.location.href = data.url;
+      } else {
+        showToast(data.error || 'Something went wrong. Try again!');
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
+    })
+    .catch(err => {
+      if (settled) return;
+      settled = true;
+      clearInterval(watchdog);
+      console.error(err);
+      showToast('Network error. Try again?');
+      btn.disabled = false;
+      btn.textContent = originalText;
+    });
+  }
+
+
+  function subscribeEmail() {
+    const emailInput = document.getElementById('hero-email');
+    const email = emailInput.value.trim();
+    if (!email || !email.includes('@')) { showToast('Please enter a valid email! 📧'); return; }
+
+    fetch(SUBSCRIBE_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, tier: 'free', notes: 'Joined via hero email signup' })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        showToast('🎉 You\'re in the pack! Welcome, ' + email.split('@')[0] + '!');
+        emailInput.value = '';
+      } else {
+        showToast('Oops! ' + (data.error || 'Something went wrong'));
+      }
+    })
+    .catch(err => { console.error(err); showToast('Network error. Try again?'); });
+  }
+
+  function subscribeMember() {
+    const emailInput = document.getElementById('member-email');
+    const email = emailInput.value.trim();
+    if (!email || !email.includes('@')) { showToast('Please enter a valid email! 📧'); return; }
+
+    fetch(SUBSCRIBE_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, tier: 'free', notes: 'Wants membership notifications' })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        showToast('🌟 You\'ll be first to know!');
+        emailInput.value = '';
+      } else {
+        showToast('Oops! ' + (data.error || 'Something went wrong'));
+      }
+    })
+    .catch(err => { console.error(err); showToast('Network error. Try again?'); });
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+
+
+  // Init
+  renderHomePhotos();
+  loadBlogPosts().then(() => {
+    // Pre-render blog in background so it's ready when user clicks
+  });
+
+  // Handle payment redirect
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('payment') === 'success') {
+    showToast('🎉 Payment successful! Welcome to the Luckie fam!');
+    history.replaceState({}, '', window.location.pathname);
+  } else if (urlParams.get('payment') === 'cancelled') {
+    showToast('Payment cancelled. Come back anytime! 🐾');
+    history.replaceState({}, '', window.location.pathname);
+  }
+</script>
+
+  <!-- Blog Post Modal -->
+  <div id="post-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;padding:1rem;">
+    <div style="background:#fff;border-radius:20px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;padding:0;position:relative;">
+      <button onclick="closePost()" style="position:sticky;top:1rem;float:right;margin:1rem;background:#e74c3c;color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.2rem;cursor:pointer;z-index:10;">✕</button>
+      <img id="post-modal-img" src="" alt="" style="width:100%;max-height:320px;object-fit:cover;border-radius:20px 20px 0 0;" />
+      <div style="padding:2rem;">
+        <h2 id="post-modal-title" style="font-family:'Pacifico',cursive;color:#e74c3c;font-size:1.8rem;margin-bottom:0.5rem;"></h2>
+        <div id="post-modal-date" style="color:#999;font-size:0.9rem;margin-bottom:1.5rem;"></div>
+        <div id="post-modal-content" style="line-height:1.8;color:#333;font-size:1rem;"></div>
+        <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid #eee;text-align:center;">
+          <p style="color:#999;margin-bottom:1rem;">Enjoyed this post? Join the Luckie fam! 🐾</p>
+          <button class="btn btn-primary" onclick="closePost();document.getElementById('nav-members').click()">Become a Member</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- SIZE PICKER MODAL -->
+<div id="size-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.55);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:18px;padding:2rem 2rem 1.5rem;max-width:380px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,0.2);text-align:center;position:relative;">
+    <button onclick="closeSizeModal()" style="position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#888;">✕</button>
+    <div style="font-size:2rem;margin-bottom:0.3rem;">🐾</div>
+    <h3 id="size-modal-title" style="margin:0 0 0.3rem;font-size:1.2rem;color:#111;font-family:'Pacifico',cursive;"></h3>
+    <p id="size-modal-price" style="margin:0 0 1.2rem;color:#7a2800;font-weight:700;font-size:1.1rem;"></p>
+    <p style="margin:0 0 0.8rem;font-size:0.9rem;color:#555;font-weight:600;">Pick your size:</p>
+    <div id="size-options" style="display:flex;gap:0.6rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.4rem;"></div>
+    <button id="size-confirm-btn" onclick="confirmSize()" style="background:#e05c1a;color:#fff;border:none;border-radius:30px;padding:0.75rem 2rem;font-size:1rem;font-weight:700;cursor:pointer;width:100%;transition:background 0.2s;" onmouseover="this.style.background='#c04a10'" onmouseout="this.style.background='#e05c1a'">
+      Continue to Checkout →
+    </button>
+    <p style="margin:0.8rem 0 0;font-size:0.75rem;color:#aaa;">Fulfilled by Printful · Ships to 200+ countries</p>
+  </div>
+</div>
+
+</body>
+</html>
