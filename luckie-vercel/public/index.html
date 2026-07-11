@@ -497,6 +497,35 @@
     .checkout-success h3 { font-family: 'Pacifico', cursive; color: var(--dark); font-size: 1.6rem; margin-bottom: 0.5rem; }
     .checkout-success p { color: #666; }
 
+  
+    /* FLOATING DONATE BUTTON */
+    .float-donate {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      background: #e05c00;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 32px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .float-donate:hover { background: #bf4e00; transform: translateX(-50%) translateY(-2px); }
+    @media (max-width: 600px) {
+      .float-donate { bottom: 16px; padding: 13px 26px; font-size: 0.95rem; }
+    }
+
   </style>
   <script src="https://js.stripe.com/v3/"></script>
   <script>(function(i,m,p,a,c,t){c.ire_o=p;c[p]=c[p]||function(){(c[p].a=c[p].a||[]).push(arguments)};t=a.createElement(m);var z=a.getElementsByTagName(m)[0];t.async=1;t.src=i;z.parentNode.insertBefore(t,z)})('https://utt.impactcdn.com/P-A7424495-b53d-4d53-b521-600a1ae183431.js','script','impactStat',document,window);impactStat('transformLinks');impactStat('trackImpression');</script>
@@ -1565,6 +1594,12 @@
     <p style="margin:0.8rem 0 0;font-size:0.75rem;color:#aaa;">Fulfilled by Printful · Ships to 200+ countries</p>
   </div>
 </div>
+
+
+  <!-- Floating Donate Button -->
+  <a class="float-donate" href="https://donate.stripe.com/dRm14ogCI0lU4ON60Yb3q07" target="_blank" rel="noopener">
+    ❤️ Donate
+  </a>
 
 </body>
 </html>
