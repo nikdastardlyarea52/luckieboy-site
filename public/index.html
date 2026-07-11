@@ -1486,12 +1486,14 @@
     document.getElementById('donate-iframe').src = url;
     document.getElementById('donate-iframe-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
+    document.querySelector('.bottom-donate-bar').style.display = 'none';
   }
 
   function closeDonateOverlay() {
     document.getElementById('donate-iframe-overlay').classList.remove('open');
     document.getElementById('donate-iframe').src = '';
     document.body.style.overflow = '';
+    document.querySelector('.bottom-donate-bar').style.display = '';
   }
 
 </script>
