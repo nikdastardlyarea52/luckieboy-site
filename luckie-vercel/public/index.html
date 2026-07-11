@@ -495,21 +495,26 @@
     #donate-modal-overlay {
       display: none;
       position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: 999999;
-      align-items: flex-end;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 2147483647;
+      align-items: flex-start;
       justify-content: center;
+      padding-top: 40px;
+      overflow-y: auto;
     }
     #donate-modal-overlay.open { display: flex; }
     #donate-modal-box {
       background: #fff;
       width: 100%;
-      max-width: 540px;
-      border-radius: 20px 20px 0 0;
+      max-width: 480px;
+      border-radius: 20px;
       padding: 20px 16px 32px;
-      max-height: 90vh;
-      overflow-y: auto;
+      margin: 0 12px 40px;
+      position: relative;
     }
     #donate-modal-close {
       float: right;
