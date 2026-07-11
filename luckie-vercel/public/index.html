@@ -1496,6 +1496,8 @@
       checkoutInstance.mount('#stripe-checkout-container');
 
       document.getElementById('donate-modal-overlay').classList.add('open');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.body.style.overflow = 'hidden';
     } catch (err) {
       showToast('Something went wrong. Try again!');
       console.error(err);
@@ -1507,6 +1509,7 @@
 
   function closeDonateModal() {
     document.getElementById('donate-modal-overlay').classList.remove('open');
+    document.body.style.overflow = '';
     if (checkoutInstance) { checkoutInstance.destroy(); checkoutInstance = null; }
     document.getElementById('stripe-checkout-container').innerHTML = '';
   }
